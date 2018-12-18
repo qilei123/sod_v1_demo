@@ -304,7 +304,7 @@ class DeformableConvolutionOp : public Operator {
     col_offset_ = kernel_dim_ * conv_out_spatial_dim_;
     output_offset_ = conv_out_channels_ * conv_out_spatial_dim_ / group_;
     // size of the column buffer used for storing im2col-ed pixels
-    im2col_step_ = std::min(param_.im2col_step, num_);
+    im2col_step_ = std::min((int)(param_.im2col_step), (int)(num_);
     col_buffer_size_ = kernel_dim_ * group_ * im2col_step_ * conv_out_spatial_dim_;
     // input/output image size (#channels * height * width)
     input_dim_ = ishape.ProdShape(1, ishape.ndim());
