@@ -136,10 +136,17 @@ class DeformableConvolutionOp : public Operator {
       Shape4(num_ / im2col_step_, group_, M, N), s);
     for (index_t n = 0; n < num_ / im2col_step_; ++n) {
       // transform image to col_buffer in order to use gemm
-      deformable_im2col(s, in_data[conv::kData].dptr<DType>() + n*im2col_step_*input_dim_,
-        in_data[conv::kOffset].dptr<DType>() + n*im2col_step_*input_offset_dim_, in_data[conv::kData].shape_,
-        col_buffer.shape_, param_.kernel, param_.pad, param_.stride, param_.dilate,
-        param_.num_deformable_group, col_buffer.dptr<DType>());
+      deformable_im2col(s, 
+        in_data[conv::kData].dptr<DType>() + n*im2col_step_*input_dim_,
+        in_data[conv::kOffset].dptr<DType>() + n*im2col_step_*input_offset_dim_, 
+        in_data[conv::kData].shape_,
+        col_buffer.shape_, 
+        param_.kernel, 
+        param_.pad, 
+        param_.stride, 
+        param_.dilate,
+        param_.num_deformable_group, 
+        col_buffer.dptr<DType>());
       Tensor<xpu, 3, DType> output_3d = output_4d[n];
       for (index_t g = 0; g < group_; ++g) {
         // Legacy approach shown here for comparison:

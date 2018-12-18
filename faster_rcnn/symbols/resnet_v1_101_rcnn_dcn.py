@@ -861,14 +861,31 @@ class resnet_v1_101_rcnn_dcn(Symbol):
         conv_new_1 = mx.sym.Convolution(data=relu1, kernel=(1, 1), num_filter=256, name="conv_new_1")
         conv_new_1_relu = mx.sym.Activation(data=conv_new_1, act_type='relu', name='conv_new_1_relu')
 
-        offset_t = mx.contrib.sym.DeformablePSROIPooling(name='offset_t', data=conv_new_1_relu, rois=rois, group_size=1, pooled_size=7,
-                                                         sample_per_part=4, no_trans=True, part_size=7, output_dim=256, spatial_scale=0.0625)
+        offset_t = mx.contrib.sym.DeformablePSROIPooling(name='offset_t', 
+                                                        data=conv_new_1_relu, 
+                                                        rois=rois, 
+                                                        group_size=1, 
+                                                        pooled_size=7,
+                                                        sample_per_part=4, 
+                                                        no_trans=True, 
+                                                        part_size=7, 
+                                                        output_dim=256, 
+                                                        spatial_scale=0.0625)
         offset = mx.sym.FullyConnected(name='offset', data=offset_t, num_hidden=7 * 7 * 2, lr_mult=0.01)
         offset_reshape = mx.sym.Reshape(data=offset, shape=(-1, 2, 7, 7), name="offset_reshape")
 
-        deformable_roi_pool = mx.contrib.sym.DeformablePSROIPooling(name='deformable_roi_pool', data=conv_new_1_relu, rois=rois,
-                                                                    trans=offset_reshape, group_size=1, pooled_size=7, sample_per_part=4,
-                                                                    no_trans=False, part_size=7, output_dim=256, spatial_scale=0.0625, trans_std=0.1)
+        deformable_roi_pool = mx.contrib.sym.DeformablePSROIPooling(name='deformable_roi_pool', 
+                                                                    data=conv_new_1_relu, 
+                                                                    rois=rois,
+                                                                    trans=offset_reshape, 
+                                                                    group_size=1, 
+                                                                    pooled_size=7, 
+                                                                    sample_per_part=4,
+                                                                    no_trans=False, 
+                                                                    part_size=7, 
+                                                                    output_dim=256, 
+                                                                    spatial_scale=0.0625, 
+                                                                    trans_std=0.1)
         # 2 fc
         fc_new_1 = mx.sym.FullyConnected(name='fc_new_1', data=deformable_roi_pool, num_hidden=1024)
         fc_new_1_relu = mx.sym.Activation(data=fc_new_1, act_type='relu', name='fc_new_1_relu')
