@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "mxnet"
 output_path: "./output/fpn/coco"
-symbol: resnet_v1_101_fpn_rcnn
-gpus: '0,1,2,3,4,5,6,7'
+symbol: resnet_v1_101_fpn_dcn_rcnn
+gpus: '1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 800
@@ -46,17 +46,12 @@ network:
   - gamma
   - beta
   ANCHOR_RATIOS:
-  - 0.125
-  - 0.25
   - 0.5
   - 1
   - 2
   ANCHOR_SCALES:
-  - 2
-  - 4
   - 8
-  - 6
-  NUM_ANCHORS: 20
+  NUM_ANCHORS: 3
 dataset:
   NUM_CLASSES: 81
   dataset: coco
@@ -67,10 +62,11 @@ dataset:
   test_image_set: minival2014
   proposal: rpn
 TRAIN:
-  lr: 0.01 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.01
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
+  # lr: 0.000001
   lr_step: '4,6'
   wd: 0.0001
   begin_epoch: 0
@@ -158,6 +154,8 @@ TEST:
   PROPOSAL_MIN_SIZE: 0
   # RCNN nms
   NMS: 0.3
+  USE_SOFTNMS: true
+  SOFTNMS_THRESH: 0.6
   test_epoch: 7
   max_per_image: 100
   # soft nms

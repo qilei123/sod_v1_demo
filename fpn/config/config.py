@@ -17,7 +17,7 @@ from easydict import EasyDict as edict
 
 config = edict()
 
-config.MXNET_VERSION = ''
+config.MXNET_VERSION = 'python'
 config.output_path = ''
 config.symbol = ''
 config.gpus = ''
