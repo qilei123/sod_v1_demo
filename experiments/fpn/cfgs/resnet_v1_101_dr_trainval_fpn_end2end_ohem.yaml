@@ -1,6 +1,6 @@
 ---
-MXNET_VERSION: "mxnet"
-output_path: "./output/fpn/coco"
+MXNET_VERSION: "python"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_baseline1"
 symbol: resnet_v1_101_fpn_rcnn
 gpus: '1'
 CLASS_AGNOSTIC: false
