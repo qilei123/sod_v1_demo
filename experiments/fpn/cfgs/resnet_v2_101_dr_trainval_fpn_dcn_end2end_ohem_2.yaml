@@ -64,7 +64,7 @@ dataset:
   dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_1"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_2"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
