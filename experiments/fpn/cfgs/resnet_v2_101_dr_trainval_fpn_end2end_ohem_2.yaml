@@ -1,8 +1,8 @@
 ---
-MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_1"
-symbol: resnet_v1_101_fpn_dcn_rcnn
-gpus: '3'
+MXNET_VERSION: "mxnet"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_baseline1"
+symbol: resnet_v1_101_fpn_rcnn
+gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 800
@@ -10,7 +10,7 @@ SCALES:
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
-  frequent: 20
+  frequent: 50
   kvstore: device
 network:
   pretrained: "./model/pretrained_model/resnet_v1_101"
@@ -64,15 +64,14 @@ dataset:
   dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_1"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_baseline1"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01
+  lr: 0.01 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
-  # lr: 0.000001
   lr_step: '4,6'
   wd: 0.0001
   begin_epoch: 0
@@ -113,7 +112,7 @@ TRAIN:
   RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.5
+  RPN_POSITIVE_OVERLAP: 0.2
   RPN_NEGATIVE_OVERLAP: 0.3
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
@@ -160,8 +159,6 @@ TEST:
   PROPOSAL_MIN_SIZE: 0
   # RCNN nms
   NMS: 0.3
-  USE_SOFTNMS: true
-  SOFTNMS_THRESH: 0.6
   test_epoch: 20
   max_per_image: 100
   # soft nms
