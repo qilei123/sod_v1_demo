@@ -1,6 +1,6 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_1"
+output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB1/fpn_dcn_v1_2"
 symbol: resnet_v1_101_fpn_dcn_rcnn
 gpus: '2,3'
 CLASS_AGNOSTIC: false
@@ -10,7 +10,7 @@ SCALES:
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
-  frequent: 50
+  frequent: 100
   kvstore: device
 network:
   pretrained: "./model/pretrained_model/resnet_v1_101"
@@ -61,10 +61,10 @@ network:
 dataset:
   NUM_CLASSES: 11
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO"
+  dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB1"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO/fpn_dcn_v1_2"
+  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB1/fpn_dcn_v1_2"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
