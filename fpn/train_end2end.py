@@ -37,8 +37,7 @@ def parse_args():
 
 args = parse_args()
 curr_path = os.path.abspath(os.path.dirname(__file__))
-mxnet_path = os.path.join(curr_path, '../external/incubator-mxnet/python')
-print mxnet_path
+mxnet_path = os.path.join(curr_path, '../external/incubator-mxnet/python/')
 sys.path.insert(0, mxnet_path)
 
 import shutil
