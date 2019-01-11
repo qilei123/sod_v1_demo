@@ -1,5 +1,5 @@
 ---
-MXNET_VERSION: "mxnet"
+MXNET_VERSION: "python"
 output_path: "./output/fpn/coco"
 symbol: resnet_v1_101_fpn_dcn_rcnn
 gpus: '1'

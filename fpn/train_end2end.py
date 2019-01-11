@@ -37,7 +37,7 @@ def parse_args():
 
 args = parse_args()
 curr_path = os.path.abspath(os.path.dirname(__file__))
-mxnet_path = os.path.join(curr_path, '../../external/incubator-mxnet/python', config.MXNET_VERSION)
+mxnet_path = os.path.join(curr_path, '../external/incubator-mxnet', config.MXNET_VERSION)
 print mxnet_path
 sys.path.insert(0, mxnet_path)
 
