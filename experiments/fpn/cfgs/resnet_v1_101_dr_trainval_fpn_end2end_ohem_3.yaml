@@ -2,7 +2,7 @@
 MXNET_VERSION: "mxnet"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO3/fpn_baseline_3"
 symbol: resnet_v1_101_fpn_rcnn
-gpus: '0,1'
+gpus: '0'
 CLASS_AGNOSTIC: false
 SCALES:
 - 800
@@ -10,7 +10,7 @@ SCALES:
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
-  frequent: 100
+  frequent: 20
   kvstore: device
 network:
   pretrained: "./model/pretrained_model/resnet_v1_101"
@@ -51,7 +51,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.00125 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true

@@ -58,6 +58,8 @@ from utils.lr_scheduler import WarmupMultiFactorScheduler
 def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch, lr, lr_step):
     mx.random.seed(3)
     np.random.seed(3)
+    if not os.path.exists(config.output_path):
+        os.mkdir(config.output_path)
     logger, final_output_path = create_logger(config.output_path, args.cfg, config.dataset.image_set)
     prefix = os.path.join(final_output_path, prefix)
 

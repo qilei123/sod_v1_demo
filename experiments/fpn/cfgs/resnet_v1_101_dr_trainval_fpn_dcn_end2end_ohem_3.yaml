@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO3/fpn_dcn_v1_3"
 symbol: resnet_v1_101_fpn_dcn_rcnn
-gpus: '2,3'
+gpus: '1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 800
@@ -51,7 +51,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01
+  lr: 0.00125
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
