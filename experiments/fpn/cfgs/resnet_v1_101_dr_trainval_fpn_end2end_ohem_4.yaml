@@ -86,10 +86,10 @@ TRAIN:
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
   BBOX_WEIGHTS:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  - 4.0
+  - 4.0
+  - 4.0
+  - 4.0
   # RPN anchor loader
   # rpn anchors batch size
   RPN_BATCH_SIZE: 256
@@ -100,10 +100,10 @@ TRAIN:
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  - 4.0
+  - 4.0
+  - 4.0
+  - 4.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
