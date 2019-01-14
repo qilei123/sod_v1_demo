@@ -148,11 +148,12 @@ class COCOeval:
         self.ious = {(imgId, catId): computeIoU(imgId, catId) \
                         for imgId in p.imgIds
                         for catId in catIds}
-
+        '''
         cat_iou_total = [0,0,0,0,0,0,0,0,0,0]
         cat_iou_count = [0,0,0,0,0,0,0,0,0,0]
         for iou in self.ious:
             print self.ious[iou]
+        '''
         evaluateImg = self.evaluateImg
         maxDet = p.maxDets[-1]
         self.evalImgs = [evaluateImg(imgId, catId, areaRng, maxDet)
@@ -440,7 +441,7 @@ class Params:
         self.imgIds = []
         self.catIds = []
         # np.arange causes trouble.  the data point on arange is slightly larger than the true value
-        self.iouThrs = np.linspace(.5, 0.95, np.round((0.95-.5)/.05)+1, endpoint=True)
+        self.iouThrs = np.linspace(.01, 0.95, np.round((0.95-.5)/.05)+1, endpoint=True)
         self.recThrs = np.linspace(.0, 1.00, np.round((1.00-.0)/.01)+1, endpoint=True)
         self.maxDets = [1,10,100]
         self.areaRng = [ [0**2,1e5**2], [0**2, 32**2], [32**2, 96**2], [96**2, 1e5**2] ]
