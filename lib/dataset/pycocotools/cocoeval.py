@@ -148,7 +148,7 @@ class COCOeval:
         self.ious = {(imgId, catId): computeIoU(imgId, catId) \
                         for imgId in p.imgIds
                         for catId in catIds}
-
+        print ious
         evaluateImg = self.evaluateImg
         maxDet = p.maxDets[-1]
         self.evalImgs = [evaluateImg(imgId, catId, areaRng, maxDet)
