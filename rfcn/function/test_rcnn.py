@@ -50,7 +50,7 @@ def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
         roidb = eval('imdb.' + proposal + '_roidb')(gt_roidb)
 
     # get test data iter
-    test_data = TestLoader(roidb, cfg, batch_size=len(ctx), shuffle=shuffle, has_rpn=has_rpn)
+    test_data = TestLoader(roidb, cfg, batch_size=cfg.TEST.BATCH_IMAGES, shuffle=shuffle, has_rpn=has_rpn)
 
     # load model
     arg_params, aux_params = load_param(prefix, epoch, process=True)
