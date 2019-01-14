@@ -347,7 +347,7 @@ class coco(IMDB):
 
     def _print_detection_metrics(self, coco_eval):
         info_str = ''
-        IoU_lo_thresh = 0.01
+        IoU_lo_thresh = 0.001
         IoU_hi_thresh = 0.95
 
         def _get_thr_ind(coco_eval, thr):
