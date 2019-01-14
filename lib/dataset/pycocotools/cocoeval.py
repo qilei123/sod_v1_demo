@@ -152,7 +152,7 @@ class COCOeval:
         cat_iou_total = [0,0,0,0,0,0,0,0,0,0]
         cat_iou_count = [0,0,0,0,0,0,0,0,0,0]
         for iou in self.ious:
-            print iou
+            print self.ious[iou]
         evaluateImg = self.evaluateImg
         maxDet = p.maxDets[-1]
         self.evalImgs = [evaluateImg(imgId, catId, areaRng, maxDet)
