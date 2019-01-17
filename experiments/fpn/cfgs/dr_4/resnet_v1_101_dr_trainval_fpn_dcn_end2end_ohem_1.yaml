@@ -27,6 +27,7 @@ network:
   - 8
   - 16
   - 32
+  - 64
   FIXED_PARAMS:
   FIXED_PARAMS_SHARED:
   ANCHOR_RATIOS:
