@@ -24,7 +24,7 @@ import cPickle
 
 from core.rcnn import sample_rois
 
-DEBUG = False
+DEBUG = True
 
 
 class ProposalTargetOperator(mx.operator.CustomOp):
