@@ -19,7 +19,7 @@ network:
   - 103.06
   - 115.90
   - 123.15
-  IMAGE_STRIDE: 16
+  IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
   - 4
