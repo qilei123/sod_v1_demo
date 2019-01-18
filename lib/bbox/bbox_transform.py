@@ -13,7 +13,7 @@
 
 import numpy as np
 from bbox import bbox_overlaps_cython
-
+np.set_printoptions(threshold=np.nan)
 
 def bbox_overlaps(boxes, query_boxes):
     return bbox_overlaps_cython(boxes, query_boxes)
@@ -93,7 +93,8 @@ def nonlinear_transform(ex_rois, gt_rois):
     targets_dx = (gt_ctr_x - ex_ctr_x) / (ex_widths + 1e-14)
     targets_dy = (gt_ctr_y - ex_ctr_y) / (ex_heights + 1e-14)
     #if ex_widths==0:
-    #print 'warning ex_widths:'+str(ex_widths)
+    print 'warning ex_widths:'+str(ex_widths)
+    print 'warning ex_heights:'+str(ex_heights)
     targets_dw = np.log(gt_widths / ex_widths)
     targets_dh = np.log(gt_heights / ex_heights)
 
