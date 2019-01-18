@@ -93,7 +93,7 @@ def nonlinear_transform(ex_rois, gt_rois):
     targets_dx = (gt_ctr_x - ex_ctr_x) / (ex_widths + 1e-14)
     targets_dy = (gt_ctr_y - ex_ctr_y) / (ex_heights + 1e-14)
     #if ex_widths==0:
-    print 'warning ex_widths:'+str(ex_widths)
+    #print 'warning ex_widths:'+str(ex_widths)
     targets_dw = np.log(gt_widths / ex_widths)
     targets_dh = np.log(gt_heights / ex_heights)
 
@@ -126,6 +126,8 @@ def nonlinear_pred(boxes, box_deltas):
 
     pred_ctr_x = dx * widths[:, np.newaxis] + ctr_x[:, np.newaxis]
     pred_ctr_y = dy * heights[:, np.newaxis] + ctr_y[:, np.newaxis]
+    print 'warning dw:'+str(dw)
+    print 'waring dh:'+str(dh)
     pred_w = np.exp(dw) * widths[:, np.newaxis]
     pred_h = np.exp(dh) * heights[:, np.newaxis]
 
