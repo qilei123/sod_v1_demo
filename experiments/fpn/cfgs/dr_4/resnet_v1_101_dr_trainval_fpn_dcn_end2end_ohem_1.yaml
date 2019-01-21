@@ -76,7 +76,7 @@ TRAIN:
   # R-CNN
   # rcnn rois batch size
   BATCH_ROIS: -1
-  BATCH_ROIS_OHEM: 512
+  BATCH_ROIS_OHEM: 256
   # rcnn rois sampling params
   FG_FRACTION: 0.25
   FG_THRESH: 0.001
@@ -91,7 +91,7 @@ TRAIN:
   - 2.0
   # RPN anchor loader
   # rpn anchors batch size
-  RPN_BATCH_SIZE: 256
+  RPN_BATCH_SIZE: 128
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
   RPN_POSITIVE_OVERLAP: 0.001
