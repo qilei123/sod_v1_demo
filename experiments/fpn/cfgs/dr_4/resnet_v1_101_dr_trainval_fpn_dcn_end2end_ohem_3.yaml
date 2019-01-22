@@ -53,7 +53,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01
+  lr: 0.00125
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
@@ -98,7 +98,7 @@ TRAIN:
   RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.15
+  RPN_POSITIVE_OVERLAP: 0.1
   RPN_NEGATIVE_OVERLAP: 0.05
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
