@@ -34,6 +34,7 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
+  - 0.03125
   - 0.0625
   - 0.125
   - 0.25
@@ -41,7 +42,6 @@ network:
   - 1
   - 2
   - 4
-  - 8
   NUM_ANCHORS: 24
 dataset:
   NUM_CLASSES: 5
