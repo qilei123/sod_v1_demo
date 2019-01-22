@@ -2,11 +2,11 @@
 MXNET_VERSION: "python"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_dcn_v1_4"
 symbol: resnet_v1_101_fpn_dcn_rcnn
-gpus: '2,3'
+gpus: '3'
 CLASS_AGNOSTIC: false
 SCALES:
-- 1440
-- 1920
+- 1280
+- 1600
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
@@ -43,7 +43,9 @@ network:
   - 2
   - 4
   - 8
-  NUM_ANCHORS: 27
+  - 16
+  - 32
+  NUM_ANCHORS: 33
 dataset:
   NUM_CLASSES: 5
   dataset: coco
@@ -99,8 +101,8 @@ TRAIN:
   RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.05
-  RPN_NEGATIVE_OVERLAP: 0.03
+  RPN_POSITIVE_OVERLAP: 0.2
+  RPN_NEGATIVE_OVERLAP: 0.05
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
