@@ -34,11 +34,13 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
+  - 0.25
+  - 0.5
+  - 1
   - 2
   - 4
   - 8
-  - 16
-  NUM_ANCHORS: 12
+  NUM_ANCHORS: 18
 dataset:
   NUM_CLASSES: 5
   dataset: coco
