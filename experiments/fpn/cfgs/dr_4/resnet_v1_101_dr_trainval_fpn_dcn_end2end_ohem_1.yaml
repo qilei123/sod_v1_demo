@@ -34,6 +34,7 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
+  - 0.0625
   - 0.125
   - 0.25
   - 0.5
@@ -98,14 +99,14 @@ TRAIN:
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
   RPN_POSITIVE_OVERLAP: 0.2
-  RPN_NEGATIVE_OVERLAP: 0.05
+  RPN_NEGATIVE_OVERLAP: 0.1
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 5.0
-  - 5.0
-  - 5.0
-  - 5.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
