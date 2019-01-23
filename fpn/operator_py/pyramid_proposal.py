@@ -51,20 +51,22 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         
         
         cls_prob_dict = {
-            'stride64': in_data[5],
-            'stride32': in_data[4],
-            'stride16': in_data[3],
-            'stride8': in_data[2],
-            'stride4': in_data[1],
-            'stride2': in_data[0],
+            'stride64': in_data[6],
+            'stride32': in_data[5],
+            'stride16': in_data[4],
+            'stride8': in_data[3],
+            'stride4': in_data[2],
+            'stride2': in_data[1],
+            'stride1': in_data[0],
         }
         bbox_pred_dict = {
-            'stride64': in_data[11],
-            'stride32': in_data[10],
-            'stride16': in_data[9],
-            'stride8': in_data[8],
-            'stride4': in_data[7],
-            'stride2': in_data[6],
+            'stride64': in_data[13],
+            'stride32': in_data[12],
+            'stride16': in_data[11],
+            'stride8': in_data[10],
+            'stride4': in_data[9],
+            'stride2': in_data[8],
+            'stride1': in_data[7],
         }
         
         pre_nms_topN = self._rpn_pre_nms_top_n
