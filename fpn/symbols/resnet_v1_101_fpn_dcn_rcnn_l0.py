@@ -925,8 +925,8 @@ class resnet_v1_101_fpn_dcn_rcnn_l0(Symbol):
         offset_p5_bias = mx.sym.Variable(name='offset_p5_bias', dtype=np.float32, lr_mult=0.01)
 
         roi_pool = mx.symbol.Custom(data_p0=fpn_p0,data_p1=fpn_p1,data_p2=fpn_p2, data_p3=fpn_p3, data_p4=fpn_p4, data_p5=fpn_p5,
-                                    offset_weight_p2=offset_p0_weight, offset_bias_p2=offset_p0_bias,
-                                    offset_weight_p2=offset_p1_weight, offset_bias_p2=offset_p1_bias,
+                                    offset_weight_p0=offset_p0_weight, offset_bias_p0=offset_p0_bias,
+                                    offset_weight_p1=offset_p1_weight, offset_bias_p1=offset_p1_bias,
                                     offset_weight_p2=offset_p2_weight, offset_bias_p2=offset_p2_bias,
                                     offset_weight_p3=offset_p3_weight, offset_bias_p3=offset_p3_bias,
                                     offset_weight_p4=offset_p4_weight, offset_bias_p4=offset_p4_bias,
