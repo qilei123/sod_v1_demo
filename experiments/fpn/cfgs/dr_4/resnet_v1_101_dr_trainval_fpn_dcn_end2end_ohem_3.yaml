@@ -1,12 +1,12 @@
 ---
 MXNET_VERSION: "python"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_dcn_v1_3"
-symbol: resnet_v1_101_fpn_dcn_rcnn
-gpus: '1'
+symbol: resnet_v1_101_fpn_dcn_rcnn_l0
+gpus: '0,1,2,3'
 CLASS_AGNOSTIC: false
 SCALES:
-- 1280
-- 1600
+- 608
+- 736
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
@@ -22,6 +22,8 @@ network:
   IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
+  - 1
+  - 2
   - 4
   - 8
   - 16
@@ -30,9 +32,11 @@ network:
   FIXED_PARAMS:
   FIXED_PARAMS_SHARED:
   ANCHOR_RATIOS:
+  - 0.25
   - 0.5
   - 1
   - 2
+  - 4
   ANCHOR_SCALES:
   - 0.0625
   - 0.125
@@ -43,7 +47,7 @@ network:
   - 4
   - 8
   - 16
-  NUM_ANCHORS: 27
+  NUM_ANCHORS: 45
 dataset:
   NUM_CLASSES: 5
   dataset: coco
@@ -90,10 +94,10 @@ TRAIN:
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
   BBOX_WEIGHTS:
-  - 10.0
-  - 10.0
-  - 10.0
-  - 10.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   # RPN anchor loader
   # rpn anchors batch size
   RPN_BATCH_SIZE: 256
@@ -104,10 +108,10 @@ TRAIN:
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 10.0
-  - 10.0
-  - 10.0
-  - 10.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
