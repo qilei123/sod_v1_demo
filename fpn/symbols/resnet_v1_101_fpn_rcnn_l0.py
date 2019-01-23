@@ -790,14 +790,14 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
         fpn_p1_upsample = mx.symbol.UpSampling(fpn_p1_plus, scale=2, sample_type='nearest', name='fpn_p1_upsample')
         fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
         # FPN feature
-        #fpn_p6 = mx.sym.Convolution(data=c5, kernel=(3, 3), pad=(1, 1), stride=(2, 2), num_filter=feature_dim, name='fpn_p6')
-        #fpn_p5 = mx.symbol.Convolution(data=fpn_p5_1x1, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p5')
-        #fpn_p4 = mx.symbol.Convolution(data=fpn_p4_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p4')
+        fpn_p6 = mx.sym.Convolution(data=c5, kernel=(3, 3), pad=(1, 1), stride=(2, 2), num_filter=feature_dim, name='fpn_p6')
+        fpn_p5 = mx.symbol.Convolution(data=fpn_p5_1x1, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p5')
+        fpn_p4 = mx.symbol.Convolution(data=fpn_p4_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p4')
         fpn_p3 = mx.symbol.Convolution(data=fpn_p3_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p3')
         fpn_p2 = mx.symbol.Convolution(data=fpn_p2_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p2')
         fpn_p1 = mx.symbol.Convolution(data=fpn_p1_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p1')
         fpn_p0 = mx.symbol.Convolution(data=fpn_p0_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p0')
-        return fpn_p0, fpn_p1, fpn_p2, fpn_p3#, fpn_p4, fpn_p5, fpn_p6
+        return fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6
 
     def get_rpn_subnet(self, data, num_anchors, suffix):
         rpn_conv = mx.sym.Convolution(data=data, kernel=(3, 3), pad=(1, 1), num_filter=512, name='rpn_conv_' + suffix,
@@ -827,29 +827,29 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
 
         # shared convolutional layers
         res0, res1, res2, res3, res4, res5 = self.get_resnet_backbone(data)
-        #fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
-        fpn_p0, fpn_p1, fpn_p2, fpn_p3 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
+        fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
+        #fpn_p0, fpn_p1, fpn_p2, fpn_p3,fpn_p4 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         rpn_cls_score_p0, rpn_prob_p0, rpn_bbox_loss_p0, rpn_bbox_pred_p0 = self.get_rpn_subnet(fpn_p0, cfg.network.NUM_ANCHORS, 'p0')
         rpn_cls_score_p1, rpn_prob_p1, rpn_bbox_loss_p1, rpn_bbox_pred_p1 = self.get_rpn_subnet(fpn_p1, cfg.network.NUM_ANCHORS, 'p1')
         rpn_cls_score_p2, rpn_prob_p2, rpn_bbox_loss_p2, rpn_bbox_pred_p2 = self.get_rpn_subnet(fpn_p2, cfg.network.NUM_ANCHORS, 'p2')
         rpn_cls_score_p3, rpn_prob_p3, rpn_bbox_loss_p3, rpn_bbox_pred_p3 = self.get_rpn_subnet(fpn_p3, cfg.network.NUM_ANCHORS, 'p3')
-        #rpn_cls_score_p4, rpn_prob_p4, rpn_bbox_loss_p4, rpn_bbox_pred_p4 = self.get_rpn_subnet(fpn_p4, cfg.network.NUM_ANCHORS, 'p4')
-        #rpn_cls_score_p5, rpn_prob_p5, rpn_bbox_loss_p5, rpn_bbox_pred_p5 = self.get_rpn_subnet(fpn_p5, cfg.network.NUM_ANCHORS, 'p5')
-        #rpn_cls_score_p6, rpn_prob_p6, rpn_bbox_loss_p6, rpn_bbox_pred_p6 = self.get_rpn_subnet(fpn_p6, cfg.network.NUM_ANCHORS, 'p6')
+        rpn_cls_score_p4, rpn_prob_p4, rpn_bbox_loss_p4, rpn_bbox_pred_p4 = self.get_rpn_subnet(fpn_p4, cfg.network.NUM_ANCHORS, 'p4')
+        rpn_cls_score_p5, rpn_prob_p5, rpn_bbox_loss_p5, rpn_bbox_pred_p5 = self.get_rpn_subnet(fpn_p5, cfg.network.NUM_ANCHORS, 'p5')
+        rpn_cls_score_p6, rpn_prob_p6, rpn_bbox_loss_p6, rpn_bbox_pred_p6 = self.get_rpn_subnet(fpn_p6, cfg.network.NUM_ANCHORS, 'p6')
 
         rpn_cls_prob_dict = {
-            #'rpn_cls_prob_stride64': rpn_prob_p6,
-            #'rpn_cls_prob_stride32': rpn_prob_p5,
-            #'rpn_cls_prob_stride16': rpn_prob_p4,
+            'rpn_cls_prob_stride64': rpn_prob_p6,
+            'rpn_cls_prob_stride32': rpn_prob_p5,
+            'rpn_cls_prob_stride16': rpn_prob_p4,
             'rpn_cls_prob_stride8': rpn_prob_p3,
             'rpn_cls_prob_stride4': rpn_prob_p2,
             'rpn_cls_prob_stride2': rpn_prob_p1,
             'rpn_cls_prob_stride1': rpn_prob_p0,
         }
         rpn_bbox_pred_dict = {
-            #'rpn_bbox_pred_stride64': rpn_bbox_pred_p6,
-            #'rpn_bbox_pred_stride32': rpn_bbox_pred_p5,
-            #'rpn_bbox_pred_stride16': rpn_bbox_pred_p4,
+            'rpn_bbox_pred_stride64': rpn_bbox_pred_p6,
+            'rpn_bbox_pred_stride32': rpn_bbox_pred_p5,
+            'rpn_bbox_pred_stride16': rpn_bbox_pred_p4,
             'rpn_bbox_pred_stride8': rpn_bbox_pred_p3,
             'rpn_bbox_pred_stride4': rpn_bbox_pred_p2,
             'rpn_bbox_pred_stride2': rpn_bbox_pred_p1,
@@ -863,10 +863,9 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
             rpn_bbox_weight = mx.sym.Variable(name='bbox_weight')
             gt_boxes = mx.sym.Variable(name="gt_boxes")
 
-            #rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p1,rpn_cls_score_p2, rpn_cls_score_p3, rpn_cls_score_p4, rpn_cls_score_p5, rpn_cls_score_p6, dim=2)
-            #rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p1,rpn_bbox_loss_p2, rpn_bbox_loss_p3, rpn_bbox_loss_p4, rpn_bbox_loss_p5, rpn_bbox_loss_p6, dim=2)
-            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p1,rpn_cls_score_p2, rpn_cls_score_p3, dim=2)
-            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p1,rpn_bbox_loss_p2, rpn_bbox_loss_p3, dim=2)
+            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p1,rpn_cls_score_p2, rpn_cls_score_p3, rpn_cls_score_p4, rpn_cls_score_p5, rpn_cls_score_p6, dim=2)
+            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p1,rpn_bbox_loss_p2, rpn_bbox_loss_p3, rpn_bbox_loss_p4, rpn_bbox_loss_p5, rpn_bbox_loss_p6, dim=2)
+
             # RPN classification loss
             rpn_cls_output = mx.sym.SoftmaxOutput(data=rpn_cls_score, label=rpn_label, multi_output=True, normalization='valid',
                                                   use_ignore=True, ignore_label=-1, name='rpn_cls_prob')
@@ -900,7 +899,7 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
             # ROI proposal
             rois = mx.sym.Custom(**dict(arg_dict.items() + aux_dict.items()))
 
-        roi_pool = mx.symbol.Custom(data_p0=fpn_p0,data_p1=fpn_p1,data_p2=fpn_p2, data_p3=fpn_p3,
+        roi_pool = mx.symbol.Custom(data_p0=fpn_p0,data_p1=fpn_p1,data_p2=fpn_p2, data_p3=fpn_p3,data_p4=fpn_p4,data_p5=fpn_p5,
                                     rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling',)
 
         # 2 fc
