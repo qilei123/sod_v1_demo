@@ -50,19 +50,16 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # return the top proposals (-> RoIs top, scores top)
         
         cls_prob_dict = {
-
-            'stride16': in_data[4],
             'stride8': in_data[3],
             'stride4': in_data[2],
             'stride2': in_data[1],
             'stride1': in_data[0],
         }
         bbox_pred_dict = {
-            'stride16': in_data[9],
-            'stride8': in_data[8],
-            'stride4': in_data[7],
-            'stride2': in_data[6],
-            'stride1': in_data[5],
+            'stride8': in_data[7],
+            'stride4': in_data[6],
+            'stride2': in_data[5],
+            'stride1': in_data[4],
         }
         '''
         cls_prob_dict = {
