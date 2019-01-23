@@ -108,7 +108,7 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
 
 @mx.operator.register('fpn_roi_pooling')
 class FPNROIPoolingProp(mx.operator.CustomOpProp):
-    def __init__(self, feat_strides='(2,4,8,16,32)', pooled_height='7', pooled_width='7', with_deformable='False', output_dim='256'):
+    def __init__(self, feat_strides='(1,2,4,8)', pooled_height='7', pooled_width='7', with_deformable='False', output_dim='256'):
         super(FPNROIPoolingProp, self).__init__(need_top_grad=True)
         self.pooled_height = int(pooled_height)
         self.pooled_width = int(pooled_width)
@@ -121,7 +121,7 @@ class FPNROIPoolingProp(mx.operator.CustomOpProp):
     def list_arguments(self):
         args_list = []
         for i in range(self.num_strides):
-            args_list.append('data_p{}'.format(1+i))
+            args_list.append('data_p{}'.format(i))
         if self.with_deformable:
             for i in range(self.num_strides):
                 args_list.extend(['offset_weight_p{}'.format(2 + i), 'offset_bias_p{}'.format(2 + i)])
