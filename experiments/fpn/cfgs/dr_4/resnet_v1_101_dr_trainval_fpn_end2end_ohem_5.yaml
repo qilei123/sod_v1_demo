@@ -1,12 +1,12 @@
 ---
 MXNET_VERSION: "mxnet"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline5"
-symbol: resnet_v1_101_fpn_rcnn_l1
+symbol: resnet_v1_101_fpn_rcnn_l0
 gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
-- 800
-- 1280
+- 640
+- 704
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
@@ -22,6 +22,7 @@ network:
   IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
+  - 1
   - 2
   - 4
   - 8
@@ -88,10 +89,10 @@ TRAIN:
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
   BBOX_WEIGHTS:
-  - 5.0
-  - 5.0
-  - 5.0
-  - 5.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   # RPN anchor loader
   # rpn anchors batch size
   RPN_BATCH_SIZE: 128
@@ -102,10 +103,10 @@ TRAIN:
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 5.0
-  - 5.0
-  - 5.0
-  - 5.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
