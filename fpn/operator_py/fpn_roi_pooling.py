@@ -108,7 +108,7 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
 
 @mx.operator.register('fpn_roi_pooling')
 class FPNROIPoolingProp(mx.operator.CustomOpProp):
-    def __init__(self, feat_strides='(4,8,16,32)', pooled_height='7', pooled_width='7', with_deformable='False', output_dim='256'):
+    def __init__(self, feat_strides='(2,4,8,16,32)', pooled_height='7', pooled_width='7', with_deformable='False', output_dim='256'):
         super(FPNROIPoolingProp, self).__init__(need_top_grad=True)
         self.pooled_height = int(pooled_height)
         self.pooled_width = int(pooled_width)
