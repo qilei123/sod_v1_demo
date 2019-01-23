@@ -121,7 +121,7 @@ class FPNROIPoolingProp(mx.operator.CustomOpProp):
     def list_arguments(self):
         args_list = []
         for i in range(self.num_strides):
-            args_list.append('data_p{}'.format(2 + i))
+            args_list.append('data_p{}'.format(1 + i))
         if self.with_deformable:
             for i in range(self.num_strides):
                 args_list.extend(['offset_weight_p{}'.format(2 + i), 'offset_bias_p{}'.format(2 + i)])
