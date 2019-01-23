@@ -19,7 +19,7 @@ class resnet_v1_101_fpn_dcn_rcnn_l0(Symbol):
         """
         Use __init__ to define parameter network needs
         """
-        self.shared_param_list = ['offset_p2', 'offset_p3', 'offset_p4', 'offset_p5',
+        self.shared_param_list = ['offset_p0', 'offset_p1','offset_p2', 'offset_p3', 'offset_p4', 'offset_p5',
                                   'rpn_conv', 'rpn_cls_score', 'rpn_bbox_pred']
         self.shared_param_dict = {}
         for name in self.shared_param_list:
