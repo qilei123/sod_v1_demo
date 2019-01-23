@@ -1,12 +1,12 @@
 ---
 MXNET_VERSION: "mxnet"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_baseline_3"
-symbol: resnet_v1_101_fpn_rcnn
-gpus: '0'
+symbol: resnet_v1_101_fpn_rcnn_l0
+gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
-- 1280
-- 1600
+- 704
+- 832
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
@@ -22,6 +22,8 @@ network:
   IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
+  - 1
+  - 2
   - 4
   - 8
   - 16
@@ -30,19 +32,20 @@ network:
   FIXED_PARAMS:
   FIXED_PARAMS_SHARED:
   ANCHOR_RATIOS:
+  - 0.25
   - 0.5
   - 1
   - 2
+  - 4
   ANCHOR_SCALES:
-  - 0.03125
-  - 0.0625
   - 0.125
   - 0.25
   - 0.5
   - 1
   - 2
   - 4
-  NUM_ANCHORS: 24
+  - 8
+  NUM_ANCHORS: 35
 dataset:
   NUM_CLASSES: 5
   dataset: coco
@@ -53,7 +56,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.00125 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.0025 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
@@ -82,30 +85,30 @@ TRAIN:
   BATCH_ROIS_OHEM: 512
   # rcnn rois sampling params
   FG_FRACTION: 0.5
-  FG_THRESH: 0.1
-  BG_THRESH_HI: 0.1
+  FG_THRESH: 0.2
+  BG_THRESH_HI: 0.2
   BG_THRESH_LO: 0.0
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
   BBOX_WEIGHTS:
-  - 10.0
-  - 10.0
-  - 10.0
-  - 10.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   # RPN anchor loader
   # rpn anchors batch size
   RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.2
-  RPN_NEGATIVE_OVERLAP: 0.05
+  RPN_POSITIVE_OVERLAP: 0.3
+  RPN_NEGATIVE_OVERLAP: 0.1
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 10.0
-  - 10.0
-  - 10.0
-  - 10.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
