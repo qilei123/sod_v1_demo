@@ -957,6 +957,8 @@ class resnet_v1_101_fpn_rcnn_l1(Symbol):
         arg_params['fpn_p3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p3_bias'])
         arg_params['fpn_p2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p2_weight'])
         arg_params['fpn_p2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p2_bias'])
+        arg_params['fpn_p1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p1_weight'])
+        arg_params['fpn_p1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_bias'])
 
         arg_params['fpn_p5_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p5_1x1_weight'])
         arg_params['fpn_p5_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_1x1_bias'])
@@ -966,7 +968,8 @@ class resnet_v1_101_fpn_rcnn_l1(Symbol):
         arg_params['fpn_p3_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p3_1x1_bias'])
         arg_params['fpn_p2_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p2_1x1_weight'])
         arg_params['fpn_p2_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p2_1x1_bias'])
-
+        arg_params['fpn_p1_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p1_1x1_weight'])
+        arg_params['fpn_p1_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_1x1_bias'])
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
             arg_params[name + '_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict[name + '_weight'])
