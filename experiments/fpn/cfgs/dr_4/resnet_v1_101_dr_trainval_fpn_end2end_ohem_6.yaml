@@ -2,13 +2,13 @@
 MXNET_VERSION: "mxnet"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline6"
 symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '0,1'
+gpus: '0'
 CLASS_AGNOSTIC: false
 SCALES:
 - 544
 - 576
 # TEST_SCALES: [[800, 1280]] # single scale testing
-TEST_SCALES: [[480, 544], [544, 576], [576, 688]]#, [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
+TEST_SCALES: [[480, 544], [544, 576], [576, 688]] #, [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
   frequent: 20
   kvstore: device
