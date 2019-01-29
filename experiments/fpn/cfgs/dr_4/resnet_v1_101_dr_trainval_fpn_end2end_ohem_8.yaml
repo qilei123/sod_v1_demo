@@ -40,7 +40,7 @@ network:
   - 4
   - 8
   - 16
-  NUM_ANCHORS: 15
+  NUM_ANCHORS: 12
 dataset:
   NUM_CLASSES: 5
   dataset: coco
