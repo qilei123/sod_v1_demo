@@ -1168,7 +1168,7 @@ class resnet_unet_rcnn_l0(Symbol):
         arg_params['bbox_pred_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['bbox_pred_bias'])
 
     def init_weight_fpn(self, cfg, arg_params, aux_params):
-        print self.aux_shape_dict['bn1_1_moving_mean']
+        #print self.aux_shape_dict['bn1_1_moving_mean']
         '''
         arg_params['fpn_p6_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p6_weight'])
         arg_params['fpn_p6_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p6_bias'])
@@ -1205,19 +1205,19 @@ class resnet_unet_rcnn_l0(Symbol):
             
             arg_params['bn'+str(i)+'_1_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_1_gamma'])
             arg_params['bn'+str(i)+'_1_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_1_beta'])
-            '''
-            arg_params['bn'+str(i)+'_1_moving_mean'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_1_moving_mean'])
-            arg_params['bn'+str(i)+'_1_moving_var'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_1_moving_var'])            
-            '''
+            
+            arg_params['bn'+str(i)+'_1_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_1_moving_mean'])
+            arg_params['bn'+str(i)+'_1_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_1_moving_var'])            
+            
             arg_params['conv'+str(i)+'_2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_2_weight'])
             arg_params['conv'+str(i)+'_2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_2_bias'])
             
             arg_params['bn'+str(i)+'_2_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_2_gamma'])
             arg_params['bn'+str(i)+'_2_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_2_beta'])
-            '''
-            arg_params['bn'+str(i)+'_2_moving_mean'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_2_moving_mean'])
-            arg_params['bn'+str(i)+'_2_moving_var'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_2_moving_var']) 
-            '''
+            
+            arg_params['bn'+str(i)+'_2_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_2_moving_mean'])
+            arg_params['bn'+str(i)+'_2_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_2_moving_var']) 
+            '
         for i in [6,7,8,9]:
             arg_params['trans_conv'+str(i)+'_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['trans_conv'+str(i)+'_weight'])
             #rg_params['trans_conv'+str(i+1)+'_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_bias'])            
@@ -1227,10 +1227,10 @@ class resnet_unet_rcnn_l0(Symbol):
             arg_params['conv'+str(i)+'_3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_3_bias'])
             arg_params['bn'+str(i)+'_3_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_3_gamma'])
             arg_params['bn'+str(i)+'_3_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_3_beta'])
-            '''
-            arg_params['bn'+str(i)+'_3_moving_mean'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_3_moving_mean'])
-            arg_params['bn'+str(i)+'_3_moving_var'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_3_moving_var'])                         
-            '''
+            
+            arg_params['bn'+str(i)+'_3_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_3_moving_mean'])
+            arg_params['bn'+str(i)+'_3_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_3_moving_var'])                         
+            
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
             arg_params[name + '_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict[name + '_weight'])
