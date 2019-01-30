@@ -1217,7 +1217,7 @@ class resnet_unet_rcnn_l0(Symbol):
             
             arg_params['bn'+str(i)+'_2_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_2_moving_mean'])
             arg_params['bn'+str(i)+'_2_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_2_moving_var']) 
-            '
+            
         for i in [6,7,8,9]:
             arg_params['trans_conv'+str(i)+'_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['trans_conv'+str(i)+'_weight'])
             #rg_params['trans_conv'+str(i+1)+'_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_bias'])            
