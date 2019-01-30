@@ -845,6 +845,18 @@ class resnet_unet_rcnn_l0(Symbol):
         conv9 = mx.sym.BatchNorm(conv9, name='bn9_2')
         conv9 = mx.sym.Activation(conv9, act_type='relu', name='relu9_2')
 
+        conv6 = mx.sym.Convolution(conv6, num_filter=32, kernel=(3,3), pad=(1,1), name='conv6_3')
+        conv6 = mx.sym.BatchNorm(conv6, name='bn6_3')
+        conv6 = mx.sym.Activation(conv6, act_type='relu', name='relu6_3')
+
+        conv7 = mx.sym.Convolution(conv7, num_filter=32, kernel=(3,3), pad=(1,1), name='conv7_3')
+        conv7 = mx.sym.BatchNorm(conv7, name='bn7_3')
+        conv7 = mx.sym.Activation(conv7, act_type='relu', name='relu7_3')
+
+        conv8 = mx.sym.Convolution(conv8, num_filter=32, kernel=(3,3), pad=(1,1), name='conv8_3')
+        conv8 = mx.sym.BatchNorm(conv8, name='bn8_3')
+        conv8 = mx.sym.Activation(conv8, act_type='relu', name='relu8_3')
+
         return conv9, conv8, conv7, conv6
 
 
