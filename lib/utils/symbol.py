@@ -49,7 +49,8 @@ class Symbol:
                 'shape inconsistent for ' + k + ' inferred ' + str(self.arg_shape_dict[k]) + ' provided ' + str(
                     arg_params[k].shape)
         for k in self.sym.list_auxiliary_states():
-            assert k in aux_params, k + ' not initialized'
+            if not (('moving_mean' in k) or ('moving_var' in k)):
+                assert k in aux_params, k + ' not initialized'
             assert aux_params[k].shape == self.aux_shape_dict[k], \
                 'shape inconsistent for ' + k + ' inferred ' + str(self.aux_shape_dict[k]) + ' provided ' + str(
                     aux_params[k].shape)
