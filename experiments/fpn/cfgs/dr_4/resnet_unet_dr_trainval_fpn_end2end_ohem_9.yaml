@@ -1,3 +1,4 @@
+# replace resnet with unet, 
 ---
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO5/fpn_baseline_8"
@@ -26,9 +27,6 @@ network:
   - 2
   - 4
   - 8
-  - 16
-  - 32
-  - 64
   FIXED_PARAMS:
   - conv1
   - bn_conv1
