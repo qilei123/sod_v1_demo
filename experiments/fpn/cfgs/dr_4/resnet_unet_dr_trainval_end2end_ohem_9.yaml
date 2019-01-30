@@ -1,9 +1,9 @@
 # replace resnet with unet, 
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO5/fpn_baseline_8"
-symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '0,1,2,3'
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline_9"
+symbol: resnet_unet_rcnn_l0
+gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
@@ -28,23 +28,7 @@ network:
   - 4
   - 8
   FIXED_PARAMS:
-  - conv1
-  - bn_conv1
-  - res2
-  - bn2
-  - gamma
-  - beta
   FIXED_PARAMS_SHARED:
-  - conv1
-  - bn_conv1
-  - res2
-  - bn2
-  - res3
-  - bn3
-  - res4
-  - bn4
-  - gamma
-  - beta
   ANCHOR_RATIOS:
   - 0.5
   - 1
@@ -58,10 +42,10 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO5"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO5/fpn_baseline_8"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline_9"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
