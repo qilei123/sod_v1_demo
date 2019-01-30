@@ -1198,6 +1198,8 @@ class resnet_unet_rcnn_l0(Symbol):
         arg_params['fpn_p0_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p0_1x1_weight'])
         arg_params['fpn_p0_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p0_1x1_bias'])
         '''
+        arg_params['bn1_1_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn1_1_moving_mean'])
+        arg_params['bn1_1_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn1_1_moving_var'])
         for j in range(9):
             i = j+1
             arg_params['conv'+str(i)+'_1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_1_weight'])
