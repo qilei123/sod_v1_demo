@@ -1168,8 +1168,6 @@ class resnet_unet_rcnn_l0(Symbol):
         arg_params['bbox_pred_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['bbox_pred_bias'])
 
     def init_weight_fpn(self, cfg, arg_params, aux_params):
-        print self.arg_shape_dict['bn1_1_gamma']
-        print self.arg_shape_dict['bn1_1_beta']
         '''
         arg_params['fpn_p6_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p6_weight'])
         arg_params['fpn_p6_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p6_bias'])
