@@ -1168,7 +1168,6 @@ class resnet_unet_rcnn_l0(Symbol):
         arg_params['bbox_pred_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['bbox_pred_bias'])
 
     def init_weight_fpn(self, cfg, arg_params, aux_params):
-        print 'init shape:'+str(self.arg_shape_dict['trans_conv6_weight'])
         '''
         arg_params['fpn_p6_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p6_weight'])
         arg_params['fpn_p6_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p6_bias'])
@@ -1198,19 +1197,20 @@ class resnet_unet_rcnn_l0(Symbol):
         arg_params['fpn_p0_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p0_1x1_weight'])
         arg_params['fpn_p0_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p0_1x1_bias'])
         '''
-        for i in range(9):
-            arg_params['conv'+str(i+1)+'_1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i+1)+'_1_weight'])
-            arg_params['conv'+str(i+1)+'_1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i+1)+'_1_bias'])
-            arg_params['conv'+str(i+1)+'_2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i+1)+'_2_weight'])
-            arg_params['conv'+str(i+1)+'_2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i+1)+'_2_bias'])
+        for j in range(9):
+            i = j+1
+            arg_params['conv'+str(i)+'_1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_1_weight'])
+            arg_params['conv'+str(i)+'_1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_1_bias'])
+            arg_params['conv'+str(i)+'_2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_2_weight'])
+            arg_params['conv'+str(i)+'_2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_2_bias'])
         
         for i in [6,7,8,9]:
             arg_params['trans_conv'+str(i+1)+'_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_weight'])
-            arg_params['trans_conv'+str(i+1)+'_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_bias'])            
+            #rg_params['trans_conv'+str(i+1)+'_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_bias'])            
 
         for i in [6,7,8]:
-            arg_params['conv'+str(i)+'_2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_2_weight'])
-            arg_params['conv'+str(i)+'_2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_2_bias'])                        
+            arg_params['conv'+str(i)+'_3_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_3_weight'])
+            arg_params['conv'+str(i)+'_3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_3_bias'])                        
 
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
