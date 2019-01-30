@@ -49,7 +49,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # take after_nms_topN proposals after NMS
         # return the top proposals (-> RoIs top, scores top)
         
-        '''
+        
         cls_prob_dict = {
             'stride64': in_data[6],
             'stride32': in_data[5],
@@ -87,7 +87,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             'stride2': in_data[8],
             'stride1': in_data[7],
         }
-
+        '''
         pre_nms_topN = self._rpn_pre_nms_top_n
         post_nms_topN = self._rpn_post_nms_top_n
         min_size = self._rpn_min_size
