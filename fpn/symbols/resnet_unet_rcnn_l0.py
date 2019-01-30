@@ -1203,9 +1203,12 @@ class resnet_unet_rcnn_l0(Symbol):
             i = j+1
             arg_params['conv'+str(i)+'_1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_1_weight'])
             arg_params['conv'+str(i)+'_1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_1_bias'])
-            #arg_params[]
+            arg_params['bn'+str(i)+'_1_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_1_gamma'])
+            arg_params['bn'+str(i)+'_1_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_1_beta'])
             arg_params['conv'+str(i)+'_2_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_2_weight'])
             arg_params['conv'+str(i)+'_2_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_2_bias'])
+            arg_params['bn'+str(i)+'_2_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_2_gamma'])
+            arg_params['bn'+str(i)+'_2_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_2_beta'])
         
         for i in [6,7,8,9]:
             arg_params['trans_conv'+str(i)+'_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['trans_conv'+str(i)+'_weight'])
@@ -1213,7 +1216,9 @@ class resnet_unet_rcnn_l0(Symbol):
 
         for i in [6,7,8]:
             arg_params['conv'+str(i)+'_3_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_3_weight'])
-            arg_params['conv'+str(i)+'_3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_3_bias'])                        
+            arg_params['conv'+str(i)+'_3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_3_bias'])
+            arg_params['bn'+str(i)+'_3_gamma'] = mx.nd.ones(shape = self.arg_shape_dict['bn'+str(i)+'_3_gamma'])
+            arg_params['bn'+str(i)+'_3_beta'] = mx.nd.zeros(shape = self.arg_shape_dict['bn'+str(i)+'_3_beta'])                        
 
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
