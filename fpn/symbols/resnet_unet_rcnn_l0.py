@@ -771,80 +771,80 @@ class resnet_unet_rcnn_l0(Symbol):
     def get_unet_backbone(self, data, with_dilated=False, with_dconv=False, with_dpyramid=False, eps=1e-5):
 
         conv1 = mx.symbol.Convolution(data, num_filter=32, kernel=(3,3), pad=(1,1), name='conv1_1')
-        conv1 = mx.symbol.BatchNorm(conv1, name='bn1_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv1 = mx.symbol.BatchNorm(conv1, name='bn1_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv1 = mx.symbol.Activation(conv1, act_type='relu', name='relu1_1')
         conv1 = mx.symbol.Convolution(conv1, num_filter=32, kernel=(3,3), pad=(1,1), name='conv1_2')
-        conv1 = mx.symbol.BatchNorm(conv1, name='bn1_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv1 = mx.symbol.BatchNorm(conv1, name='bn1_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv1 = mx.symbol.Activation(conv1, act_type='relu', name='relu1_2')
         pool1 = mx.symbol.Pooling(conv1, kernel=(2,2), pool_type='max', name='pool1')
         
-        conv2 = mx.symbol.Convolution(pool1, num_filter=64, kernel=(3,3), pad=(1,1), name='conv2_1')
-        conv2 = mx.symbol.BatchNorm(conv2, name='bn2_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv2 = mx.symbol.Convolution(pool1, num_filter=32, kernel=(3,3), pad=(1,1), name='conv2_1')
+        conv2 = mx.symbol.BatchNorm(conv2, name='bn2_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv2 = mx.symbol.Activation(conv2, act_type='relu', name='relu2_1')
-        conv2 = mx.symbol.Convolution(conv2, num_filter=64, kernel=(3,3), pad=(1,1), name='conv2_2')
-        conv2 = mx.symbol.BatchNorm(conv2, name='bn2_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv2 = mx.symbol.Convolution(conv2, num_filter=32, kernel=(3,3), pad=(1,1), name='conv2_2')
+        conv2 = mx.symbol.BatchNorm(conv2, name='bn2_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv2 = mx.symbol.Activation(conv2, act_type='relu', name='relu2_2')
         pool2 = mx.symbol.Pooling(conv2, kernel=(2,2), pool_type='max', name='pool2')
         
-        conv3 = mx.symbol.Convolution(pool2, num_filter=128, kernel=(3,3), pad=(1,1), name='conv3_1')
-        conv3 = mx.symbol.BatchNorm(conv3, name='bn3_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv3 = mx.symbol.Convolution(pool2, num_filter=32, kernel=(3,3), pad=(1,1), name='conv3_1')
+        conv3 = mx.symbol.BatchNorm(conv3, name='bn3_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv3 = mx.symbol.Activation(conv3, act_type='relu', name='relu3_1')
-        conv3 = mx.symbol.Convolution(conv3, num_filter=128, kernel=(3,3), pad=(1,1), name='conv3_2')
-        conv3 = mx.symbol.BatchNorm(conv3, name='bn3_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv3 = mx.symbol.Convolution(conv3, num_filter=32, kernel=(3,3), pad=(1,1), name='conv3_2')
+        conv3 = mx.symbol.BatchNorm(conv3, name='bn3_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv3 = mx.symbol.Activation(conv3, act_type='relu', name='relu3_2')
         pool3 = mx.symbol.Pooling(conv3, kernel=(2,2), pool_type='max', name='pool3')
         
-        conv4 = mx.symbol.Convolution(pool3, num_filter=256, kernel=(3,3), pad=(1,1), name='conv4_1')
-        conv4 = mx.symbol.BatchNorm(conv4, name='bn4_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv4 = mx.symbol.Convolution(pool3, num_filter=32, kernel=(3,3), pad=(1,1), name='conv4_1')
+        conv4 = mx.symbol.BatchNorm(conv4, name='bn4_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv4 = mx.symbol.Activation(conv4, act_type='relu', name='relu4_1')
-        conv4 = mx.symbol.Convolution(conv4, num_filter=256, kernel=(3,3), pad=(1,1), name='conv4_2')
-        conv4 = mx.symbol.BatchNorm(conv4, name='bn4_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv4 = mx.symbol.Convolution(conv4, num_filter=32, kernel=(3,3), pad=(1,1), name='conv4_2')
+        conv4 = mx.symbol.BatchNorm(conv4, name='bn4_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv4 = mx.symbol.Activation(conv4, act_type='relu', name='relu4_2')
         pool4 = mx.symbol.Pooling(conv4, kernel=(2,2), pool_type='max', name='pool4')
         
         conv5 = mx.symbol.Convolution(pool4, num_filter=512, kernel=(3,3), pad=(1,1), name='conv5_1')
-        conv5 = mx.symbol.BatchNorm(conv5, name='bn5_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv5 = mx.symbol.BatchNorm(conv5, name='bn5_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv5 = mx.symbol.Activation(conv5, act_type='relu', name='relu5_1')
         conv5 = mx.symbol.Convolution(conv5, num_filter=512, kernel=(3,3), pad=(1,1), name='conv5_2')
-        conv5 = mx.symbol.BatchNorm(conv5, name='bn5_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv5 = mx.symbol.BatchNorm(conv5, name='bn5_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv5 = mx.symbol.Activation(conv5, act_type='relu', name='relu5_2')
         
-        trans_conv6 = mx.symbol.Deconvolution(conv5, num_filter=256, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv6')
+        trans_conv6 = mx.symbol.Deconvolution(conv5, num_filter=32, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv6')
         up6 = mx.symbol.concat(*[trans_conv6, conv4], dim=1, name='concat6')
-        conv6 = mx.symbol.Convolution(up6, num_filter=256, kernel=(3,3), pad=(1,1), name='conv6_1')
+        conv6 = mx.symbol.Convolution(up6, num_filter=32, kernel=(3,3), pad=(1,1), name='conv6_1')
         conv6 = mx.symbol.BatchNorm(conv6, name='bn6_1',use_global_stats=False, fix_gamma=False, eps=eps)
         conv6 = mx.symbol.Activation(conv6, act_type='relu', name='relu6_1')
-        conv6 = mx.symbol.Convolution(conv6, num_filter=256, kernel=(3,3), pad=(1,1), name='conv6_2')
+        conv6 = mx.symbol.Convolution(conv6, num_filter=32, kernel=(3,3), pad=(1,1), name='conv6_2')
         conv6 = mx.symbol.BatchNorm(conv6, name='bn6_2',use_global_stats=False, fix_gamma=False, eps=eps)
         conv6 = mx.symbol.Activation(conv6, act_type='relu', name='relu6_2')
         
-        trans_conv7 = mx.symbol.Deconvolution(conv6, num_filter=128, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv7')
+        trans_conv7 = mx.symbol.Deconvolution(conv6, num_filter=32, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv7')
         up7 = mx.symbol.concat(*[trans_conv7, conv3], dim=1, name='concat7')
-        conv7 = mx.symbol.Convolution(up7, num_filter=128, kernel=(3,3), pad=(1,1), name='conv7_1')
-        conv7 = mx.symbol.BatchNorm(conv7, name='bn7_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv7 = mx.symbol.Convolution(up7, num_filter=32, kernel=(3,3), pad=(1,1), name='conv7_1')
+        conv7 = mx.symbol.BatchNorm(conv7, name='bn7_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv7 = mx.symbol.Activation(conv7, act_type='relu', name='relu7_1')
-        conv7 = mx.symbol.Convolution(conv7, num_filter=128, kernel=(3,3), pad=(1,1), name='conv7_2')
-        conv7 = mx.symbol.BatchNorm(conv7, name='bn7_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv7 = mx.symbol.Convolution(conv7, num_filter=32, kernel=(3,3), pad=(1,1), name='conv7_2')
+        conv7 = mx.symbol.BatchNorm(conv7, name='bn7_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv7 = mx.symbol.Activation(conv7, act_type='relu', name='relu7_2')
         
-        trans_conv8 = mx.symbol.Deconvolution(conv7, num_filter=64, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv8')
+        trans_conv8 = mx.symbol.Deconvolution(conv7, num_filter=32, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv8')
         up8 = mx.symbol.concat(*[trans_conv8, conv2], dim=1, name='concat8')
-        conv8 = mx.symbol.Convolution(up8, num_filter=64, kernel=(3,3), pad=(1,1), name='conv8_1')
-        conv8 = mx.symbol.BatchNorm(conv8, name='bn8_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv8 = mx.symbol.Convolution(up8, num_filter=32, kernel=(3,3), pad=(1,1), name='conv8_1')
+        conv8 = mx.symbol.BatchNorm(conv8, name='bn8_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv8 = mx.symbol.Activation(conv8, act_type='relu', name='relu8_1')
-        conv8 = mx.symbol.Convolution(conv8, num_filter=64, kernel=(3,3), pad=(1,1), name='conv8_2')
-        conv8 = mx.symbol.BatchNorm(conv8, name='bn8_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv8 = mx.symbol.Convolution(conv8, num_filter=32, kernel=(3,3), pad=(1,1), name='conv8_2')
+        conv8 = mx.symbol.BatchNorm(conv8, name='bn8_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv8 = mx.symbol.Activation(conv8, act_type='relu', name='relu8_2')
         
         trans_conv9 = mx.symbol.Deconvolution(conv8, num_filter=32, kernel=(2,2), stride=(1,1), no_bias=True, name='trans_conv9')
         up9 = mx.symbol.concat(*[trans_conv9, conv1], dim=1, name='concat9')
         conv9 = mx.symbol.Convolution(up9, num_filter=32, kernel=(3,3), pad=(1,1), name='conv9_1')
-        conv9 = mx.symbol.BatchNorm(conv9, name='bn9_1',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv9 = mx.symbol.BatchNorm(conv9, name='bn9_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv9 = mx.symbol.Activation(conv9, act_type='relu', name='relu9_1')
         conv9 = mx.symbol.Convolution(conv9, num_filter=32, kernel=(3,3), pad=(1,1), name='conv9_2')
-        conv9 = mx.symbol.BatchNorm(conv9, name='bn9_2',use_global_stats=False, fix_gamma=False, eps=eps)
+        conv9 = mx.symbol.BatchNorm(conv9, name='bn9_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv9 = mx.symbol.Activation(conv9, act_type='relu', name='relu9_2')
-
+        '''
         conv6 = mx.symbol.Convolution(conv6, num_filter=32, kernel=(3,3), pad=(1,1), name='conv6_3')
         conv6 = mx.symbol.BatchNorm(conv6, name='bn6_3',use_global_stats=False, fix_gamma=False, eps=eps)
         conv6 = mx.symbol.Activation(conv6, act_type='relu', name='relu6_3')
@@ -856,7 +856,7 @@ class resnet_unet_rcnn_l0(Symbol):
         conv8 = mx.symbol.Convolution(conv8, num_filter=32, kernel=(3,3), pad=(1,1), name='conv8_3')
         conv8 = mx.symbol.BatchNorm(conv8, name='bn8_3',use_global_stats=False, fix_gamma=False, eps=eps)
         conv8 = mx.symbol.Activation(conv8, act_type='relu', name='relu8_3')
-
+        '''
         return conv9, conv8, conv7, conv6
 
 
@@ -1221,7 +1221,7 @@ class resnet_unet_rcnn_l0(Symbol):
         for i in [6,7,8,9]:
             arg_params['trans_conv'+str(i)+'_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['trans_conv'+str(i)+'_weight'])
             #rg_params['trans_conv'+str(i+1)+'_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['trans_conv'+str(i+1)+'_bias'])            
-
+        '''
         for i in [6,7,8]:
             arg_params['conv'+str(i)+'_3_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['conv'+str(i)+'_3_weight'])
             arg_params['conv'+str(i)+'_3_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['conv'+str(i)+'_3_bias'])
@@ -1230,7 +1230,7 @@ class resnet_unet_rcnn_l0(Symbol):
             
             aux_params['bn'+str(i)+'_3_moving_mean'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_3_moving_mean'])
             aux_params['bn'+str(i)+'_3_moving_var'] = mx.nd.zeros(shape = self.aux_shape_dict['bn'+str(i)+'_3_moving_var'])                         
-            
+        '''    
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
             arg_params[name + '_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict[name + '_weight'])
