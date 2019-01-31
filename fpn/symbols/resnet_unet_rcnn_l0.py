@@ -802,10 +802,10 @@ class resnet_unet_rcnn_l0(Symbol):
         conv4 = mx.symbol.Activation(conv4, act_type='relu', name='relu4_2')
         pool4 = mx.symbol.Pooling(conv4, kernel=(2,2), pool_type='max', name='pool4')
         
-        conv5 = mx.symbol.Convolution(pool4, num_filter=512, kernel=(3,3), pad=(1,1), name='conv5_1')
+        conv5 = mx.symbol.Convolution(pool4, num_filter=128, kernel=(3,3), pad=(1,1), name='conv5_1')
         conv5 = mx.symbol.BatchNorm(conv5, name='bn5_1',use_global_stats=True, fix_gamma=False, eps=eps)
         conv5 = mx.symbol.Activation(conv5, act_type='relu', name='relu5_1')
-        conv5 = mx.symbol.Convolution(conv5, num_filter=512, kernel=(3,3), pad=(1,1), name='conv5_2')
+        conv5 = mx.symbol.Convolution(conv5, num_filter=128, kernel=(3,3), pad=(1,1), name='conv5_2')
         conv5 = mx.symbol.BatchNorm(conv5, name='bn5_2',use_global_stats=True, fix_gamma=False, eps=eps)
         conv5 = mx.symbol.Activation(conv5, act_type='relu', name='relu5_2')
         
