@@ -1,19 +1,19 @@
 ---
-MXNET_VERSION: "mxnet"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline6"
-symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '2'
+MXNET_VERSION: "python"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_10"
+symbol: vgg_16_fpn_rcnn_l0
+gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
-- 544
-- 576
+- 608
+- 672
 # TEST_SCALES: [[800, 1280]] # single scale testing
-TEST_SCALES: [[480, 544], [544, 576], [576, 688],[800, 1200]] #, [1200, 1600], [1400, 2000]] # multi-scale testing
+TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
   frequent: 20
   kvstore: device
 network:
-  pretrained: "./model/pretrained_model/resnet_v1_101"
+  pretrained: "./model/pretrained_model/resnet-50"
   pretrained_epoch: 0
   PIXEL_MEANS:
   - 103.06
@@ -30,42 +30,57 @@ network:
   - 32
   - 64
   FIXED_PARAMS:
+  - conv1
+  - bn_conv1
+  - res2
+  - bn2
+  - gamma
+  - beta
   FIXED_PARAMS_SHARED:
+  - conv1
+  - bn_conv1
+  - res2
+  - bn2
+  - res3
+  - bn3
+  - res4
+  - bn4
+  - gamma
+  - beta
   ANCHOR_RATIOS:
   - 0.5
   - 1
   - 2
   ANCHOR_SCALES:
-  - 0.25
-  - 0.5
-  - 1
   - 2
   - 4
   - 8
-  NUM_ANCHORS: 18
+  - 16
+  NUM_ANCHORS: 12
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO4/fpn_baseline6"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_10"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.0025 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.005
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
+  # lr: 0.000001
   lr_step: '4,6'
   wd: 0.0001
-  begin_epoch: 12
+  begin_epoch: 0
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: true
+  RESUME: false
   # whether flip image
-  FLIP: true
+  FLIP: false
   # whether shuffle image
   SHUFFLE: true
   # whether use OHEM
@@ -79,11 +94,11 @@ TRAIN:
   # R-CNN
   # rcnn rois batch size
   BATCH_ROIS: -1
-  BATCH_ROIS_OHEM: 256
+  BATCH_ROIS_OHEM: 512
   # rcnn rois sampling params
-  FG_FRACTION: 0.25
-  FG_THRESH: 0.2
-  BG_THRESH_HI: 0.2
+  FG_FRACTION: 0.5
+  FG_THRESH: 0.5
+  BG_THRESH_HI: 0.5
   BG_THRESH_LO: 0.0
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
@@ -94,11 +109,11 @@ TRAIN:
   - 1.0
   # RPN anchor loader
   # rpn anchors batch size
-  RPN_BATCH_SIZE: 128
+  RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.3
-  RPN_NEGATIVE_OVERLAP: 0.1
+  RPN_POSITIVE_OVERLAP: 0.6
+  RPN_NEGATIVE_OVERLAP: 0.4
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
@@ -144,7 +159,9 @@ TEST:
   PROPOSAL_MIN_SIZE: 0
   # RCNN nms
   NMS: 0.3
-  test_epoch: 7
+  USE_SOFTNMS: true
+  SOFTNMS_THRESH: 0.6
+  test_epoch: 20
   max_per_image: 100
   # soft nms
   USE_SOFTNMS: true

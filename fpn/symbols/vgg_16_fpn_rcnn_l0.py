@@ -14,7 +14,7 @@ from operator_py.fpn_roi_pooling import *
 from operator_py.box_annotator_ohem import *
 
 
-class resnet_v1_50_fpn_rcnn_l0(Symbol):
+class vgg_16_fpn_rcnn_l0(Symbol):
     def __init__(self):
         """
         Use __init__ to define parameter network needs
@@ -96,43 +96,102 @@ class resnet_v1_50_fpn_rcnn_l0(Symbol):
         conv_feat = [conv_C5, conv_C4, conv_C3, conv_C2, conv_C1, conv_C0]
         return conv_feat
         #return conv_C0, conv_C1, conv_C2, conv_C3, conv_C4, conv_C5
-
-    def get_resnet_conv_down(self,conv_feat):
+    def get_vgg_conv(self,data):
+        """
+        shared convolutional layers
+        :param data: Symbol
+        :return: Symbol
+        """
+        # group 1
+        conv1_1 = mx.symbol.Convolution(
+            data=data, kernel=(3, 3), pad=(1, 1), num_filter=64, workspace=2048, name="conv1_1")
+        relu1_1 = mx.symbol.Activation(data=conv1_1, act_type="relu", name="relu1_1")
+        conv1_2 = mx.symbol.Convolution(
+            data=relu1_1, kernel=(3, 3), pad=(1, 1), num_filter=64, workspace=2048, name="conv1_2")
+        relu1_2 = mx.symbol.Activation(data=conv1_2, act_type="relu", name="relu1_2")
+        pool1 = mx.symbol.Pooling(
+            data=relu1_2, pool_type="max", kernel=(2, 2), stride=(2, 2), name="pool1")
+        # group 2
+        conv2_1 = mx.symbol.Convolution(
+            data=pool1, kernel=(3, 3), pad=(1, 1), num_filter=128, workspace=2048, name="conv2_1")
+        relu2_1 = mx.symbol.Activation(data=conv2_1, act_type="relu", name="relu2_1")
+        conv2_2 = mx.symbol.Convolution(
+            data=relu2_1, kernel=(3, 3), pad=(1, 1), num_filter=128, workspace=2048, name="conv2_2")
+        relu2_2 = mx.symbol.Activation(data=conv2_2, act_type="relu", name="relu2_2")
+        pool2 = mx.symbol.Pooling(
+            data=relu2_2, pool_type="max", kernel=(2, 2), stride=(2, 2), name="pool2")
+        # group 3
+        conv3_1 = mx.symbol.Convolution(
+            data=pool2, kernel=(3, 3), pad=(1, 1), num_filter=256, workspace=2048, name="conv3_1")
+        relu3_1 = mx.symbol.Activation(data=conv3_1, act_type="relu", name="relu3_1")
+        conv3_2 = mx.symbol.Convolution(
+            data=relu3_1, kernel=(3, 3), pad=(1, 1), num_filter=256, workspace=2048, name="conv3_2")
+        relu3_2 = mx.symbol.Activation(data=conv3_2, act_type="relu", name="relu3_2")
+        conv3_3 = mx.symbol.Convolution(
+            data=relu3_2, kernel=(3, 3), pad=(1, 1), num_filter=256, workspace=2048, name="conv3_3")
+        relu3_3 = mx.symbol.Activation(data=conv3_3, act_type="relu", name="relu3_3")
+        pool3 = mx.symbol.Pooling(
+            data=relu3_3, pool_type="max", kernel=(2, 2), stride=(2, 2), name="pool3")
+        # group 4
+        conv4_1 = mx.symbol.Convolution(
+            data=pool3, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv4_1")
+        relu4_1 = mx.symbol.Activation(data=conv4_1, act_type="relu", name="relu4_1")
+        conv4_2 = mx.symbol.Convolution(
+            data=relu4_1, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv4_2")
+        relu4_2 = mx.symbol.Activation(data=conv4_2, act_type="relu", name="relu4_2")
+        conv4_3 = mx.symbol.Convolution(
+            data=relu4_2, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv4_3")
+        relu4_3 = mx.symbol.Activation(data=conv4_3, act_type="relu", name="relu4_3")
+        pool4 = mx.symbol.Pooling(
+            data=relu4_3, pool_type="max", kernel=(2, 2), stride=(2, 2), name="pool4")
+        # group 5
+        conv5_1 = mx.symbol.Convolution(
+            data=pool4, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv5_1")
+        relu5_1 = mx.symbol.Activation(data=conv5_1, act_type="relu", name="relu5_1")
+        conv5_2 = mx.symbol.Convolution(
+            data=relu5_1, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv5_2")
+        relu5_2 = mx.symbol.Activation(data=conv5_2, act_type="relu", name="relu5_2")
+        conv5_3 = mx.symbol.Convolution(
+            data=relu5_2, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv5_3")
+        relu5_3 = mx.symbol.Activation(data=conv5_3, act_type="relu", name="relu5_3")
+        conv_feat = [relu5_3, relu4_3, relu3_3, relu2_2, relu1_2, data]
+        return conv_feat
+    def get_resnet_conv_down(self,conv_feat,dim = 256):
         # C5 to P5, 1x1 dimension reduction to 256
-        P5 = mx.symbol.Convolution(data=conv_feat[0], kernel=(1, 1), num_filter=256, name="P5_lateral")
+        P5 = mx.symbol.Convolution(data=conv_feat[0], kernel=(1, 1), num_filter=dim, name="P5_lateral")
 
         # P5 2x upsampling + C4 = P4
         P5_up   = mx.symbol.UpSampling(P5, scale=2, sample_type='nearest', workspace=512, name='P5_upsampling', num_args=1)
-        P4_la   = mx.symbol.Convolution(data=conv_feat[1], kernel=(1, 1), num_filter=256, name="P4_lateral")
+        P4_la   = mx.symbol.Convolution(data=conv_feat[1], kernel=(1, 1), num_filter=dim, name="P4_lateral")
         P5_clip = mx.symbol.Crop(*[P5_up, P4_la], name="P4_clip")
         P4      = mx.sym.ElementWiseSum(*[P5_clip, P4_la], name="P4_sum")
-        P4      = mx.symbol.Convolution(data=P4, kernel=(3, 3), pad=(1, 1), num_filter=256, name="P4_aggregate")
+        P4      = mx.symbol.Convolution(data=P4, kernel=(3, 3), pad=(1, 1), num_filter=dim, name="P4_aggregate")
 
         # P4 2x upsampling + C3 = P3
         P4_up   = mx.symbol.UpSampling(P4, scale=2, sample_type='nearest', workspace=512, name='P4_upsampling', num_args=1)
-        P3_la   = mx.symbol.Convolution(data=conv_feat[2], kernel=(1, 1), num_filter=256, name="P3_lateral")
+        P3_la   = mx.symbol.Convolution(data=conv_feat[2], kernel=(1, 1), num_filter=dim, name="P3_lateral")
         P4_clip = mx.symbol.Crop(*[P4_up, P3_la], name="P3_clip")
         P3      = mx.sym.ElementWiseSum(*[P4_clip, P3_la], name="P3_sum")
-        P3      = mx.symbol.Convolution(data=P3, kernel=(3, 3), pad=(1, 1), num_filter=256, name="P3_aggregate")
+        P3      = mx.symbol.Convolution(data=P3, kernel=(3, 3), pad=(1, 1), num_filter=dim, name="P3_aggregate")
 
         # P3 2x upsampling + C2 = P2
         P3_up   = mx.symbol.UpSampling(P3, scale=2, sample_type='nearest', workspace=512, name='P3_upsampling', num_args=1)
-        P2_la   = mx.symbol.Convolution(data=conv_feat[3], kernel=(1, 1), num_filter=256, name="P2_lateral")
+        P2_la   = mx.symbol.Convolution(data=conv_feat[3], kernel=(1, 1), num_filter=dim, name="P2_lateral")
         P3_clip = mx.symbol.Crop(*[P3_up, P2_la], name="P2_clip")
         P2      = mx.sym.ElementWiseSum(*[P3_clip, P2_la], name="P2_sum")
-        P2      = mx.symbol.Convolution(data=P2, kernel=(3, 3), pad=(1, 1), num_filter=256, name="P2_aggregate")
+        P2      = mx.symbol.Convolution(data=P2, kernel=(3, 3), pad=(1, 1), num_filter=dim, name="P2_aggregate")
 
         P2_up   = mx.symbol.UpSampling(P2, scale=2, sample_type='nearest', workspace=512, name='P2_upsampling', num_args=1)
-        P1_la   = mx.symbol.Convolution(data=conv_feat[4], kernel=(1, 1), num_filter=256, name="P1_lateral")
+        P1_la   = mx.symbol.Convolution(data=conv_feat[4], kernel=(1, 1), num_filter=dim, name="P1_lateral")
         P2_clip = mx.symbol.Crop(*[P2_up, P1_la], name="P1_clip")
         P1      = mx.sym.ElementWiseSum(*[P2_clip, P1_la], name="P1_sum")
-        P1      = mx.symbol.Convolution(data=P1, kernel=(3, 3), pad=(1, 1), num_filter=256, name="P1_aggregate")
+        P1      = mx.symbol.Convolution(data=P1, kernel=(3, 3), pad=(1, 1), num_filter=dim, name="P1_aggregate")
 
         P1_up   = mx.symbol.UpSampling(P1, scale=2, sample_type='nearest', workspace=512, name='P1_upsampling', num_args=1)
-        P0_la   = mx.symbol.Convolution(data=conv_feat[5], kernel=(1, 1), num_filter=256, name="P0_lateral")
+        P0_la   = mx.symbol.Convolution(data=conv_feat[5], kernel=(1, 1), num_filter=dim, name="P0_lateral")
         P1_clip = mx.symbol.Crop(*[P1_up, P0_la], name="P0_clip")
         P0      = mx.sym.ElementWiseSum(*[P1_clip, P0_la], name="P0_sum")
-        P0      = mx.symbol.Convolution(data=P0, kernel=(3, 3), pad=(1, 1), num_filter=256, name="P0_aggregate")
+        P0      = mx.symbol.Convolution(data=P0, kernel=(3, 3), pad=(1, 1), num_filter=dim, name="P0_aggregate")
 
         # P6 2x subsampling P5
         P6 = mx.symbol.Pooling(data=P5, kernel=(3, 3), stride=(2, 2), pad=(1, 1), pool_type='max', name='P6_subsampling')
@@ -172,8 +231,8 @@ class resnet_v1_50_fpn_rcnn_l0(Symbol):
         #res0, res1, res2, res3, res4, res5 = self.get_resnet_backbone(data)
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3,fpn_p4 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
-        conv_feat = self.get_resnet_conv(data)
-        fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat)
+        conv_feat = self.get_vgg_conv(data)
+        fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat,128)
 
         rpn_cls_score_p0, rpn_prob_p0, rpn_bbox_loss_p0, rpn_bbox_pred_p0 = self.get_rpn_subnet(fpn_p0, cfg.network.NUM_ANCHORS, 'p0')
         rpn_cls_score_p1, rpn_prob_p1, rpn_bbox_loss_p1, rpn_bbox_pred_p1 = self.get_rpn_subnet(fpn_p1, cfg.network.NUM_ANCHORS, 'p1')
