@@ -361,11 +361,11 @@ class vgg_16_fpn_rcnn_l0(Symbol):
 
     def init_weight_fpn(self, cfg, arg_params, aux_params):
 
-        for i in [0,1,2,3,4,5]:
+        for i in [1,2,3,4,5]:
             arg_params['P'+str(i)+'_lateral_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['P'+str(i)+'_lateral_weight'])
             arg_params['P'+str(i)+'_lateral_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['P'+str(i)+'_lateral_bias'])            
 
-        for i in [0,1,2,3,4]:
+        for i in [1,2,3,4]:
             arg_params['P'+str(i)+'_aggregate_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['P'+str(i)+'_aggregate_weight'])
             arg_params['P'+str(i)+'_aggregate_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['P'+str(i)+'_aggregate_bias']) 
 
