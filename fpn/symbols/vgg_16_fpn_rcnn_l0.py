@@ -154,7 +154,7 @@ class vgg_16_fpn_rcnn_l0(Symbol):
         conv5_3 = mx.symbol.Convolution(
             data=relu5_2, kernel=(3, 3), pad=(1, 1), num_filter=512, workspace=2048, name="conv5_3")
         relu5_3 = mx.symbol.Activation(data=conv5_3, act_type="relu", name="relu5_3")
-        conv_feat = [relu5_3, relu4_3, relu3_3, relu2_2, relu1_2, data]
+        conv_feat = [relu5_3, relu4_3, relu3_3, relu2_2, relu1_2]
         return conv_feat
     def get_resnet_conv_down(self,conv_feat,dim = 256):
         # C5 to P5, 1x1 dimension reduction to 256
@@ -232,7 +232,7 @@ class vgg_16_fpn_rcnn_l0(Symbol):
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3,fpn_p4 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         conv_feat = self.get_vgg_conv(data)
-        fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat,256)
+        fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat,128)
 
         #rpn_cls_score_p0, rpn_prob_p0, rpn_bbox_loss_p0, rpn_bbox_pred_p0 = self.get_rpn_subnet(fpn_p0, cfg.network.NUM_ANCHORS, 'p0')
         rpn_cls_score_p1, rpn_prob_p1, rpn_bbox_loss_p1, rpn_bbox_pred_p1 = self.get_rpn_subnet(fpn_p1, cfg.network.NUM_ANCHORS, 'p1')
