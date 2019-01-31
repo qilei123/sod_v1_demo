@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_10"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_11"
 symbol: vgg_16_fpn_rcnn_l0
-gpus: '0,1'
+gpus: '3'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
@@ -63,7 +63,7 @@ dataset:
   dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_10"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_11"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
