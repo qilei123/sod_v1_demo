@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO2/fpn_baseline_3"
+output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB6/fpn_baseline_3"
 symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '0,1,2,3,4,5,6,7'
+gpus: '0,1,2,3'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
@@ -52,23 +52,22 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
-  - 1
   - 2
   - 4
   - 8
   - 16
-  NUM_ANCHORS: 15
+  NUM_ANCHORS: 12
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO2"
+  dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB6"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO2/fpn_baseline_3"
+  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB6/fpn_baseline_3"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.005 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
@@ -97,8 +96,8 @@ TRAIN:
   BATCH_ROIS_OHEM: 512
   # rcnn rois sampling params
   FG_FRACTION: 0.5
-  FG_THRESH: 0.2
-  BG_THRESH_HI: 0.2
+  FG_THRESH: 0.5
+  BG_THRESH_HI: 0.5
   BG_THRESH_LO: 0.0
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
@@ -112,8 +111,8 @@ TRAIN:
   RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
-  RPN_POSITIVE_OVERLAP: 0.3
-  RPN_NEGATIVE_OVERLAP: 0.1
+  RPN_POSITIVE_OVERLAP: 0.7
+  RPN_NEGATIVE_OVERLAP: 0.3
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
