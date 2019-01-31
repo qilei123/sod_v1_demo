@@ -869,9 +869,9 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
                                 name='stage4_unit%s' % i)
         conv_C5 = unit
 
-        #conv_feat = [conv_C5, conv_C4, conv_C3, conv_C2, conv_C1, conv_C0]
-        #return conv_feat
-        return conv_C0, conv_C1, conv_C2, conv_C3, conv_C4, conv_C5
+        conv_feat = [conv_C5, conv_C4, conv_C3, conv_C2, conv_C1, conv_C0]
+        return conv_feat
+        #return conv_C0, conv_C1, conv_C2, conv_C3, conv_C4, conv_C5
 
     def get_resnet_conv_down(self,conv_feat):
         # C5 to P5, 1x1 dimension reduction to 256
