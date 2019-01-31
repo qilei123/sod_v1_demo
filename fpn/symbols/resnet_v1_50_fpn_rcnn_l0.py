@@ -14,7 +14,7 @@ from operator_py.fpn_roi_pooling import *
 from operator_py.box_annotator_ohem import *
 
 
-class resnet_v1_101_fpn_rcnn_l0(Symbol):
+class resnet_v1_50_fpn_rcnn_l0(Symbol):
     def __init__(self):
         """
         Use __init__ to define parameter network needs
