@@ -69,6 +69,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             'stride1': in_data[7],
         }
         '''
+        '''
         cls_prob_dict = {
             'stride8': in_data[3],
             'stride4': in_data[2],
@@ -81,6 +82,15 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             'stride2': in_data[5],
             'stride1': in_data[4],
         }
+        '''
+        cls_prob_dict = {
+            'stride2': in_data[1],
+            'stride1': in_data[0],
+        }
+        bbox_pred_dict = {
+            'stride2': in_data[3],
+            'stride1': in_data[2],
+        }        
         
         pre_nms_topN = self._rpn_pre_nms_top_n
         post_nms_topN = self._rpn_post_nms_top_n
