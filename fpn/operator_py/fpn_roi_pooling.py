@@ -120,6 +120,7 @@ class FPNROIPoolingProp(mx.operator.CustomOpProp):
 
     def list_arguments(self):
         args_list = []
+        print self.feat_strides
         for i in self.feat_strides:
             args_list.append('data_p{}'.format(i))
         if self.with_deformable:
