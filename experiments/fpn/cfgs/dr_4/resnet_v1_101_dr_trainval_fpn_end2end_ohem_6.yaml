@@ -65,7 +65,7 @@ TRAIN:
   # whether resume training
   RESUME: true
   # whether flip image
-  FLIP: true
+  FLIP: false
   # whether shuffle image
   SHUFFLE: true
   # whether use OHEM
