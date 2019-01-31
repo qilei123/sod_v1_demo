@@ -122,10 +122,10 @@ class FPNROIPoolingProp(mx.operator.CustomOpProp):
         args_list = []
         print self.feat_strides
         for i in self.feat_strides:
-            args_list.append('data_p{}'.format(i))
+            args_list.append('data_p{}'.format(int(np.log2(i))))
         if self.with_deformable:
             for i in self.feat_strides:
-                args_list.extend(['offset_weight_p{}'.format(i), 'offset_bias_p{}'.format(i)])
+                args_list.extend(['offset_weight_p{}'.format(int(np.log2(i))), 'offset_bias_p{}'.format(int(np.log2(i)))])
         args_list.append('rois')
         return args_list
 
