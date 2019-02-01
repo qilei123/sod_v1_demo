@@ -22,7 +22,6 @@ network:
   IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
-  - 2
   - 4
   - 8
   - 16

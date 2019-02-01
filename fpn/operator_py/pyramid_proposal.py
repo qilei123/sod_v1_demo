@@ -69,7 +69,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             'stride1': in_data[7],
         }
         '''
-
+        '''
         cls_prob_dict = {
             'stride64': in_data[5],
             'stride32': in_data[4],
@@ -86,7 +86,21 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             'stride4': in_data[7],
             'stride2': in_data[6],
         }        
-        
+        '''
+        cls_prob_dict = {
+            'stride64': in_data[4],
+            'stride32': in_data[3],
+            'stride16': in_data[2],
+            'stride8': in_data[1],
+            'stride4': in_data[0],
+        }
+        bbox_pred_dict = {
+            'stride64': in_data[9],
+            'stride32': in_data[8],
+            'stride16': in_data[7],
+            'stride8': in_data[6],
+            'stride4': in_data[5],
+        } 
         '''
         cls_prob_dict = {
             'stride8': in_data[3],
