@@ -900,7 +900,7 @@ class resnet_v1_101_fpn_rcnn_l0(Symbol):
             rois = mx.sym.Custom(**dict(arg_dict.items() + aux_dict.items()))
 
         roi_pool = mx.symbol.Custom(data_p0=fpn_p0,data_p1=fpn_p1,data_p2=fpn_p2, data_p3=fpn_p3,data_p4=fpn_p4,data_p5=fpn_p5,
-                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling',)
+                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling', feat_strides = '(1,2,4,8,16,32)')
 
         # 2 fc
         fc_new_1 = mx.symbol.FullyConnected(name='fc_new_1', data=roi_pool, num_hidden=1024)
