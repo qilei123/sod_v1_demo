@@ -2,13 +2,13 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_8"
 symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '0,1,2,3'
+gpus: '7'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
 - 672
 # TEST_SCALES: [[800, 1280]] # single scale testing
-TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
+TEST_SCALES: [[480, 800], [608, 672], [688, 1100], [800, 1200]] #, [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
   frequent: 20
   kvstore: device
@@ -161,7 +161,7 @@ TEST:
   NMS: 0.3
   USE_SOFTNMS: true
   SOFTNMS_THRESH: 0.6
-  test_epoch: 20
+  test_epoch: 13
   max_per_image: 100
   # soft nms
   USE_SOFTNMS: true
