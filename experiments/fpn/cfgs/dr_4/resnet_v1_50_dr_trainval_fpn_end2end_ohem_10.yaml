@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_10"
 symbol: resnet_v1_50_fpn_rcnn_l0
-gpus: '0,1'
+gpus: '0,1,2'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
@@ -67,14 +67,14 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.0025
+  lr: 0.00375
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
   # lr: 0.000001
-  lr_step: '4,6'
+  lr_step: '10,12'
   wd: 0.0001
-  begin_epoch: 1
+  begin_epoch: 6
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
