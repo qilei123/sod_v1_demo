@@ -913,7 +913,8 @@ class resnet_v1_101_fpn_dcn_rcnn(Symbol):
                                     offset_weight_p3=offset_p3_weight, offset_bias_p3=offset_p3_bias,
                                     offset_weight_p4=offset_p4_weight, offset_bias_p4=offset_p4_bias,
                                     offset_weight_p5=offset_p5_weight, offset_bias_p5=offset_p5_bias,
-                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling', with_deformable=True)
+                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling', 
+                                    with_deformable=True,feat_strides='(4,8,16,32)')
 
         # 2 fc
         fc_new_1 = mx.symbol.FullyConnected(name='fc_new_1', data=roi_pool, num_hidden=1024)
