@@ -34,13 +34,11 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
-  - 0.25
-  - 0.5
   - 1
   - 2
   - 4
   - 8
-  NUM_ANCHORS: 18
+  NUM_ANCHORS: 12
 dataset:
   NUM_CLASSES: 5
   dataset: coco
@@ -86,10 +84,10 @@ TRAIN:
   # rcnn bounding box regression params
   BBOX_REGRESSION_THRESH: 0.5
   BBOX_WEIGHTS:
-  - 5.0
-  - 5.0
-  - 5.0
-  - 5.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   # RPN anchor loader
   # rpn anchors batch size
   RPN_BATCH_SIZE: 128
@@ -100,10 +98,10 @@ TRAIN:
   RPN_CLOBBER_POSITIVES: false
   # rpn bounding box regression params
   RPN_BBOX_WEIGHTS:
-  - 5.0
-  - 5.0
-  - 5.0
-  - 5.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   RPN_POSITIVE_WEIGHT: -1.0
   # used for end2end training
   # RPN proposal
