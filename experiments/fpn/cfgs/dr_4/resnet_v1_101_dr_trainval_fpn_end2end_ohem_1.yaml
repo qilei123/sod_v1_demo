@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_baseline1"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline1"
 symbol: resnet_v1_101_fpn_rcnn
-gpus: '0'
+gpus: '2'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1280
@@ -42,10 +42,10 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_baseline1"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline1"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
@@ -75,7 +75,7 @@ TRAIN:
   # R-CNN
   # rcnn rois batch size
   BATCH_ROIS: -1
-  BATCH_ROIS_OHEM: 256
+  BATCH_ROIS_OHEM: 512
   # rcnn rois sampling params
   FG_FRACTION: 0.25
   FG_THRESH: 0.2
@@ -90,7 +90,7 @@ TRAIN:
   - 1.0
   # RPN anchor loader
   # rpn anchors batch size
-  RPN_BATCH_SIZE: 128
+  RPN_BATCH_SIZE: 256
   # rpn anchors sampling params
   RPN_FG_FRACTION: 0.5
   RPN_POSITIVE_OVERLAP: 0.3
