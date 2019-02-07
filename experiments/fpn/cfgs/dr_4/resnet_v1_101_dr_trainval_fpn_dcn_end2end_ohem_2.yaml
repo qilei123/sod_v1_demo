@@ -1,7 +1,7 @@
 ---
 MXNET_VERSION: "python"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB2/fpn_dcn_v1_2"
-symbol: resnet_v1_101_fpn_dcn_rcnn
+symbol: resnet_v1_101_fpn_dcn_rcnn_l1
 gpus: '3'
 CLASS_AGNOSTIC: false
 SCALES:
@@ -34,14 +34,11 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:  
-  - 0.125
-  - 0.25
-  - 0.5
   - 1
   - 2
   - 4
   - 8
-  NUM_ANCHORS: 21
+  NUM_ANCHORS: 12
 dataset:
   NUM_CLASSES: 5
   dataset: coco
