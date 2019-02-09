@@ -67,18 +67,18 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.0025
+  lr: 0.00125
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
   # lr: 0.000001
   lr_step: '19,21'
   wd: 0.0001
-  begin_epoch: 15
+  begin_epoch: 0
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: true
+  RESUME: false
   # whether flip image
   FLIP: false
   # whether shuffle image
