@@ -45,7 +45,7 @@ dataset:
   dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/fpn_dcn_v1_1"
+  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/fpn_dcn_v1_13"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
