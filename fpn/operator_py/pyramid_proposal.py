@@ -16,7 +16,7 @@ from nms.nms import gpu_nms_wrapper
 
 DEBUG = False
 
-
+LAYER_NUM = 5
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -49,60 +49,60 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # take after_nms_topN proposals after NMS
         # return the top proposals (-> RoIs top, scores top)
         
+        if LAYER_NUM==7:
+            cls_prob_dict = {
+                'stride64': in_data[6],
+                'stride32': in_data[5],
+                'stride16': in_data[4],
+                'stride8': in_data[3],
+                'stride4': in_data[2],
+                'stride2': in_data[1],
+                'stride1': in_data[0],
+            }
+            bbox_pred_dict = {
+                'stride64': in_data[13],
+                'stride32': in_data[12],
+                'stride16': in_data[11],
+                'stride8': in_data[10],
+                'stride4': in_data[9],
+                'stride2': in_data[8],
+                'stride1': in_data[7],
+            }
         
-        cls_prob_dict = {
-            'stride64': in_data[6],
-            'stride32': in_data[5],
-            'stride16': in_data[4],
-            'stride8': in_data[3],
-            'stride4': in_data[2],
-            'stride2': in_data[1],
-            'stride1': in_data[0],
-        }
-        bbox_pred_dict = {
-            'stride64': in_data[13],
-            'stride32': in_data[12],
-            'stride16': in_data[11],
-            'stride8': in_data[10],
-            'stride4': in_data[9],
-            'stride2': in_data[8],
-            'stride1': in_data[7],
-        }
+        elif LAYER_NUM==6:
+            cls_prob_dict = {
+                'stride64': in_data[5],
+                'stride32': in_data[4],
+                'stride16': in_data[3],
+                'stride8': in_data[2],
+                'stride4': in_data[1],
+                'stride2': in_data[0],
+            }
+            bbox_pred_dict = {
+                'stride64': in_data[11],
+                'stride32': in_data[10],
+                'stride16': in_data[9],
+                'stride8': in_data[8],
+                'stride4': in_data[7],
+                'stride2': in_data[6],
+            }        
         
-        '''
-        cls_prob_dict = {
-            'stride64': in_data[5],
-            'stride32': in_data[4],
-            'stride16': in_data[3],
-            'stride8': in_data[2],
-            'stride4': in_data[1],
-            'stride2': in_data[0],
-        }
-        bbox_pred_dict = {
-            'stride64': in_data[11],
-            'stride32': in_data[10],
-            'stride16': in_data[9],
-            'stride8': in_data[8],
-            'stride4': in_data[7],
-            'stride2': in_data[6],
-        }        
-        '''
-        '''
-        cls_prob_dict = {
-            'stride64': in_data[4],
-            'stride32': in_data[3],
-            'stride16': in_data[2],
-            'stride8': in_data[1],
-            'stride4': in_data[0],
-        }
-        bbox_pred_dict = {
-            'stride64': in_data[9],
-            'stride32': in_data[8],
-            'stride16': in_data[7],
-            'stride8': in_data[6],
-            'stride4': in_data[5],
-        } 
-        '''
+        elif LAYER_NUM==5:
+            cls_prob_dict = {
+                'stride64': in_data[4],
+                'stride32': in_data[3],
+                'stride16': in_data[2],
+                'stride8': in_data[1],
+                'stride4': in_data[0],
+            }
+            bbox_pred_dict = {
+                'stride64': in_data[9],
+                'stride32': in_data[8],
+                'stride16': in_data[7],
+                'stride8': in_data[6],
+                'stride4': in_data[5],
+            } 
+        
         '''
         cls_prob_dict = {
             'stride8': in_data[3],
