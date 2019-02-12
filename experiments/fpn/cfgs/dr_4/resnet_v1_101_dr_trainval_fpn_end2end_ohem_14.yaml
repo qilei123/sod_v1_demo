@@ -1,6 +1,6 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/fpn_baseline14"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO9/fpn_baseline14"
 symbol: resnet_v1_101_fpn_rcnn_l2_focal
 gpus: '0,1'
 CLASS_AGNOSTIC: false
@@ -42,10 +42,10 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO9"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/fpn_baseline14"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO9/fpn_baseline14"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
