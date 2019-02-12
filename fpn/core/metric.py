@@ -242,6 +242,8 @@ class FocalLoss(mx.metric.EvalMetric):
             pred = pred.asnumpy()
 
             label = label.ravel()
+            print label.shape[0]
+            print pred.shape[0]
             assert label.shape[0] == pred.shape[0]
 
             prob = pred[np.arange(label.shape[0]), np.int64(label)]
