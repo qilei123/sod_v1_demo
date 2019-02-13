@@ -16,7 +16,7 @@ from nms.nms import gpu_nms_wrapper
 
 DEBUG = False
 
-LAYER_NUM = 7
+LAYER_NUM = 6
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):

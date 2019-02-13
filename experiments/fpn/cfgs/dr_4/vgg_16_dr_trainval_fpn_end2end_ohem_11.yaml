@@ -1,7 +1,7 @@
 ---
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/fpn_baseline_11"
-symbol: vgg_16_fpn_rcnn_l0_focal
+symbol: vgg_16_fpn_rcnn_l1_focal
 gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
@@ -22,7 +22,6 @@ network:
   IMAGE_STRIDE: 32
   RCNN_FEAT_STRIDE: 16
   RPN_FEAT_STRIDE:
-  - 1
   - 2
   - 4
   - 8
