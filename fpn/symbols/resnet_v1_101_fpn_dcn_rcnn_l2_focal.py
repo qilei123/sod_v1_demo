@@ -12,9 +12,9 @@ from operator_py.pyramid_proposal import *
 from operator_py.proposal_target import *
 from operator_py.fpn_roi_pooling import *
 from operator_py.box_annotator_ohem import *
+from operator_py.focal_loss_OptimizedVersion import *
 
-
-class resnet_v1_101_fpn_dcn_rcnn(Symbol):
+class resnet_v1_101_fpn_dcn_rcnn_l2_focal(Symbol):
     def __init__(self):
         """
         Use __init__ to define parameter network needs
@@ -937,6 +937,13 @@ class resnet_v1_101_fpn_dcn_rcnn(Symbol):
                 bbox_loss_ = bbox_weights_ohem * mx.sym.smooth_l1(name='bbox_loss_', scalar=1.0, data=(bbox_pred - bbox_target))
                 bbox_loss = mx.sym.MakeLoss(name='bbox_loss', data=bbox_loss_, grad_scale=1.0 / cfg.TRAIN.BATCH_ROIS_OHEM)
                 rcnn_label = labels_ohem
+            elif cfg.TRAIN.ENABLE_FOCAL_LOSS:
+                cls_prob = mx.sym.Custom(op_type='FocalLoss', name='cls_prob', data=cls_score, labels=label, gamma= 2,alpha = 0.25)
+                #  cls_prob = mx.sym.SoftmaxOutput(name='cls_prob', data=cls_score, label=label, normalization='valid')
+                bbox_loss_ = bbox_weight * mx.sym.smooth_l1(name='bbox_loss_', scalar=1.0,
+                                                            data=(bbox_pred - bbox_target))
+                bbox_loss = mx.sym.MakeLoss(name='bbox_loss', data=bbox_loss_, grad_scale=1.0 / cfg.TRAIN.BATCH_ROIS)
+                rcnn_label = label            
             else:
                 cls_prob = mx.sym.SoftmaxOutput(name='cls_prob', data=cls_score, label=label, normalization='valid')
                 bbox_loss_ = bbox_weight * mx.sym.smooth_l1(name='bbox_loss_', scalar=1.0, data=(bbox_pred - bbox_target))

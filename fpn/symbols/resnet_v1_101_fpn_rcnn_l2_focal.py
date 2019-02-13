@@ -912,7 +912,7 @@ class resnet_v1_101_fpn_rcnn_l2_focal(Symbol):
                 rcnn_label = labels_ohem
             elif cfg.TRAIN.ENABLE_FOCAL_LOSS:
                 cls_prob = mx.sym.Custom(op_type='FocalLoss', name='cls_prob', data=cls_score, labels=label, gamma= 2,alpha = 0.25)
-              #  cls_prob = mx.sym.SoftmaxOutput(name='cls_prob', data=cls_score, label=label, normalization='valid')
+                #  cls_prob = mx.sym.SoftmaxOutput(name='cls_prob', data=cls_score, label=label, normalization='valid')
                 bbox_loss_ = bbox_weight * mx.sym.smooth_l1(name='bbox_loss_', scalar=1.0,
                                                             data=(bbox_pred - bbox_target))
                 bbox_loss = mx.sym.MakeLoss(name='bbox_loss', data=bbox_loss_, grad_scale=1.0 / cfg.TRAIN.BATCH_ROIS)
