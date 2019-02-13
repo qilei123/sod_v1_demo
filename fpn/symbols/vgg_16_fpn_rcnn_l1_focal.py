@@ -232,7 +232,7 @@ class vgg_16_fpn_rcnn_l1_focal(Symbol):
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         #fpn_p0, fpn_p1, fpn_p2, fpn_p3,fpn_p4 = self.get_fpn_feature(res0, res1, res2, res3, res4, res5)
         conv_feat = self.get_vgg_conv(data)
-        fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat,256)
+        fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6 = self.get_resnet_conv_down(conv_feat,128)
 
         #rpn_cls_score_p0, rpn_prob_p0, rpn_bbox_loss_p0, rpn_bbox_pred_p0 = self.get_rpn_subnet(fpn_p0, cfg.network.NUM_ANCHORS, 'p0')
         rpn_cls_score_p1, rpn_prob_p1, rpn_bbox_loss_p1, rpn_bbox_pred_p1 = self.get_rpn_subnet(fpn_p1, cfg.network.NUM_ANCHORS, 'p1')
