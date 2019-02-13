@@ -1,12 +1,12 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO7/fpn_baseline_11"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/fpn_baseline_11"
 symbol: vgg_16_fpn_rcnn_l0_focal
 gpus: '0,1'
 CLASS_AGNOSTIC: false
 SCALES:
-- 512
 - 544
+- 576
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[480, 800], [576, 900], [688, 1100], [800, 1200], [1200, 1600], [1400, 2000]] # multi-scale testing
 default:
@@ -60,10 +60,10 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO7"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO7/fpn_baseline_11"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/fpn_baseline_11"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
