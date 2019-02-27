@@ -225,6 +225,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         blob = np.hstack((batch_inds, proposals.astype(np.float32, copy=False)))
         # if is_train:
         self.assign(out_data[0], req[0], blob)
+        print "out_data[0].shape"+str(out_data[0].shape)
         if self._output_score:
             self.assign(out_data[1], req[1], scores.astype(np.float32, copy=False))
 
