@@ -139,6 +139,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
             print "scores.shape:"+str(scores.shape)
             bbox_deltas = bbox_pred_dict['stride' + str(s)].asnumpy()
+            print "bbox_deltas.shape:"+str(bbox_deltas.shape)
             im_info = in_data[-1].asnumpy()[0, :]
             # 1. Generate proposals from bbox_deltas and shifted anchors
             # use real image size instead of padded feature map sizes
