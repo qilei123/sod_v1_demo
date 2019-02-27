@@ -64,6 +64,7 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
                 autograd.mark_variables([in_data[i] for i in range(self.num_strides)], self.in_grad_hist_list)
                 with autograd.train_section():
                     for i in range(self.num_strides):
+                        print "rois_p[i]:"+str(rois_p[i])
                         self.roi_pool[i] = mx.nd.ROIPooling(in_data[i], mx.nd.array(rois_p[i], in_data[i].context), (7, 7), spatial_scale=1.0 / self.feat_strides[i])
             roi_pool = mx.nd.concatenate(self.roi_pool, axis=0)
         else:
