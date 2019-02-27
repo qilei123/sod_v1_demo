@@ -48,11 +48,13 @@ class ProposalTargetOperator(mx.operator.CustomOp):
         gt_boxes = in_data[1].asnumpy()
 
         print '-----------------------------'
-        print all_rois[:100,5]
         print all_rois.shape
+        print all_rois[:100,5]
+        
         print '-----------------------------'
-        print gt_boxes[:,4]
         print gt_boxes.shape
+        print gt_boxes[:,4]
+        
         
         if self._batch_rois == -1:
             rois_per_image = all_rois.shape[0] + gt_boxes.shape[0]
