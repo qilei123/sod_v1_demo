@@ -49,7 +49,7 @@ class ProposalTargetOperator(mx.operator.CustomOp):
 
         print '-----------------------------'
         print all_rois.shape
-        print all_rois[:100,5]
+        print all_rois[:100,4]
         
         print '-----------------------------'
         print gt_boxes.shape
