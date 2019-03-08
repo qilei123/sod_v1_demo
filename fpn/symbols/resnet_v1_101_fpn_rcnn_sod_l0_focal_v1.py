@@ -769,7 +769,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v1(Symbol):
 
         return data, conv1_relu, res2c_relu, res3b3_relu, res4b22_relu, res5c_relu
 
-    def get_fpn_feature(self, c0, c1, c2, c3, c4, c5, feature_dim=64):
+    def get_fpn_feature(self, c0, c1, c2, c3, c4, c5, feature_dim=128):
 
         # lateral connection
         fpn_p5_1x1 = mx.symbol.Convolution(data=c5, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p5_1x1')
@@ -802,7 +802,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v1(Symbol):
         return fpn_p0#, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6
 
     def get_rpn_subnet(self, data, num_anchors, suffix):
-        rpn_conv = mx.sym.Convolution(data=data, kernel=(3, 3), pad=(1, 1), num_filter=32, name='rpn_conv_' + suffix,
+        rpn_conv = mx.sym.Convolution(data=data, kernel=(3, 3), pad=(1, 1), num_filter=64, name='rpn_conv_' + suffix,
                                       weight=self.shared_param_dict['rpn_conv_weight'], bias=self.shared_param_dict['rpn_conv_bias'])
         rpn_relu = mx.sym.Activation(data=rpn_conv, act_type='relu', name='rpn_relu_' + suffix)
         rpn_cls_score = mx.sym.Convolution(data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=2 * num_anchors, name='rpn_cls_score_' + suffix,
