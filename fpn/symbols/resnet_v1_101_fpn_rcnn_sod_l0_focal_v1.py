@@ -769,7 +769,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v1(Symbol):
 
         return data, conv1_relu, res2c_relu, res3b3_relu, res4b22_relu, res5c_relu
 
-    def get_fpn_feature(self, c0, c1, c2, c3, c4, c5, feature_dim=128):
+    def get_fpn_feature(self, c0, c1, c2, c3, c4, c5, feature_dim=256):
 
         # lateral connection
         fpn_p5_1x1 = mx.symbol.Convolution(data=c5, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p5_1x1')
