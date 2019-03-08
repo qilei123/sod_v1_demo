@@ -142,11 +142,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         for s in self._feat_stride:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
-            print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
+            #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
             scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
-            print "scores.shape:"+str(scores.shape)
+            #print "scores.shape:"+str(scores.shape)
             bbox_deltas = bbox_pred_dict['stride' + str(s)].asnumpy()
-            print "bbox_deltas.shape:"+str(bbox_deltas.shape)
+            #print "bbox_deltas.shape:"+str(bbox_deltas.shape)
             im_info = in_data[-1].asnumpy()[0, :]
             # 1. Generate proposals from bbox_deltas and shifted anchors
             # use real image size instead of padded feature map sizes
@@ -234,7 +234,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         blob = np.hstack((batch_inds, proposals.astype(np.float32, copy=False)))
         # if is_train:
         self.assign(out_data[0], req[0], blob)
-        print "out_data[0].shape"+str(out_data[0].shape)
+        #print "out_data[0].shape"+str(out_data[0].shape)
         if self._output_score:
             self.assign(out_data[1], req[1], scores.astype(np.float32, copy=False))
 
