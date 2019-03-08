@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/sod_baseline2"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline2"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v2
-gpus: '0,1'
+gpus: '0,1,2,3,4,5,6,7'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
@@ -38,14 +38,14 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6"
+  dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/sod_baseline2"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline2"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.0025
+  lr: 0.01
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
