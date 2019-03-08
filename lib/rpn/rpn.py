@@ -67,7 +67,7 @@ def get_rpn_batch(roidb, cfg):
         gt_boxes[:, 4] = roidb[0]['gt_classes'][gt_inds]
     else:
         gt_boxes = np.empty((0, 5), dtype=np.float32)
-    print "gt_boxes:"+str(gt_boxes.shape)
+    #print "gt_boxes:"+str(gt_boxes.shape)
     data = {'data': im_array,
             'im_info': im_info}
     label = {'gt_boxes': gt_boxes}
