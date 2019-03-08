@@ -16,7 +16,7 @@ from nms.nms import gpu_nms_wrapper
 
 DEBUG = False
 
-LAYER_NUM = 5
+LAYER_NUM = 1
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -102,7 +102,13 @@ class PyramidProposalOperator(mx.operator.CustomOp):
                 'stride8': in_data[6],
                 'stride4': in_data[5],
             } 
-        
+        elif LAYER_NUM==1:
+            cls_prob_dict = {
+                'stride1': in_data[0],
+            }
+            bbox_pred_dict = {
+                'stride1': in_data[1],
+            }        
         '''
         cls_prob_dict = {
             'stride8': in_data[3],
