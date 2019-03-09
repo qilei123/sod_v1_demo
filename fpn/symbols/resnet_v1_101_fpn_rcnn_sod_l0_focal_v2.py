@@ -792,7 +792,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
         '''
         _kernel=(4,4)
-        _stride=(1,1)
+        _stride=(2,2)
         _pad=(1,1)
         #fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
         fpn_p5_deconv = mx.symbol.Deconvolution(fpn_p5_1x1,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p5_deconv')
