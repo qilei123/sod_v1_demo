@@ -1013,15 +1013,15 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         arg_params['fpn_p0_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p0_1x1_bias'])
 
         arg_params['fpn_p5_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p5_deconv_weight'])
-        arg_params['fpn_p5_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_deconv_bias'])
+        #arg_params['fpn_p5_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_deconv_bias'])
         arg_params['fpn_p4_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p4_deconv_weight'])
-        arg_params['fpn_p4_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p4_deconv_bias'])
+        #arg_params['fpn_p4_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p4_deconv_bias'])
         arg_params['fpn_p3_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p3_deconv_weight'])
-        arg_params['fpn_p3_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p3_deconv_bias'])
+        #arg_params['fpn_p3_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p3_deconv_bias'])
         arg_params['fpn_p2_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p2_deconv_weight'])
-        arg_params['fpn_p2_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p2_deconv_bias'])
+        #arg_params['fpn_p2_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p2_deconv_bias'])
         arg_params['fpn_p1_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p1_deconv_weight'])
-        arg_params['fpn_p1_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_deconv_bias'])
+        #arg_params['fpn_p1_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_deconv_bias'])
       
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
