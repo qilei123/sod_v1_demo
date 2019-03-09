@@ -791,7 +791,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         fpn_p1_upsample = mx.symbol.UpSampling(fpn_p1_plus, scale=2, sample_type='nearest', name='fpn_p1_upsample')
         fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
         '''
-        _kernel=(3,3)
+        _kernel=(4,4)
         _stride=(1,1)
         _pad=(1,1)
         #fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
