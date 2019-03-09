@@ -792,15 +792,15 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
         '''
         #fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
-        fpn_p5_deconv = mx.symbol.Deconvolution(fpn_p5_1x1,kernel=(1,1), stride=(1,1),num_filter=feature_dim,name='fpn_p5_deconv')
+        fpn_p5_deconv = mx.symbol.Deconvolution(fpn_p5_1x1,kernel=(4,4), stride=(2,2),num_filter=feature_dim,name='fpn_p5_deconv')
         fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_deconv, fpn_p4_1x1], name='fpn_p4_sum')
-        fpn_p4_deconv = mx.symbol.Deconvolution(fpn_p4_plus,kernel=(1,1), stride=(1,1),num_filter=feature_dim,name='fpn_p4_deconv')
+        fpn_p4_deconv = mx.symbol.Deconvolution(fpn_p4_plus,kernel=(4,4), stride=(2,2),num_filter=feature_dim,name='fpn_p4_deconv')
         fpn_p3_plus = mx.sym.ElementWiseSum(*[fpn_p4_deconv, fpn_p3_1x1], name='fpn_p3_sum')
-        fpn_p3_deconv = mx.symbol.Deconvolution(fpn_p3_plus,kernel=(1,1), stride=(1,1),num_filter=feature_dim,name='fpn_p3_deconv')
+        fpn_p3_deconv = mx.symbol.Deconvolution(fpn_p3_plus,kernel=(4,4), stride=(2,2),num_filter=feature_dim,name='fpn_p3_deconv')
         fpn_p2_plus = mx.sym.ElementWiseSum(*[fpn_p3_deconv, fpn_p2_1x1], name='fpn_p2_sum')
-        fpn_p2_deconv = mx.symbol.Deconvolution(fpn_p2_plus,kernel=(1,1), stride=(1,1),num_filter=feature_dim,name='fpn_p2_deconv')
+        fpn_p2_deconv = mx.symbol.Deconvolution(fpn_p2_plus,kernel=(4,4), stride=(2,2),num_filter=feature_dim,name='fpn_p2_deconv')
         fpn_p1_plus = mx.sym.ElementWiseSum(*[fpn_p2_deconv, fpn_p1_1x1], name='fpn_p1_sum')
-        fpn_p1_deconv = mx.symbol.Deconvolution(fpn_p1_plus,kernel=(1,1), stride=(1,1),num_filter=feature_dim,name='fpn_p1_deconv')
+        fpn_p1_deconv = mx.symbol.Deconvolution(fpn_p1_plus,kernel=(4,4), stride=(2,2),num_filter=feature_dim,name='fpn_p1_deconv')
         fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_deconv, fpn_p0_1x1], name='fpn_p0_sum')        
         # FPN feature
         '''
@@ -1019,7 +1019,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         arg_params['fpn_p2_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p2_deconv_bias'])
         arg_params['fpn_p1_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p1_deconv_weight'])
         arg_params['fpn_p1_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_deconv_bias'])
-     
+      
     def init_weight(self, cfg, arg_params, aux_params):
         for name in self.shared_param_list:
             arg_params[name + '_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict[name + '_weight'])
