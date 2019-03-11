@@ -211,7 +211,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
         # 4. sort all (proposal, score) pairs by score from highest to lowest
         # 5. take top pre_nms_topN (e.g. 6000)
+        before_sort = datetime.now()
         order = scores.ravel().argsort()[::-1]
+        after_sort = datetime.now()
+        print "sort time:"
+        print (after_sort-before_sort).seconds
         if pre_nms_topN > 0:
             order = order[:pre_nms_topN]
         proposals = proposals[order, :]
