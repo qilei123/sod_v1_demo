@@ -30,7 +30,7 @@ from mxnet import metric
 from .DataParallelExecutorGroup import DataParallelExecutorGroup
 from mxnet import ndarray as nd
 from mxnet import optimizer as opt
-
+from datetime import datetime
 
 class Module(BaseModule):
     """Module is a basic module that wrap a `Symbol`. It is functionally the same
@@ -977,6 +977,7 @@ class MutableModule(BaseModule):
             tic = time.time()
             eval_metric.reset()
             for nbatch, data_batch in enumerate(train_data):
+                before_one = datetime.now()
                 if monitor is not None:
                     monitor.tic()
                 self.forward_backward(data_batch)
@@ -992,7 +993,9 @@ class MutableModule(BaseModule):
                                                      locals=locals())
                     for callback in _as_list(batch_end_callback):
                         callback(batch_end_params)
-
+                after_one = datetime.now()
+                print "one image time:"
+                print (after_one-before_one).seconds
             # one epoch of training is finished
             for name, val in eval_metric.get_name_value():
                 self.logger.info('Epoch[%d] Train-%s=%f', epoch, name, val)
