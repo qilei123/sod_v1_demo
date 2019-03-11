@@ -183,7 +183,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             # transpose to (1, H, W, 4 * A)
             # reshape to (1 * H * W * A, 4) where rows are ordered by (h, w, a)
             # in slowest to fastest order
+            before_clip = datetime.now()
             bbox_deltas = self._clip_pad(bbox_deltas, (height, width))
+            after_clip = datetime.now()
+            print "clip time:"
+            print (after_clip-before_clip).seconds
             bbox_deltas = bbox_deltas.transpose((0, 2, 3, 1)).reshape((-1, 4))
 
             # Same story for the scores:
