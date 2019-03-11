@@ -160,24 +160,25 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             height, width = int(im_info[0] / stride), int(im_info[1] / stride)
 
             # Enumerate all shifts
-            before_enume = datetime.now()
+            
             shift_x = np.arange(0, width) * stride
             shift_y = np.arange(0, height) * stride
             shift_x, shift_y = np.meshgrid(shift_x, shift_y)
             shifts = np.vstack((shift_x.ravel(), shift_y.ravel(), shift_x.ravel(), shift_y.ravel())).transpose()
-            after_enume = datetime.now()
-            print "enume time:"+str((after_enume-before_enume).seconds)
+
             # Enumerate all shifted anchors:
             #
             # add A anchors (1, A, 4) to
             # cell K shifts (K, 1, 4) to get
             # shift anchors (K, A, 4)
             # reshape to (K*A, 4) shifted anchors
+            before_enume = datetime.now()
             A = self._num_anchors
             K = shifts.shape[0]
             anchors = sub_anchors.reshape((1, A, 4)) + shifts.reshape((1, K, 4)).transpose((1, 0, 2))
             anchors = anchors.reshape((K * A, 4))
-
+            after_enume = datetime.now()
+            print "enume time:"+str((after_enume-before_enume).seconds)
             # Transpose and reshape predicted bbox transformations to get them
             # into the same order as the anchors:
             #
