@@ -178,7 +178,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             anchors = sub_anchors.reshape((1, A, 4)) + shifts.reshape((1, K, 4)).transpose((1, 0, 2))
             anchors = anchors.reshape((K * A, 4))
             after_enume = datetime.now()
-            print "enume time:"+str((after_enume-before_enume).seconds)
+            #print "enume time:"+str((after_enume-before_enume).seconds)
             # Transpose and reshape predicted bbox transformations to get them
             # into the same order as the anchors:
             #
@@ -203,7 +203,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             before_pred = datetime.now()
             proposals = bbox_pred(anchors, bbox_deltas)
             after_pred = datetime.now()
-            print "pred_time:"
+            #print "pred_time:"
             #print (after_pred-before_pred).seconds
             # 2. clip predicted boxes to image
             proposals = clip_boxes(proposals, im_info[:2])
