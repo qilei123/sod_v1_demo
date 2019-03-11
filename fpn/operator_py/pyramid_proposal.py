@@ -195,8 +195,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             scores = scores.transpose((0, 2, 3, 1)).reshape((-1, 1))
 
             # Convert anchors into proposals via bbox transformations
+            before_pred = datetime.now()
             proposals = bbox_pred(anchors, bbox_deltas)
-
+            after_pred = datetime.now()
+            print "pred_time:"
+            print (after_pred-before_pred).seconds
             # 2. clip predicted boxes to image
             proposals = clip_boxes(proposals, im_info[:2])
 
