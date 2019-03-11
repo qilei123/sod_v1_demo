@@ -142,6 +142,9 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
         proposal_list = []
         score_list = []
+
+        before_feat = datetime.now()
+
         for s in self._feat_stride:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
@@ -205,6 +208,10 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
             proposal_list.append(proposals)
             score_list.append(scores)
+
+        after_feat = datetime.now()
+        print "feat time:"
+        print (after_feat-before_feat).seconds
 
         proposals = np.vstack(proposal_list)
         scores = np.vstack(score_list)
