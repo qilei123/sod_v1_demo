@@ -34,6 +34,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         self._rpn_min_size = rpn_min_size
 
     def forward(self, is_train, req, in_data, out_data, aux):
+        before_pyramid_proposal = datetime.now()
         nms = gpu_nms_wrapper(self._threshold, in_data[0].context.device_id)
 
         batch_size = in_data[0].shape[0]
@@ -220,12 +221,9 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # 7. take after_nms_topN (e.g. 300)
         # 8. return the top proposals (-> RoIs top)
         det = np.hstack((proposals, scores)).astype(np.float32)
-        
-        before_nms = datetime.now() 
+         
         keep = nms(det)
-        after_nms = datetime.now()
-        print 'nms times:'
-        print (after_nms-before_nms).seconds
+
         if post_nms_topN > 0:
             keep = keep[:post_nms_topN]
         # pad to ensure output size remains unchanged
@@ -245,7 +243,9 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         #print "out_data[0].shape"+str(out_data[0].shape)
         if self._output_score:
             self.assign(out_data[1], req[1], scores.astype(np.float32, copy=False))
-
+        after_pyramid_proposal = datetime.now()
+        print 'pyramid_proposal times:'
+        print (after_pyramid_proposal-before_pyramid_proposal).seconds
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):
             self.assign(in_grad[i], req[i], 0)
