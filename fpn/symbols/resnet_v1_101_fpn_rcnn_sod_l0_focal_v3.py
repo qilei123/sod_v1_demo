@@ -14,7 +14,7 @@ from operator_py.fpn_roi_pooling import *
 from operator_py.box_annotator_ohem import *
 from operator_py.focal_loss_OptimizedVersion import *
 
-class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
+class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
     def __init__(self):
         """
         Use __init__ to define parameter network needs
@@ -770,14 +770,31 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         return data, conv1_relu, res2c_relu, res3b3_relu, res4b22_relu, res5c_relu
 
     def get_fpn_feature(self, c0, c1, c2, c3, c4, c5, feature_dim=128):
-
+        eps = 1e-5
         # lateral connection
         fpn_p5_1x1 = mx.symbol.Convolution(data=c5, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p5_1x1')
+        bn_fpn_p5_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p5_1x1', data=fpn_p5_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p5_1x1_relu = mx.symbol.Activation(name='bn_fpn_p5_1x1_relu', data=bn_fpn_p5_1x1, act_type='relu')
+
         fpn_p4_1x1 = mx.symbol.Convolution(data=c4, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p4_1x1')
+        bn_fpn_p4_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p4_1x1', data=fpn_p4_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p4_1x1_relu = mx.symbol.Activation(name='bn_fpn_p4_1x1_relu', data=bn_fpn_p4_1x1, act_type='relu')
+
         fpn_p3_1x1 = mx.symbol.Convolution(data=c3, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p3_1x1')
+        bn_fpn_p3_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p3_1x1', data=fpn_p3_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p3_1x1_relu = mx.symbol.Activation(name='bn_fpn_p3_1x1_relu', data=bn_fpn_p3_1x1, act_type='relu')
+
         fpn_p2_1x1 = mx.symbol.Convolution(data=c2, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p2_1x1')
+        bn_fpn_p2_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p2_1x1', data=fpn_p2_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p2_1x1_relu = mx.symbol.Activation(name='bn_fpn_p2_1x1_relu', data=bn_fpn_p2_1x1, act_type='relu')
+
         fpn_p1_1x1 = mx.symbol.Convolution(data=c1, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p1_1x1')
+        bn_fpn_p1_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p1_1x1', data=fpn_p1_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p1_1x1_relu = mx.symbol.Activation(name='bn_fpn_p1_1x1_relu', data=bn_fpn_p1_1x1, act_type='relu')
+
         fpn_p0_1x1 = mx.symbol.Convolution(data=c0, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p0_1x1')
+        bn_fpn_p0_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p0_1x1', data=fpn_p0_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
+        bn_fpn_p0_1x1_relu = mx.symbol.Activation(name='bn_fpn_p0_1x1_relu', data=bn_fpn_p0_1x1, act_type='relu')
         # top-down connection
         '''
         fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
@@ -795,16 +812,16 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v2(Symbol):
         _stride=(2,2)
         _pad=(1,1)
         #fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
-        fpn_p5_deconv = mx.symbol.Deconvolution(fpn_p5_1x1,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p5_deconv')
-        fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_deconv, fpn_p4_1x1], name='fpn_p4_sum')
+        fpn_p5_deconv = mx.symbol.Deconvolution(bn_fpn_p5_1x1_relu,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p5_deconv')
+        fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_deconv, bn_fpn_p4_1x1_relu], name='fpn_p4_sum')
         fpn_p4_deconv = mx.symbol.Deconvolution(fpn_p4_plus,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p4_deconv')
-        fpn_p3_plus = mx.sym.ElementWiseSum(*[fpn_p4_deconv, fpn_p3_1x1], name='fpn_p3_sum')
+        fpn_p3_plus = mx.sym.ElementWiseSum(*[fpn_p4_deconv, bn_fpn_p3_1x1_relu], name='fpn_p3_sum')
         fpn_p3_deconv = mx.symbol.Deconvolution(fpn_p3_plus,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p3_deconv')
-        fpn_p2_plus = mx.sym.ElementWiseSum(*[fpn_p3_deconv, fpn_p2_1x1], name='fpn_p2_sum')
+        fpn_p2_plus = mx.sym.ElementWiseSum(*[fpn_p3_deconv, bn_fpn_p2_1x1_relu], name='fpn_p2_sum')
         fpn_p2_deconv = mx.symbol.Deconvolution(fpn_p2_plus,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p2_deconv')
-        fpn_p1_plus = mx.sym.ElementWiseSum(*[fpn_p2_deconv, fpn_p1_1x1], name='fpn_p1_sum')
+        fpn_p1_plus = mx.sym.ElementWiseSum(*[fpn_p2_deconv, bn_fpn_p1_1x1_relu], name='fpn_p1_sum')
         fpn_p1_deconv = mx.symbol.Deconvolution(fpn_p1_plus,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p1_deconv')
-        fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_deconv, fpn_p0_1x1], name='fpn_p0_sum')        
+        fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_deconv, bn_fpn_p0_1x1_relu], name='fpn_p0_sum')        
         # FPN feature
         '''
         fpn_p6 = mx.sym.Convolution(data=c5, kernel=(3, 3), pad=(1, 1), stride=(2, 2), num_filter=feature_dim, name='fpn_p6')
