@@ -1,6 +1,6 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline2"
+output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline3"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
 gpus: '0,1,2'
 CLASS_AGNOSTIC: false
@@ -41,7 +41,7 @@ dataset:
   dataset_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline2"
+  root_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline3"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
