@@ -796,22 +796,11 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
         bn_fpn_p0_1x1 = mx.symbol.BatchNorm(name='bn_fpn_p0_1x1', data=fpn_p0_1x1, use_global_stats=True, fix_gamma=False, eps=eps)
         bn_fpn_p0_1x1_relu = mx.symbol.Activation(name='bn_fpn_p0_1x1_relu', data=bn_fpn_p0_1x1, act_type='relu')
         # top-down connection
-        '''
-        fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
-        fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_upsample, fpn_p4_1x1], name='fpn_p4_sum')
-        fpn_p4_upsample = mx.symbol.UpSampling(fpn_p4_plus, scale=2, sample_type='nearest', name='fpn_p4_upsample')
-        fpn_p3_plus = mx.sym.ElementWiseSum(*[fpn_p4_upsample, fpn_p3_1x1], name='fpn_p3_sum')
-        fpn_p3_upsample = mx.symbol.UpSampling(fpn_p3_plus, scale=2, sample_type='nearest', name='fpn_p3_upsample')
-        fpn_p2_plus = mx.sym.ElementWiseSum(*[fpn_p3_upsample, fpn_p2_1x1], name='fpn_p2_sum')
-        fpn_p2_upsample = mx.symbol.UpSampling(fpn_p2_plus, scale=2, sample_type='nearest', name='fpn_p2_upsample')
-        fpn_p1_plus = mx.sym.ElementWiseSum(*[fpn_p2_upsample, fpn_p1_1x1], name='fpn_p1_sum')
-        fpn_p1_upsample = mx.symbol.UpSampling(fpn_p1_plus, scale=2, sample_type='nearest', name='fpn_p1_upsample')
-        fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
-        '''
+
         _kernel=(4,4)
         _stride=(2,2)
         _pad=(1,1)
-        #fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
+
         fpn_p5_deconv = mx.symbol.Deconvolution(bn_fpn_p5_1x1_relu,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p5_deconv')
         fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_deconv, bn_fpn_p4_1x1_relu], name='fpn_p4_sum')
         fpn_p4_deconv = mx.symbol.Deconvolution(fpn_p4_plus,kernel=_kernel, stride=_stride,pad=_pad,num_filter=feature_dim,name='fpn_p4_deconv')
@@ -1028,6 +1017,12 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
         arg_params['fpn_p1_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p1_1x1_bias'])
         arg_params['fpn_p0_1x1_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p0_1x1_weight'])
         arg_params['fpn_p0_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p0_1x1_bias'])
+
+
+        for i in range(6):
+            arg_params['bn_fpn_p'+str(i)+'_1x1_gamma'] = mx.nd.ones(shape=self.arg_shape_dict['bn_fpn_p'+str(i)+'_1x1_gamma'])
+            arg_params['bn_fpn_p'+str(i)+'_1x1_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['bn_fpn_p'+str(i)+'_1x1_bias'])
+            arg_params['bn_fpn_p'+str(i)+'_1x1_beta'] = mx.nd.zeros(shape=self.arg_shape_dict['bn_fpn_p'+str(i)+'_1x1_beta'])
 
         arg_params['fpn_p5_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p5_deconv_weight'])
         #arg_params['fpn_p5_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_deconv_bias'])
