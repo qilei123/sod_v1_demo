@@ -90,8 +90,8 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         roi_pool = mx.nd.take(roi_pool, mx.nd.array(rois_idx, roi_pool.context))
         self.assign(out_data[0], req[0], roi_pool)
         after_fpn_roi_pooling = datetime.now()
-        print 'fpn_roi_pooling times:'
-        print (after_fpn_roi_pooling-before_fpn_roi_pooling).seconds
+        #print 'fpn_roi_pooling times:'
+        #print (after_fpn_roi_pooling-before_fpn_roi_pooling).seconds
 
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):

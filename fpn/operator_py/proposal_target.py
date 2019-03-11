@@ -83,8 +83,8 @@ class ProposalTargetOperator(mx.operator.CustomOp):
         for ind, val in enumerate([rois, labels, bbox_targets, bbox_weights]):
             self.assign(out_data[ind], req[ind], val)
         after_proposal_target = datetime.now()
-        print 'proposal_target times:'
-        print (after_proposal_target-before_proposal_target).seconds
+        #print 'proposal_target times:'
+        #print (after_proposal_target-before_proposal_target).seconds
 
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):

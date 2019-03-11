@@ -204,7 +204,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             proposals = bbox_pred(anchors, bbox_deltas)
             after_pred = datetime.now()
             print "pred_time:"
-            print (after_pred-before_pred).seconds
+            #print (after_pred-before_pred).seconds
             # 2. clip predicted boxes to image
             proposals = clip_boxes(proposals, im_info[:2])
             # 3. remove predicted boxes with either height or width < threshold
@@ -217,8 +217,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             score_list.append(scores)
 
         after_feat = datetime.now()
-        print "feat time:"
-        print (after_feat-before_feat).seconds
+        #print "feat time:"
+        #print (after_feat-before_feat).seconds
 
         proposals = np.vstack(proposal_list)
         scores = np.vstack(score_list)
@@ -228,8 +228,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         before_sort = datetime.now()
         order = scores.ravel().argsort()[::-1]
         after_sort = datetime.now()
-        print "sort time:"
-        print (after_sort-before_sort).seconds
+        #print "sort time:"
+        #print (after_sort-before_sort).seconds
         if pre_nms_topN > 0:
             order = order[:pre_nms_topN]
         proposals = proposals[order, :]
@@ -262,8 +262,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         if self._output_score:
             self.assign(out_data[1], req[1], scores.astype(np.float32, copy=False))
         after_pyramid_proposal = datetime.now()
-        print 'pyramid_proposal times:'
-        print (after_pyramid_proposal-before_pyramid_proposal).seconds
+        #print 'pyramid_proposal times:'
+        #print (after_pyramid_proposal-before_pyramid_proposal).seconds
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):
             self.assign(in_grad[i], req[i], 0)
