@@ -183,11 +183,9 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             # transpose to (1, H, W, 4 * A)
             # reshape to (1 * H * W * A, 4) where rows are ordered by (h, w, a)
             # in slowest to fastest order
-            before_clip = datetime.now()
+
             bbox_deltas = self._clip_pad(bbox_deltas, (height, width))
-            after_clip = datetime.now()
-            print "clip time:"
-            print (after_clip-before_clip).seconds
+
             bbox_deltas = bbox_deltas.transpose((0, 2, 3, 1)).reshape((-1, 4))
 
             # Same story for the scores:
@@ -205,8 +203,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             print "pred_time:"
             print (after_pred-before_pred).seconds
             # 2. clip predicted boxes to image
+            before_clip = datetime.now()
             proposals = clip_boxes(proposals, im_info[:2])
-
+            after_clip = datetime.now()
+            print "clip time:"
+            print (after_clip-before_clip).seconds
             # 3. remove predicted boxes with either height or width < threshold
             # (NOTE: convert min_size to input image scale stored in im_info[2])
             keep = self._filter_boxes(proposals, min_size * im_info[2])
