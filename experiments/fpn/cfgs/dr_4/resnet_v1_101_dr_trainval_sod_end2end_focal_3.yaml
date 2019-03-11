@@ -45,7 +45,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.005
+  lr: 0.00375
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
