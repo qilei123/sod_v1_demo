@@ -9,7 +9,7 @@ import mxnet as mx
 import numpy as np
 from mxnet.contrib import autograd
 import gc
-
+from datetime import datetime
 
 class FPNROIPoolingOperator(mx.operator.CustomOp):
     def __init__(self, feat_strides, pooled_height, pooled_width, output_dim, with_deformable):
@@ -24,6 +24,8 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         self.feat_idx = [None for _ in range(self.num_strides)]
 
     def forward(self, is_train, req, in_data, out_data, aux):
+        before_fpn_roi_pooling = datetime.now()
+
         rois = in_data[-1].asnumpy()
         w = rois[:, 3] - rois[:, 1] + 1
         h = rois[:, 4] - rois[:, 2] + 1
@@ -87,6 +89,9 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
 
         roi_pool = mx.nd.take(roi_pool, mx.nd.array(rois_idx, roi_pool.context))
         self.assign(out_data[0], req[0], roi_pool)
+        after_fpn_roi_pooling = datetime.now()
+        print 'fpn_roi_pooling times:'
+        print (after_fpn_roi_pooling-before_fpn_roi_pooling).seconds
 
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):

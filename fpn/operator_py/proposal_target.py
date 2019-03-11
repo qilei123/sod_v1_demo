@@ -20,7 +20,8 @@ import numpy as np
 from distutils.util import strtobool
 from easydict import EasyDict as edict
 import cPickle
-
+import gc
+from datetime import datetime
 
 from core.rcnn import sample_rois
 
@@ -42,6 +43,7 @@ class ProposalTargetOperator(mx.operator.CustomOp):
             self._bg_num = 0
 
     def forward(self, is_train, req, in_data, out_data, aux):
+        before_proposal_target = datetime.now()
         assert self._batch_rois == -1 or self._batch_rois % self._batch_images == 0, \
             'batchimages {} must devide batch_rois {}'.format(self._batch_images, self._batch_rois)
         all_rois = in_data[0].asnumpy()
@@ -80,10 +82,14 @@ class ProposalTargetOperator(mx.operator.CustomOp):
 
         for ind, val in enumerate([rois, labels, bbox_targets, bbox_weights]):
             self.assign(out_data[ind], req[ind], val)
+        after_proposal_target = datetime.now()
+        print 'proposal_terget times:'
+        print (after_proposal_terget-before_proposal_terget).seconds
 
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):
             self.assign(in_grad[i], req[i], 0)
+        gc.collect()
 
 
 @mx.operator.register('proposal_target')

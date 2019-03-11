@@ -15,7 +15,7 @@ from rpn.generate_anchor import generate_anchors
 from nms.nms import gpu_nms_wrapper
 
 from datetime import datetime
-
+import gc
 DEBUG = False
 
 LAYER_NUM = 1
@@ -249,6 +249,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         for i in range(len(in_grad)):
             self.assign(in_grad[i], req[i], 0)
+        gc.collect()
 
     @staticmethod
     def _filter_boxes(boxes, min_size):
