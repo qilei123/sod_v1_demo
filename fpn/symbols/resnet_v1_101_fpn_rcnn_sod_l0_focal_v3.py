@@ -1021,8 +1021,9 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
 
         for i in range(6):
             arg_params['bn_fpn_p'+str(i)+'_1x1_gamma'] = mx.nd.ones(shape=self.arg_shape_dict['bn_fpn_p'+str(i)+'_1x1_gamma'])
-            aux_params['bn_fpn_p'+str(i)+'_1x1_moving_mean'] = mx.nd.zeros(shape=self.aux_shape_dict['bn_fpn_p'+str(i)+'_1x1_moving_mean'])
             arg_params['bn_fpn_p'+str(i)+'_1x1_beta'] = mx.nd.zeros(shape=self.arg_shape_dict['bn_fpn_p'+str(i)+'_1x1_beta'])
+            aux_params['bn_fpn_p'+str(i)+'_1x1_moving_mean'] = mx.nd.zeros(shape=self.aux_shape_dict['bn_fpn_p'+str(i)+'_1x1_moving_mean'])
+            aux_params['bn_fpn_p'+str(i)+'_1x1_moving_var'] = mx.nd.zeros(shape=self.aux_shape_dict['bn_fpn_p'+str(i)+'_1x1_moving_var'])
 
         arg_params['fpn_p5_deconv_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p5_deconv_weight'])
         #arg_params['fpn_p5_deconv_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_deconv_bias'])
