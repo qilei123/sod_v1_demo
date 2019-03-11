@@ -160,11 +160,13 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             height, width = int(im_info[0] / stride), int(im_info[1] / stride)
 
             # Enumerate all shifts
+            before_enume = datetime.now()
             shift_x = np.arange(0, width) * stride
             shift_y = np.arange(0, height) * stride
             shift_x, shift_y = np.meshgrid(shift_x, shift_y)
             shifts = np.vstack((shift_x.ravel(), shift_y.ravel(), shift_x.ravel(), shift_y.ravel())).transpose()
-
+            after_enume = datetime.now()
+            print "enume time:"+str((after_enume-before_enume).seconds)
             # Enumerate all shifted anchors:
             #
             # add A anchors (1, A, 4) to
@@ -203,11 +205,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             print "pred_time:"
             print (after_pred-before_pred).seconds
             # 2. clip predicted boxes to image
-            before_clip = datetime.now()
             proposals = clip_boxes(proposals, im_info[:2])
-            after_clip = datetime.now()
-            print "clip time:"
-            print (after_clip-before_clip).seconds
             # 3. remove predicted boxes with either height or width < threshold
             # (NOTE: convert min_size to input image scale stored in im_info[2])
             keep = self._filter_boxes(proposals, min_size * im_info[2])
