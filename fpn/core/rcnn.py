@@ -146,7 +146,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     #print gt_assignment
     # foreground RoI with FG_THRESH overlap
     print "gt_boxes:"+str(gt_boxes)
-    print "overlaps:"+str(overlaps)
+    print "overlaps:"+str(np.sort(overlaps))
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
