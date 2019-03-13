@@ -61,7 +61,7 @@ TRAIN:
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: true
+  RESUME: false
   # whether flip image
   FLIP: false
   # whether shuffle image
