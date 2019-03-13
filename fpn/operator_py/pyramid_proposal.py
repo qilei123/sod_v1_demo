@@ -262,7 +262,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         print channels.shape
         for s in self._feat_stride:
             print "stride:"+str(s)
-            print len(np.where(channels==float(s)))
+            print np.where(channels==float(s)).shape
 
         # Output rois array
         # Our RPN implementation only supports a single input image, so all
