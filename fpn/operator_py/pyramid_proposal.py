@@ -258,7 +258,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[keep, :]
         scores = scores[keep]
         channels = channels[keep]
-        print channels
+
+        print channels.shape
+        for s in self._feat_stride:
+            print "stride:"+str(s)
+            print len(np.where(channels==float(s)))
 
         # Output rois array
         # Our RPN implementation only supports a single input image, so all
