@@ -241,6 +241,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[order, :]
         scores = scores[order]
         channels = channels[order]
+        print '-------1-------'
         print channels.shape
         for s in self._feat_stride:
             print "stride:"+str(s)
@@ -261,7 +262,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[keep, :]
         scores = scores[keep]
         channels = channels[keep]
-
+        print '-------2-------'
         print channels.shape
         for s in self._feat_stride:
             print "stride:"+str(s)
