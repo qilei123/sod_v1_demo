@@ -241,7 +241,10 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[order, :]
         scores = scores[order]
         channels = channels[order]
-
+        print channels.shape
+        for s in self._feat_stride:
+            print "stride:"+str(s)
+            print len(np.where(channels==float(s))[0])
         # 6. apply nms (e.g. threshold = 0.7)
         # 7. take after_nms_topN (e.g. 300)
         # 8. return the top proposals (-> RoIs top)
