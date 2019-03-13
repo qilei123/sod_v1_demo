@@ -143,8 +143,10 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposal_list = []
         score_list = []
 
-        before_feat = datetime.now()
+        channel_list = []
 
+        before_feat = datetime.now()
+        
         for s in self._feat_stride:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
@@ -198,6 +200,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             # reshape to (1 * H * W * A, 1) where rows are ordered by (h, w, a)
             scores = self._clip_pad(scores, (height, width))
             scores = scores.transpose((0, 2, 3, 1)).reshape((-1, 1))
+            
+            channels = np.ones((scores.shape))*stride
 
             # Convert anchors into proposals via bbox transformations
             before_pred = datetime.now()
@@ -213,16 +217,18 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             proposals = proposals[keep, :]
             scores = scores[keep]
 
+            channels = channels[keep]
+
             proposal_list.append(proposals)
             score_list.append(scores)
-
+            channel_list.append(channels)
         after_feat = datetime.now()
         #print "feat time:"
         #print (after_feat-before_feat).seconds
 
         proposals = np.vstack(proposal_list)
         scores = np.vstack(score_list)
-
+        channels = np.vstack(channel_list)
         # 4. sort all (proposal, score) pairs by score from highest to lowest
         # 5. take top pre_nms_topN (e.g. 6000)
         before_sort = datetime.now()
@@ -234,6 +240,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             order = order[:pre_nms_topN]
         proposals = proposals[order, :]
         scores = scores[order]
+        channels = channels[order]
 
         # 6. apply nms (e.g. threshold = 0.7)
         # 7. take after_nms_topN (e.g. 300)
@@ -250,6 +257,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             keep = np.hstack((keep, pad))
         proposals = proposals[keep, :]
         scores = scores[keep]
+        channels = channels[keep]
+        print channels
 
         # Output rois array
         # Our RPN implementation only supports a single input image, so all
