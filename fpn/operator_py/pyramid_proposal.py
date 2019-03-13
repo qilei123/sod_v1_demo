@@ -18,7 +18,7 @@ from datetime import datetime
 import gc
 DEBUG = False
 
-LAYER_NUM = 1
+LAYER_NUM = 7
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
