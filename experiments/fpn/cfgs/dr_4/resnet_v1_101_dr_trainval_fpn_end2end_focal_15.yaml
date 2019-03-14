@@ -2,7 +2,7 @@
 MXNET_VERSION: "mxnet"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline15"
 symbol: resnet_v1_101_fpn_rcnn_l0_focal_v2
-gpus: '2'
+gpus: '2,3'
 CLASS_AGNOSTIC: false
 SCALES:
 - 640
@@ -51,7 +51,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.00125 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
+  lr: 0.0025 # this is for 8 gpus, if you want to use 1 gpus, the lr should be 0.01 / 8
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
