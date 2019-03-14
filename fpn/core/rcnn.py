@@ -140,6 +140,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
         overlaps,overlaps1 = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
         gt_assignment = overlaps.argmax(axis=1)
         overlaps = overlaps.max(axis=1)
+        overlaps1 = overlaps1.max(axis=1)
         labels = gt_boxes[gt_assignment, 4]
     #print labels
     #print gt_boxes
