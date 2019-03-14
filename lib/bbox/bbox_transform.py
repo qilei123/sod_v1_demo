@@ -52,6 +52,7 @@ def bbox_overlaps_py1(boxes, query_boxes):
     k_ = query_boxes.shape[0]
     overlaps = np.zeros((n_, k_), dtype=np.float)
     overlaps1 = np.zeros((n_, k_), dtype=np.float)
+    overlaps2 = np.zeros((n_, k_), dtype=np.float)
     for k in range(k_):
         query_box_area = (query_boxes[k, 2] - query_boxes[k, 0] + 1) * (query_boxes[k, 3] - query_boxes[k, 1] + 1)
         for n in range(n_):
@@ -63,8 +64,9 @@ def bbox_overlaps_py1(boxes, query_boxes):
                     all_area = float(box_area + query_box_area - iw * ih)
                     overlaps[n, k] = iw * ih / all_area
                     overlaps1[n, k] = iw * ih/float(box_area)
+                    overlaps2[n, k] = iw * ih/float(query_box_area)
 
-    return overlaps,overlaps1
+    return overlaps,overlaps1,overlaps2
 
 
 def clip_boxes(boxes, im_shape):

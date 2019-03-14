@@ -137,10 +137,11 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     :return: (labels, rois, bbox_targets, bbox_weights)
     """
     if labels is None:
-        overlaps,overlaps1 = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
+        overlaps,overlaps1,overlaps2 = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
         gt_assignment = overlaps.argmax(axis=1)
         overlaps = overlaps.max(axis=1)
         overlaps1 = overlaps1.max(axis=1)
+        overlaps2 = overlaps2.max(axis=1)
         labels = gt_boxes[gt_assignment, 4]
     #print labels
     #print gt_boxes
@@ -149,6 +150,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     print "gt_boxes:"+str(gt_boxes)
     print "overlaps:"+str(np.sort(overlaps)[-100:])
     print "overlaps1:"+str(np.sort(overlaps1)[-100:])
+    print "overlaps2:"+str(np.sort(overlaps2)[-100:])
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
