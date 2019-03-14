@@ -62,7 +62,7 @@ def bbox_overlaps_py1(boxes, query_boxes):
                     box_area = (boxes[n, 2] - boxes[n, 0] + 1) * (boxes[n, 3] - boxes[n, 1] + 1)
                     all_area = float(box_area + query_box_area - iw * ih)
                     overlaps[n, k] = iw * ih / all_area
-                    overlaps1[n, k] = iw*ih/box_area
+                    overlaps1[n, k] = iw*ih/float(box_area)
     return overlaps,overlaps1
 
 
