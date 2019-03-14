@@ -28,7 +28,7 @@ import numpy as np
 import numpy.random as npr
 
 from utils.image import get_image, tensor_vstack
-from bbox.bbox_transform import bbox_overlaps, bbox_transform
+from bbox.bbox_transform import bbox_overlaps, bbox_transform, bbox_overlaps_py1
 from bbox.bbox_regression import expand_bbox_regression_targets
 
 
@@ -137,7 +137,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     :return: (labels, rois, bbox_targets, bbox_weights)
     """
     if labels is None:
-        overlaps = bbox_overlaps(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
+        overlaps,overlaps1 = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
         gt_assignment = overlaps.argmax(axis=1)
         overlaps = overlaps.max(axis=1)
         labels = gt_boxes[gt_assignment, 4]
@@ -147,6 +147,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     # foreground RoI with FG_THRESH overlap
     print "gt_boxes:"+str(gt_boxes)
     print "overlaps:"+str(np.sort(overlaps))
+    print "overlaps1:"+str(np.sort(overlaps1))
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
