@@ -33,9 +33,8 @@ network:
   FIXED_PARAMS_SHARED:
   ANCHOR_RATIOS:
   - 1
+  - 1
   ANCHOR_SCALES:
-  - 0.001
-  - 0.005
   - 0.01
   - 0.05
   - 0.1
