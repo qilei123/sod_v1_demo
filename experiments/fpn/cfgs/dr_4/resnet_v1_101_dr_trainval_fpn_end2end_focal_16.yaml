@@ -30,18 +30,17 @@ network:
   FIXED_PARAMS:
   FIXED_PARAMS_SHARED:
   ANCHOR_RATIOS:
+  - 0.5
   - 1
+  - 2
   ANCHOR_SCALES:
   - 0.1
-  - 0.25
   - 0.5
-  - 0.75
   - 1
   - 2
   - 3
   - 4
-  - 5
-  NUM_ANCHORS: 9
+  NUM_ANCHORS: 18
 dataset:
   NUM_CLASSES: 5
   dataset: coco
