@@ -147,7 +147,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     #print gt_boxes
     #print gt_assignment
     # foreground RoI with FG_THRESH overlap
-    print "gt_boxes:"+str(gt_boxes)
+    #print "gt_boxes:"+str(gt_boxes)
     new_order = np.argsort(overlaps)
     print "overlaps:"+str(overlaps[new_order[-50:]])
     #print "overlaps1:"+str(overlaps1[new_order[-100:]])
