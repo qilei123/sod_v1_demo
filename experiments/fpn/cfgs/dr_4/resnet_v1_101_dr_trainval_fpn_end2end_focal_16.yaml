@@ -35,11 +35,12 @@ network:
   - 0.1
   - 0.25
   - 0.5
+  - 0.75
   - 1
   - 2
   - 4
   - 8
-  NUM_ANCHORS: 7
+  NUM_ANCHORS: 8
 dataset:
   NUM_CLASSES: 5
   dataset: coco
