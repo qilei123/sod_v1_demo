@@ -19,3 +19,4 @@ import resnet_v1_101_fpn_rcnn_sod_l0_focal_v2
 import resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
 
 import resnet_v1_101_fpn_rcnn_l0_focal_v2
+import resnet_v1_101_fpn_rcnn_l2_focal_v2
