@@ -15,6 +15,9 @@ from rpn.generate_anchor import generate_anchors
 from nms.nms import gpu_nms_wrapper
 
 from datetime import datetime
+
+import os
+
 import gc
 DEBUG = False
 
@@ -267,7 +270,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         for s in self._feat_stride:
             print "stride:"+str(s)
             print len(np.where(channels==float(s))[0])
-        print "channels:"+str(channels)
+        f_chan = open('channels.txt','w')
+        for ii in range(len(channels.shape[0])):
+            f_chan.write(str(channels[ii][0])+' ')
+        f_chan.close()
+
         # Output rois array
         # Our RPN implementation only supports a single input image, so all
         # batch inds are 0
