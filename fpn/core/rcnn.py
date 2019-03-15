@@ -154,7 +154,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     print "overlaps2:"+str(overlaps2[new_order[-50:]])
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
-    print "proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
+    print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
     fg_rois_per_this_image = np.minimum(fg_rois_per_image, fg_indexes.size)
     # Sample foreground regions without replacement
