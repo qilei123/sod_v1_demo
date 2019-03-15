@@ -154,12 +154,12 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     print "overlaps2:"+str(overlaps2[new_order[-50:]])
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
+    print "proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
     fg_rois_per_this_image = np.minimum(fg_rois_per_image, fg_indexes.size)
     # Sample foreground regions without replacement
     if len(fg_indexes) > fg_rois_per_this_image:
         fg_indexes = npr.choice(fg_indexes, size=fg_rois_per_this_image, replace=False)
-
     # Select background RoIs as those within [BG_THRESH_LO, BG_THRESH_HI)
     bg_indexes = np.where((overlaps < cfg.TRAIN.BG_THRESH_HI) & (overlaps >= cfg.TRAIN.BG_THRESH_LO))[0]
     # Compute number of background RoIs to take from this image (guarding against there being fewer than desired)
