@@ -271,7 +271,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             print "stride:"+str(s)
             print len(np.where(channels==float(s))[0])
         f_chan = open('channels.txt','w')
-        for ii in range(len(channels.shape[0])):
+        for ii in range(channels.shape[0]):
             f_chan.write(str(channels[ii][0])+' ')
         f_chan.close()
 
