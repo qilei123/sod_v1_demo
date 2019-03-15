@@ -149,7 +149,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     # foreground RoI with FG_THRESH overlap
     print "gt_boxes:"+str(gt_boxes)
     new_order = np.argsort(overlaps)
-    #print "overlaps:"+str(overlaps[new_order[-100:]])
+    print "overlaps:"+str(overlaps[new_order[-50:]])
     #print "overlaps1:"+str(overlaps1[new_order[-100:]])
     #print "overlaps2:"+str(overlaps2[new_order[-100:]])
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
