@@ -21,7 +21,7 @@ import os
 import gc
 DEBUG = False
 
-LAYER_NUM = 2
+LAYER_NUM = 5
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -228,7 +228,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             keep = self._filter_boxes(proposals, min_size * im_info[2])
             proposals = proposals[keep, :]
             scores = scores[keep]
-
+            if s in ['4','8','16']:
+                scores = scores*0
             channels = channels[keep]
 
             proposal_list.append(proposals)
