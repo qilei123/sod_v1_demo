@@ -1,6 +1,6 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline15"
+output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline16"
 symbol: resnet_v1_101_fpn_rcnn_l2_focal_v2
 gpus: '2,3'
 CLASS_AGNOSTIC: false
@@ -45,7 +45,7 @@ dataset:
   dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline15"
+  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline16"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
@@ -53,13 +53,13 @@ TRAIN:
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
-  lr_step: '6,8'
+  lr_step: '4,6'
   wd: 0.0001
-  begin_epoch: 2
+  begin_epoch: 0
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: true
+  RESUME: false
   # whether flip image
   FLIP: false
   # whether shuffle image
