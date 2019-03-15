@@ -21,7 +21,7 @@ import os
 import gc
 DEBUG = False
 
-LAYER_NUM = 5
+LAYER_NUM = 2
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -107,6 +107,15 @@ class PyramidProposalOperator(mx.operator.CustomOp):
                 'stride16': in_data[7],
                 'stride8': in_data[6],
                 'stride4': in_data[5],
+            } 
+        elif LAYER_NUM==2:
+            cls_prob_dict = {
+                'stride64': in_data[4],
+                'stride32': in_data[3],
+            }
+            bbox_pred_dict = {
+                'stride64': in_data[9],
+                'stride32': in_data[8],
             } 
         elif LAYER_NUM==1:
             cls_prob_dict = {

@@ -897,18 +897,18 @@ class resnet_v1_101_fpn_rcnn_l2_focal_v2(Symbol):
         rpn_cls_prob_dict = {
             'rpn_cls_prob_stride64': rpn_prob_p6,
             'rpn_cls_prob_stride32': rpn_prob_p5,
-            'rpn_cls_prob_stride16': rpn_prob_p4,
-            'rpn_cls_prob_stride8': rpn_prob_p3,
-            'rpn_cls_prob_stride4': rpn_prob_p2,
+            #'rpn_cls_prob_stride16': rpn_prob_p4,
+            #'rpn_cls_prob_stride8': rpn_prob_p3,
+            #'rpn_cls_prob_stride4': rpn_prob_p2,
             #'rpn_cls_prob_stride2': rpn_prob_p1,
             #'rpn_cls_prob_stride1': rpn_prob_p0,
         }
         rpn_bbox_pred_dict = {
             'rpn_bbox_pred_stride64': rpn_bbox_pred_p6,
             'rpn_bbox_pred_stride32': rpn_bbox_pred_p5,
-            'rpn_bbox_pred_stride16': rpn_bbox_pred_p4,
-            'rpn_bbox_pred_stride8': rpn_bbox_pred_p3,
-            'rpn_bbox_pred_stride4': rpn_bbox_pred_p2,
+            #'rpn_bbox_pred_stride16': rpn_bbox_pred_p4,
+            #'rpn_bbox_pred_stride8': rpn_bbox_pred_p3,
+            #'rpn_bbox_pred_stride4': rpn_bbox_pred_p2,
             #'rpn_bbox_pred_stride2': rpn_bbox_pred_p1,
             #'rpn_bbox_pred_stride1': rpn_bbox_pred_p0,
         }
@@ -956,8 +956,8 @@ class resnet_v1_101_fpn_rcnn_l2_focal_v2(Symbol):
             # ROI proposal
             rois = mx.sym.Custom(**dict(arg_dict.items() + aux_dict.items()))
 
-        roi_pool = mx.symbol.Custom(data_p2=fpn_p2, data_p3=fpn_p3,data_p4=fpn_p4,data_p5=fpn_p5,
-                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling', feat_strides = '(4,8,16,32)')
+        roi_pool = mx.symbol.Custom(data_p2=fpn_p2, data_p3=fpn_p3,data_p4=fpn_p4,
+                                    rois=rois, op_type='fpn_roi_pooling', name='fpn_roi_pooling', feat_strides = '(4,8,16)')
 
         # 2 fc
         fc_new_1 = mx.symbol.FullyConnected(name='fc_new_1', data=roi_pool, num_hidden=1024)
