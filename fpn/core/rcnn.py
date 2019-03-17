@@ -164,7 +164,7 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
                 if boxcenter_ins[i]==1:
                     if not(i in fg_indexes):
                         fg_indexes = np.append(fg_indexes,i) 
-
+    print "fg_indexes:"+str(fg_indexes)
     print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
     f_chan = open('channels.txt')
     sf_chan = f_chan.read()
