@@ -159,8 +159,9 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     sf_chan = f_chan.read()
     channels = sf_chan.split(" ")
     for ii in range(len(fg_indexes)-gt_boxes.shape[0]):
-        print channels[fg_indexes[ii]]
-        print labels[fg_indexes[ii]]
+        if fg_indexes[ii]  <len(channels):
+            print channels[fg_indexes[ii]]
+            print labels[fg_indexes[ii]]
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
     fg_rois_per_this_image = np.minimum(fg_rois_per_image, fg_indexes.size)
     # Sample foreground regions without replacement
