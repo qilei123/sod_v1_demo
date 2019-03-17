@@ -137,8 +137,11 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     :return: (labels, rois, bbox_targets, bbox_weights)
     """
     if labels is None:
-        overlaps,overlaps1,overlaps2 = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
+        overlaps,overlaps1,overlaps2,tboxcenter_ins = bbox_overlaps_py1(rois[:, 1:].astype(np.float), gt_boxes[:, :4].astype(np.float))
         gt_assignment = overlaps.argmax(axis=1)
+        boxcenter_ins=np.zeros(gt_assignment.shape[0])
+        for i in range(gt_assignment.shape[0]):
+            boxcenter_ins[i]=tboxcenter_ins[i,gt_assignment[i]]
         overlaps = overlaps.max(axis=1)
         overlaps1 = overlaps1.max(axis=1)
         overlaps2 = overlaps2.max(axis=1)
@@ -149,11 +152,19 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     # foreground RoI with FG_THRESH overlap
     #print "gt_boxes:"+str(gt_boxes)
     new_order = np.argsort(overlaps)
-    print "overlaps:"+str(overlaps[new_order[-50:]])
+    print "overlaps:"+str(overlaps[new_order[-100:]])
     print "overlaps1:"+str(overlaps1[new_order[-100:]])
     print "overlaps2:"+str(overlaps2[new_order[-100:]])
+    print "boxcenter_ins"+str(boxcenter_ins[new_order[-100:]])
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     print "fg_indexes:"+str(fg_indexes)
+    for i in range(overlaps):
+        if overlaps[i]>0.1:
+            if overlaps1[i]>0.7:
+                if boxcenter_ins[i]==1:
+                    if not(i in fg_indexes):
+                        fg_indexes = np.append(fg_indexes,i) 
+
     print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
     f_chan = open('channels.txt')
     sf_chan = f_chan.read()

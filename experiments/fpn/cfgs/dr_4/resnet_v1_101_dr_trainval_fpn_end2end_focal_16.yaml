@@ -55,13 +55,13 @@ TRAIN:
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
-  lr_step: '4,6'
+  lr_step: '12,14'
   wd: 0.0001
-  begin_epoch: 0
+  begin_epoch: 8
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: false
+  RESUME: true
   # whether flip image
   FLIP: false
   # whether shuffle image
