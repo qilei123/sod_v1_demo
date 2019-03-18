@@ -29,6 +29,7 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         rois = in_data[-1].asnumpy()
         w = rois[:, 3] - rois[:, 1] + 1
         h = rois[:, 4] - rois[:, 2] + 1
+        print "rois:"+str(rois)
         feat_id = np.clip(np.floor(2 + np.log2(np.sqrt(w * h) / 224)), 0, len(self.feat_strides) - 1)
         pyramid_idx = []
         print "feat_id:"+str(feat_id)
