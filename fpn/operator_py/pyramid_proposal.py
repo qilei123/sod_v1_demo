@@ -21,7 +21,7 @@ import os
 import gc
 DEBUG = False
 
-LAYER_NUM = 7
+LAYER_NUM = 5
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -54,7 +54,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # apply NMS with threshold 0.7 to remaining proposals
         # take after_nms_topN proposals after NMS
         # return the top proposals (-> RoIs top, scores top)
-        
+        LAYER_NUM = len(in_data)/2
         if LAYER_NUM==7:
             cls_prob_dict = {
                 'stride64': in_data[6],
