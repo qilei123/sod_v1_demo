@@ -42,9 +42,10 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
             else:
                 rois_p[i] = rois[self.feat_idx[i]]
                 pyramid_idx.append(self.feat_idx[i])
+            print "rois_p:"+str(rois_p[i])
+            print "rois_p.shape"+str(rois_p[i].shape)
         rois_idx = np.argsort(np.hstack(pyramid_idx))[-rois.shape[0]:]
-        print "rois_p:"+str(rois_p)
-        print "rois_p.shape"+str(rois_p.shape)
+
         if is_train:
             for i in range(self.num_strides):
                 self.in_grad_hist_list.append(mx.nd.zeros_like(in_data[i]))
