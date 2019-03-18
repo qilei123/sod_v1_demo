@@ -158,7 +158,8 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
         print "overlaps1:"+str(overlaps1[new_order[-100:]])
         print "overlaps2:"+str(overlaps2[new_order[-100:]])
         print "boxcenter_ins"+str(boxcenter_ins[new_order[-100:]])
-        fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
+    fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
+    if DEBUG:
         print "fg_indexes:"+str(fg_indexes)
         for i in range(len(overlaps)):
             if overlaps[i]>0.1:
