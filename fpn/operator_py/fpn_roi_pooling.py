@@ -32,6 +32,7 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         print "rois:"+str(rois)
         feat_id = np.clip(np.floor(2 + np.log2(np.sqrt(w * h) / 224)), 0, len(self.feat_strides) - 1)
         pyramid_idx = []
+        print "befor_clip:"+str(np.floor(2 + np.log2(np.sqrt(w * h) / 224)))
         print "feat_id:"+str(feat_id)
         rois_p = [None for _ in range(self.num_strides)]
         for i in range(self.num_strides):
