@@ -2,7 +2,7 @@
 MXNET_VERSION: "mxnet"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB7/fpn_baseline16"
 symbol: resnet_v1_101_fpn_rcnn_l2_focal_v2
-gpus: '2'
+gpus: '1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1600
@@ -55,9 +55,9 @@ TRAIN:
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
-  lr_step: '12,14'
+  lr_step: '14,16'
   wd: 0.0001
-  begin_epoch: 8
+  begin_epoch: 10
   end_epoch: 20
   model_prefix: 'fpn_dr'
   # whether resume training

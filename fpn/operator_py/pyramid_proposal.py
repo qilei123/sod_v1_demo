@@ -22,6 +22,7 @@ import gc
 DEBUG = False
 
 LAYER_NUM = 5
+PROPOSAL_LAYER=-1
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -159,7 +160,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
         before_feat = datetime.now()
         
-        for s in self._feat_stride:
+        for s in self._feat_stride[PROPOSAL_LAYER:]:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
