@@ -29,11 +29,11 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         rois = in_data[-1].asnumpy()
         w = rois[:, 3] - rois[:, 1] + 1
         h = rois[:, 4] - rois[:, 2] + 1
-        print "rois:"+str(rois)
+        #print "rois:"+str(rois)
         feat_id = np.clip(np.floor(2 + np.log2(np.sqrt(w * h) / 224)), 0, len(self.feat_strides) - 1)
         pyramid_idx = []
-        print "befor_clip:"+str(np.floor(2 + np.log2(np.sqrt(w * h) / 224)))
-        print "feat_id:"+str(feat_id)
+        #print "befor_clip:"+str(np.floor(2 + np.log2(np.sqrt(w * h) / 224)))
+        #print "feat_id:"+str(feat_id)
         rois_p = [None for _ in range(self.num_strides)]
         for i in range(self.num_strides):
             self.feat_idx[i] = np.where(feat_id == i)[0]
@@ -44,8 +44,8 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
             else:
                 rois_p[i] = rois[self.feat_idx[i]]
                 pyramid_idx.append(self.feat_idx[i])
-            print "rois_p:"+str(rois_p[i])
-            print "rois_p.shape"+str(rois_p[i].shape)
+            #print "rois_p:"+str(rois_p[i])
+            #print "rois_p.shape"+str(rois_p[i].shape)
         rois_idx = np.argsort(np.hstack(pyramid_idx))[-rois.shape[0]:]
 
         if is_train:

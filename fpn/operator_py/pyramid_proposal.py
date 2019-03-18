@@ -21,7 +21,7 @@ import os
 import gc
 DEBUG = False
 
-LAYER_NUM = 5
+LAYER_NUM = 7
 class PyramidProposalOperator(mx.operator.CustomOp):
     def __init__(self, feat_stride, scales, ratios, output_score,
                  rpn_pre_nms_top_n, rpn_post_nms_top_n, threshold, rpn_min_size):
@@ -159,7 +159,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
         before_feat = datetime.now()
         
-        for s in self._feat_stride[-1:]:
+        for s in self._feat_stride:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
@@ -253,11 +253,12 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[order, :]
         scores = scores[order]
         channels = channels[order]
-        print '-------1-------'
-        print channels.shape
-        for s in self._feat_stride:
-            print "stride:"+str(s)
-            print len(np.where(channels==float(s))[0])
+        if DEBUG:
+            print '-------1-------'
+            print channels.shape
+            for s in self._feat_stride:
+                print "stride:"+str(s)
+                print len(np.where(channels==float(s))[0])
         # 6. apply nms (e.g. threshold = 0.7)
         # 7. take after_nms_topN (e.g. 300)
         # 8. return the top proposals (-> RoIs top)
@@ -274,11 +275,12 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         proposals = proposals[keep, :]
         scores = scores[keep]
         channels = channels[keep]
-        print '-------2-------'
-        print channels.shape
-        for s in self._feat_stride:
-            print "stride:"+str(s)
-            print len(np.where(channels==float(s))[0])
+        if DEBUG:
+            print '-------2-------'
+            print channels.shape
+            for s in self._feat_stride:
+                print "stride:"+str(s)
+                print len(np.where(channels==float(s))[0])
         f_chan = open('channels.txt','w')
         for ii in range(channels.shape[0]):
             f_chan.write(str(channels[ii][0])+' ')

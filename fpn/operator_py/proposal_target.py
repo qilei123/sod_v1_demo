@@ -25,7 +25,7 @@ from datetime import datetime
 
 from core.rcnn import sample_rois
 
-DEBUG = True
+DEBUG = False
 
 
 class ProposalTargetOperator(mx.operator.CustomOp):

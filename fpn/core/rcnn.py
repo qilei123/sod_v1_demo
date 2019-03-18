@@ -31,6 +31,7 @@ from utils.image import get_image, tensor_vstack
 from bbox.bbox_transform import bbox_overlaps, bbox_transform, bbox_overlaps_py1
 from bbox.bbox_regression import expand_bbox_regression_targets
 
+DEBUG=False
 
 def get_rcnn_testbatch(roidb, cfg):
     """
@@ -152,27 +153,28 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     # foreground RoI with FG_THRESH overlap
     #print "gt_boxes:"+str(gt_boxes)
     new_order = np.argsort(overlaps)
-    print "overlaps:"+str(overlaps[new_order[-100:]])
-    print "overlaps1:"+str(overlaps1[new_order[-100:]])
-    print "overlaps2:"+str(overlaps2[new_order[-100:]])
-    print "boxcenter_ins"+str(boxcenter_ins[new_order[-100:]])
-    fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
-    print "fg_indexes:"+str(fg_indexes)
-    for i in range(len(overlaps)):
-        if overlaps[i]>0.1:
-            if overlaps1[i]>0.7:
-                if boxcenter_ins[i]==1:
-                    if not(i in fg_indexes):
-                        fg_indexes = np.append(fg_indexes,i) 
-    print "fg_indexes:"+str(fg_indexes)
-    print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
-    f_chan = open('channels.txt')
-    sf_chan = f_chan.read()
-    channels = sf_chan.split(" ")
-    for ii in range(len(fg_indexes)-gt_boxes.shape[0]):
-        if fg_indexes[ii]  <len(channels):
-            print channels[fg_indexes[ii]]
-            print labels[fg_indexes[ii]]
+    if DEBUG:
+        print "overlaps:"+str(overlaps[new_order[-100:]])
+        print "overlaps1:"+str(overlaps1[new_order[-100:]])
+        print "overlaps2:"+str(overlaps2[new_order[-100:]])
+        print "boxcenter_ins"+str(boxcenter_ins[new_order[-100:]])
+        fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
+        print "fg_indexes:"+str(fg_indexes)
+        for i in range(len(overlaps)):
+            if overlaps[i]>0.1:
+                if overlaps1[i]>0.7:
+                    if boxcenter_ins[i]==1:
+                        if not(i in fg_indexes):
+                            fg_indexes = np.append(fg_indexes,i) 
+        print "fg_indexes:"+str(fg_indexes)
+        print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
+        f_chan = open('channels.txt')
+        sf_chan = f_chan.read()
+        channels = sf_chan.split(" ")
+        for ii in range(len(fg_indexes)-gt_boxes.shape[0]):
+            if fg_indexes[ii]  <len(channels):
+                print channels[fg_indexes[ii]]
+                print labels[fg_indexes[ii]]
     # guard against the case when an image has fewer than fg_rois_per_image foreground RoIs
     fg_rois_per_this_image = np.minimum(fg_rois_per_image, fg_indexes.size)
     # Sample foreground regions without replacement
