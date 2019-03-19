@@ -891,8 +891,8 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
 
             #rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p1,rpn_cls_score_p2, rpn_cls_score_p3, rpn_cls_score_p4, rpn_cls_score_p5, rpn_cls_score_p6, dim=2)
             #rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p1,rpn_bbox_loss_p2, rpn_bbox_loss_p3, rpn_bbox_loss_p4, rpn_bbox_loss_p5, rpn_bbox_loss_p6, dim=2)
-            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,dim=2)
-            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,dim=2)
+            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p5,rpn_cls_score_p6,dim=2)
+            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p5,rpn_bbox_loss_p6,dim=2)
             # RPN classification loss
             rpn_cls_output = mx.sym.SoftmaxOutput(data=rpn_cls_score, label=rpn_label, multi_output=True, normalization='valid',
                                                   use_ignore=True, ignore_label=-1, name='rpn_cls_prob')
