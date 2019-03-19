@@ -298,7 +298,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
                 print "stride:"+str(s)
                 print len(np.where(channels==float(s))[0])
             print "proposals:"+str(proposals[0:20])
-            #print "scores:"+str(scores)
+            print "scores:"+str(scores[0:20])
         f_chan = open('channels.txt','w')
         for ii in range(channels.shape[0]):
             f_chan.write(str(channels[ii][0])+' ')
