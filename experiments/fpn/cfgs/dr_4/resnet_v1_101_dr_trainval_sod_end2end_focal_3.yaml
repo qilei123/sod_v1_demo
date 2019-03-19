@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO8/sod_baseline3"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
-gpus: '0,1,2'
+gpus: '1'
 CLASS_AGNOSTIC: false
 SCALES:
 - 960
