@@ -175,7 +175,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
-            scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
+            scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, :self._num_anchors, :, :]
             scores1 = cls_prob_dict['stride' + str(s)].asnumpy()
             
             print "scores.shape:"+str(scores.shape)
