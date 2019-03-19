@@ -171,7 +171,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
 
         before_feat = datetime.now()
         
-        for s in self._feat_stride[PROPOSAL_LAYER:-1]:
+        for s in self._feat_stride:
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
