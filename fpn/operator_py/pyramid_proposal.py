@@ -282,6 +282,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             for s in self._feat_stride:
                 print "stride:"+str(s)
                 print len(np.where(channels==float(s))[0])
+            print "proposals:"+str(proposals)
+            print "scores:"+str(scores)
         f_chan = open('channels.txt','w')
         for ii in range(channels.shape[0]):
             f_chan.write(str(channels[ii][0])+' ')
