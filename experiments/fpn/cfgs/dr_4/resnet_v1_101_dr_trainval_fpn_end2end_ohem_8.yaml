@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/DR_COCO6/fpn_baseline_8"
 symbol: resnet_v1_101_fpn_rcnn_l0
-gpus: '4'
+gpus: '4,5'
 CLASS_AGNOSTIC: false
 SCALES:
 - 608
