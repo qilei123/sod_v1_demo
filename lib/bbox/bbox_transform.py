@@ -165,6 +165,9 @@ def nonlinear_pred(boxes, box_deltas):
     pred_w = np.exp(dw) * widths[:, np.newaxis]
     pred_h = np.exp(dh) * heights[:, np.newaxis]
 
+    print pred_h[0:20]
+    print heights[0:20]
+
     pred_boxes = np.zeros(box_deltas.shape)
     # x1
     pred_boxes[:, 0::4] = pred_ctr_x - 0.5 * (pred_w - 1.0)
