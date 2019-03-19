@@ -10,7 +10,7 @@ import numpy as np
 from mxnet.contrib import autograd
 import gc
 from datetime import datetime
-
+DEBUG = False
 class FPNROIPoolingOperator(mx.operator.CustomOp):
     def __init__(self, feat_strides, pooled_height, pooled_width, output_dim, with_deformable):
         self.pooled_height = pooled_height
@@ -33,7 +33,8 @@ class FPNROIPoolingOperator(mx.operator.CustomOp):
         feat_id = np.clip(np.floor(2 + np.log2(np.sqrt(w * h) / 224)), 0, len(self.feat_strides) - 1)
         pyramid_idx = []
         #print "befor_clip:"+str(np.floor(2 + np.log2(np.sqrt(w * h) / 224)))
-        print "feat_id:"+str(feat_id)
+        if DEBUG:
+            print "feat_id:"+str(feat_id)
         rois_p = [None for _ in range(self.num_strides)]
         for i in range(self.num_strides):
             self.feat_idx[i] = np.where(feat_id == i)[0]
