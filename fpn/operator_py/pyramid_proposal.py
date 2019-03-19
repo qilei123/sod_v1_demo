@@ -19,7 +19,7 @@ from datetime import datetime
 import os
 
 import gc
-DEBUG = False
+DEBUG = True
 
 LAYER_NUM = 5
 PROPOSAL_LAYER=-1
