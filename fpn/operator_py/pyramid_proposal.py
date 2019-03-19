@@ -177,7 +177,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
             #scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
             scores = cls_prob_dict['stride' + str(s)].asnumpy()
-            print "scores[:100]:"+str(scores.shape)
+            
             #print "scores.shape:"+str(scores.shape)
             bbox_deltas = bbox_pred_dict['stride' + str(s)].asnumpy()
             #print "bbox_deltas.shape:"+str(bbox_deltas.shape)
@@ -225,7 +225,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             # reshape to (1 * H * W * A, 1) where rows are ordered by (h, w, a)
             scores = self._clip_pad(scores, (height, width))
             scores = scores.transpose((0, 2, 3, 1)).reshape((-1, 1))
-            
+            print "scores[:100]:"+str(scores[:50])
             channels = np.ones((scores.shape))*stride
 
             # Convert anchors into proposals via bbox transformations
