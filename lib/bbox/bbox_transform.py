@@ -164,9 +164,9 @@ def nonlinear_pred(boxes, box_deltas):
     #print 'waring dh:'+str(dh)
     pred_w = np.exp(dw) * widths[:, np.newaxis]
     pred_h = np.exp(dh) * heights[:, np.newaxis]
-
-    print pred_h[0:20]
-    print heights[0:20]
+    print "pred_h[0:20]:"+str(pred_h[0:20])
+    print "dh[0:20]:"+str(dh[0:20])
+    print "pred_h[0:20]:"+str(heights[0:20])
 
     pred_boxes = np.zeros(box_deltas.shape)
     # x1
