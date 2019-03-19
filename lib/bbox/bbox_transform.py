@@ -15,7 +15,7 @@ import numpy as np
 from bbox import bbox_overlaps_cython
 np.set_printoptions(threshold=np.nan)
 
-DEBUG=True
+DEBUG=False
 
 def bbox_overlaps(boxes, query_boxes):
     return bbox_overlaps_cython(boxes, query_boxes)
