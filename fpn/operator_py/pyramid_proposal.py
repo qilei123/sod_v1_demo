@@ -241,6 +241,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             print str(im_info[2])
             keep = self._filter_boxes(proposals, min_size * im_info[2])
             proposals = proposals[keep, :]
+            print "proposals3:"+str(proposals[0:10])
             scores = scores[keep]
 
             channels = channels[keep]
