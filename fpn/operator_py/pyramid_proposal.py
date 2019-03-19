@@ -179,7 +179,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             scores1 = cls_prob_dict['stride' + str(s)].asnumpy()
             
             print "scores.shape:"+str(scores.shape)
-            print "scores1.shape:"+str(score1.shape)
+            print "scores1.shape:"+str(scores1.shape)
 
             #print "scores.shape:"+str(scores.shape)
             bbox_deltas = bbox_pred_dict['stride' + str(s)].asnumpy()
