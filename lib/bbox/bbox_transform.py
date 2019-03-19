@@ -15,6 +15,8 @@ import numpy as np
 from bbox import bbox_overlaps_cython
 np.set_printoptions(threshold=np.nan)
 
+DEBUG=True
+
 def bbox_overlaps(boxes, query_boxes):
     return bbox_overlaps_cython(boxes, query_boxes)
 
@@ -164,10 +166,10 @@ def nonlinear_pred(boxes, box_deltas):
     #print 'waring dh:'+str(dh)
     pred_w = np.exp(dw) * widths[:, np.newaxis]
     pred_h = np.exp(dh) * heights[:, np.newaxis]
-    
-    print "heights[0:20]:"+str(heights[0:20])
-    print "dh[0:20]:"+str(dh[0:20])
-    print "pred_h[0:20]:"+str(pred_h[0:20])
+    if DEBUG:
+        print "heights[0:20]:"+str(heights[0:20])
+        print "dh[0:20]:"+str(dh[0:20])
+        print "pred_h[0:20]:"+str(pred_h[0:20])
     
     pred_boxes = np.zeros(box_deltas.shape)
     # x1

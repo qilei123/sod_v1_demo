@@ -175,11 +175,11 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             stride = int(s)
             sub_anchors = generate_anchors(base_size=stride, scales=self._scales, ratios=self._ratios)
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
-            scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, :self._num_anchors, :, :]
+            scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
             scores1 = cls_prob_dict['stride' + str(s)].asnumpy()
-            
-            print "scores.shape:"+str(scores.shape)
-            print "scores1.shape:"+str(scores1.shape)
+            if DEBUG:
+                print "scores.shape:"+str(scores.shape)
+                print "scores1.shape:"+str(scores1.shape)
 
             #print "scores.shape:"+str(scores.shape)
             bbox_deltas = bbox_pred_dict['stride' + str(s)].asnumpy()
@@ -228,7 +228,8 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             # reshape to (1 * H * W * A, 1) where rows are ordered by (h, w, a)
             scores = self._clip_pad(scores, (height, width))
             scores = scores.transpose((0, 2, 3, 1)).reshape((-1, 1))
-            print "scores[:100]:"+str(scores[:50])
+            if DEBUG:
+                print "scores[:100]:"+str(scores[:50])
             channels = np.ones((scores.shape))*stride
 
             # Convert anchors into proposals via bbox transformations
@@ -241,11 +242,13 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             proposals = clip_boxes(proposals, im_info[:2])
             # 3. remove predicted boxes with either height or width < threshold
             # (NOTE: convert min_size to input image scale stored in im_info[2])
-            print str(min_size)
-            print str(im_info[2])
+            if DEBUG:
+                print str(min_size)
+                print str(im_info[2])
             keep = self._filter_boxes(proposals, min_size * im_info[2])
             proposals = proposals[keep, :]
-            print "proposals3:"+str(proposals[0:10])
+            if DEBUG:
+                print "proposals3:"+str(proposals[0:10])
             scores = scores[keep]
 
             channels = channels[keep]
@@ -331,7 +334,6 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         """ Remove all boxes with any side smaller than min_size """
         ws = boxes[:, 2] - boxes[:, 0] + 1
         hs = boxes[:, 3] - boxes[:, 1] + 1
-        print "boxes:"+str(boxes[0:10])
         keep = np.where((ws >= min_size) & (hs >= min_size))[0]
         return keep
 
