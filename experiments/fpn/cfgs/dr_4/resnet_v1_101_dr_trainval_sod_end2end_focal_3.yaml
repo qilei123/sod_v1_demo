@@ -55,11 +55,11 @@ TRAIN:
   # lr: 0.000001
   lr_step: '4,6'
   wd: 0.0001
-  begin_epoch: 1
+  begin_epoch: 0
   end_epoch: 10
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: true
+  RESUME: false
   # whether flip image
   FLIP: false
   # whether shuffle image
