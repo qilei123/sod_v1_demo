@@ -365,8 +365,8 @@ def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 
             if center_ins[i,argmax_overlaps[i]]==1:
                 if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/2:
                     print max_overlaps[i]
-                    print labels[i]
-                    labels[i] = 1
+                    print fpn_labels[i]
+                    fpn_labels[i] = 1
     else:
         fpn_labels[:] = 0
 
