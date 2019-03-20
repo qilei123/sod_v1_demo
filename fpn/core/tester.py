@@ -121,7 +121,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     :param thresh: valid detection threshold
     :return:
     """
-
+    imdb.result_path=imdb.result_path+'_2'
     det_file = os.path.join(imdb.result_path, imdb.name + '_detections.pkl')
     if os.path.exists(det_file) and not ignore_cache:
         with open(det_file, 'rb') as fid:
