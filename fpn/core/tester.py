@@ -89,7 +89,7 @@ def detect_at_single_scale(predictor, data_names, imdb, test_data, cfg, thresh, 
                 cls_boxes = boxes[indexes, 4:8] if cfg.CLASS_AGNOSTIC else boxes[indexes, j * 4:(j + 1) * 4]
                 cls_dets = np.hstack((cls_boxes, cls_scores)).copy()
                 all_boxes_single_scale[j][idx + delta] = cls_dets
-            if not vis:
+            if vis:
                 boxes_this_image = [[]] + [all_boxes_single_scale[j][idx + delta] for j in range(1, imdb.num_classes)]
                 data_for_vis = data_dict['data'].asnumpy().copy()
                 vis_all_detection(imdb.result_path,data_for_vis, boxes_this_image, imdb.classes, scales[delta], cfg)
