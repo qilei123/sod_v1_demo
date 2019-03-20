@@ -177,7 +177,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             #print "cls_prob_dict['stride' + str(s)].shape:"+str(cls_prob_dict['stride' + str(s)].shape)
             scores = cls_prob_dict['stride' + str(s)].asnumpy()[:, self._num_anchors:, :, :]
             scores1 = cls_prob_dict['stride' + str(s)].asnumpy()
-            if DEBUG:
+            if not DEBUG:
                 print "scores.shape:"+str(scores.shape)
                 print "scores1.shape:"+str(scores1.shape)
 
