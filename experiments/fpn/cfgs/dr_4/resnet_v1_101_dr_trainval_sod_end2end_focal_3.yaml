@@ -5,8 +5,8 @@ symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
 gpus: '4'
 CLASS_AGNOSTIC: false
 SCALES:
-- 1216
-- 1216
+- 1120
+- 1120
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[960, 960]] # multi-scale testing
 default:
@@ -30,14 +30,13 @@ network:
   - 1
   - 2
   ANCHOR_SCALES:
-  - 0.03125
-  - 0.0625
-  - 0.125
-  - 0.25
+  - 0.02
+  - 0.05
+  - 0.1
+  - 0.2
   - 0.5
   - 1
-  - 2
-  NUM_ANCHORS: 21
+  NUM_ANCHORS: 18
 dataset:
   NUM_CLASSES: 5
   dataset: coco
