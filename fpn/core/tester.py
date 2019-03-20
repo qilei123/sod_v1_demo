@@ -92,7 +92,7 @@ def detect_at_single_scale(predictor, data_names, imdb, test_data, cfg, thresh, 
             if not vis:
                 boxes_this_image = [[]] + [all_boxes_single_scale[j][idx + delta] for j in range(1, imdb.num_classes)]
                 data_for_vis = data_dict['data'].asnumpy().copy()
-                vis_all_detection(data_for_vis, boxes_this_image, imdb.classes, scales[delta], cfg)
+                vis_all_detection(imdb.result_path,data_for_vis, boxes_this_image, imdb.classes, scales[delta], cfg)
 
         idx += test_data.batch_size
         t3 = time.time() - t
