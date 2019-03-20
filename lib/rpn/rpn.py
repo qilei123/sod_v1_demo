@@ -343,9 +343,10 @@ def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 
         # overlap between the anchors and the gt boxes
         # overlaps (ex, gt)
         #overlaps = bbox_overlaps(fpn_anchors.astype(np.float), gt_boxes.astype(np.float))
-        overlaps,_,_,center_ins = bbox_overlaps_py1(anchors.astype(np.float), gt_boxes.astype(np.float))
+        overlaps,overlaps1,_,center_ins = bbox_overlaps_py1(anchors.astype(np.float), gt_boxes.astype(np.float))
         argmax_overlaps = overlaps.argmax(axis=1)
         max_overlaps = overlaps[np.arange(len(fpn_anchors)), argmax_overlaps]
+        max_overlaps1 = overlaps1[np.arange(len(fpn_anchors)), argmax_overlaps]
         gt_argmax_overlaps = overlaps.argmax(axis=0)
         gt_max_overlaps = overlaps[gt_argmax_overlaps, np.arange(overlaps.shape[1])]
         gt_argmax_overlaps = np.where(overlaps == gt_max_overlaps)[0]
@@ -363,10 +364,11 @@ def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 
         #print center_ins
         for i in range(argmax_overlaps.shape[0]):
             if center_ins[i,argmax_overlaps[i]]==1:
-                if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/2:
-                    print max_overlaps[i]
-                    print fpn_labels[i]
-                    fpn_labels[i] = 1
+                if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/3:
+                    if max_overlaps1[i]>=0.7:
+                        print max_overlaps[i]
+                        print fpn_labels[i]
+                        fpn_labels[i] = 1
     else:
         fpn_labels[:] = 0
 
