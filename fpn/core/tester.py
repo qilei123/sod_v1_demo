@@ -89,7 +89,7 @@ def detect_at_single_scale(predictor, data_names, imdb, test_data, cfg, thresh, 
                 cls_boxes = boxes[indexes, 4:8] if cfg.CLASS_AGNOSTIC else boxes[indexes, j * 4:(j + 1) * 4]
                 cls_dets = np.hstack((cls_boxes, cls_scores)).copy()
                 all_boxes_single_scale[j][idx + delta] = cls_dets
-            if vis:
+            if not vis:
                 boxes_this_image = [[]] + [all_boxes_single_scale[j][idx + delta] for j in range(1, imdb.num_classes)]
                 data_for_vis = data_dict['data'].asnumpy().copy()
                 vis_all_detection(data_for_vis, boxes_this_image, imdb.classes, scales[delta], cfg)
@@ -109,7 +109,7 @@ def detect_at_single_scale(predictor, data_names, imdb, test_data, cfg, thresh, 
                         .format(idx, imdb.num_images, cfg.SCALES, data_time / idx * test_data.batch_size,
                                 net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
 
-
+count=0
 def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=None, ignore_cache=True):
     """
     wrapper for calculating offline validation for faster data analysis
@@ -197,14 +197,14 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                     all_boxes[j][idx_im] = all_boxes[j][idx_im][keep, :]
 
     with open(det_file, 'wb') as f:
-        cPickle.dump(all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
+        cPickle.dump(imdb.result_path,all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
 
     info_str = imdb.evaluate_detections(all_boxes)
     if logger:
         logger.info('evaluate detections: \n{}'.format(info_str))
 
 
-def vis_all_detection(im_array, detections, class_names, scale, cfg, threshold=1e-3):
+def vis_all_detection(save_dir,im_array, detections, class_names, scale, cfg, threshold=1e-3):
     """
     visualize all detections in one image
     :param im_array: [b=1 c h w] in rgb
@@ -213,6 +213,9 @@ def vis_all_detection(im_array, detections, class_names, scale, cfg, threshold=1
     :param scale: visualize the scaled image
     :return:
     """
+    save_dir = (os.path.join(save_dir,'view_result'))
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir) 
     import matplotlib.pyplot as plt
     import random
     im = image.transform_inverse(im_array, cfg.network.PIXEL_MEANS)
@@ -235,7 +238,10 @@ def vis_all_detection(im_array, detections, class_names, scale, cfg, threshold=1
             plt.gca().text(bbox[0], bbox[1] - 2,
                            '{:s} {:.3f}'.format(name, score),
                            bbox=dict(facecolor=color, alpha=0.5), fontsize=12, color='white')
-    plt.show()
+    
+    plt.savefig(save_dir+'/'+str(count)+".jpg")
+    count=count+1
+    #plt.show()
 
 
 def draw_all_detection(im_array, detections, class_names, scale, cfg, threshold=1e-1):

@@ -8,7 +8,7 @@ SCALES:
 - 1120
 - 1120
 # TEST_SCALES: [[800, 1280]] # single scale testing
-TEST_SCALES: [[1120, 1120]] # multi-scale testing
+TEST_SCALES: [[960,960],[1120, 1120],[1280,1280]] # multi-scale testing
 default:
   frequent: 20
   kvstore: device
