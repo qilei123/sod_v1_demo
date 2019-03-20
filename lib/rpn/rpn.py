@@ -185,9 +185,10 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
         for i in range(argmax_overlaps.shape[0]):
             if center_ins[i,argmax_overlaps[i]]==1:
                 if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/2:
-                    labels[i] = 1 
-        
-
+                    print max_overlaps[i]
+                    print labels[i]
+                    labels[i] = 1
+                     
     else:
         labels[:] = 0
 
