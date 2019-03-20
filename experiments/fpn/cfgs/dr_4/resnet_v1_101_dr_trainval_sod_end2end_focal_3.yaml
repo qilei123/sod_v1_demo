@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline3"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
-gpus: '0,1,2,3'
+gpus: '4'
 CLASS_AGNOSTIC: false
 SCALES:
 - 960
@@ -47,7 +47,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.005
+  lr: 0.00125
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
