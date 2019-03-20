@@ -2,13 +2,13 @@
 MXNET_VERSION: "python"
 output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline3"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
-gpus: '4'
+gpus: '0,1,2,3,4,5,6'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
 - 1120
 # TEST_SCALES: [[800, 1280]] # single scale testing
-TEST_SCALES: [[960, 960]] # multi-scale testing
+TEST_SCALES: [[1120, 1120]] # multi-scale testing
 default:
   frequent: 20
   kvstore: device
@@ -48,7 +48,7 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.00125
+  lr: 0.00875
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true

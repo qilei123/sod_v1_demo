@@ -31,7 +31,7 @@ from utils.image import get_image, tensor_vstack
 from bbox.bbox_transform import bbox_overlaps, bbox_transform, bbox_overlaps_py1
 from bbox.bbox_regression import expand_bbox_regression_targets
 
-DEBUG=True
+DEBUG=False
 
 def get_rcnn_testbatch(roidb, cfg):
     """

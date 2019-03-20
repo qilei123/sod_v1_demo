@@ -252,7 +252,7 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
              'bbox_weight': bbox_weights}
     return label
 
-
+DEBUG = False
 def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 8, 16, 32, 64),
                           scales=(8,), ratios=(0.5, 1, 2), allowed_border=0, balance_scale_bg=False,):
     """
@@ -283,7 +283,7 @@ def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 
             ret[inds, :] = data
         return ret
 
-    DEBUG = False
+
     im_info = im_info[0]
     scales = np.array(scales, dtype=np.float32)
     ratios = np.array(ratios, dtype=np.float32)
@@ -366,9 +366,10 @@ def assign_pyramid_anchor(feat_shapes, gt_boxes, im_info, cfg, feat_strides=(4, 
             if center_ins[i,argmax_overlaps[i]]==1:
                 if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/3:
                     if max_overlaps1[i]>=0.7:
-                        print max_overlaps[i]
-                        print max_overlaps1[i]
-                        print fpn_labels[i]
+                        if DEBUG:
+                            print max_overlaps[i]
+                            print max_overlaps1[i]
+                            print fpn_labels[i]
                         fpn_labels[i] = 1
     else:
         fpn_labels[:] = 0
