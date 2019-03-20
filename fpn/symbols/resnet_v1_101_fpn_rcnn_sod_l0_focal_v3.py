@@ -860,12 +860,12 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
         #rpn_cls_score_p2, rpn_prob_p2, rpn_bbox_loss_p2, rpn_bbox_pred_p2 = self.get_rpn_subnet(fpn_p2, cfg.network.NUM_ANCHORS, 'p2')
         #rpn_cls_score_p3, rpn_prob_p3, rpn_bbox_loss_p3, rpn_bbox_pred_p3 = self.get_rpn_subnet(fpn_p3, cfg.network.NUM_ANCHORS, 'p3')
         #rpn_cls_score_p4, rpn_prob_p4, rpn_bbox_loss_p4, rpn_bbox_pred_p4 = self.get_rpn_subnet(fpn_p4, cfg.network.NUM_ANCHORS, 'p4')
-        rpn_cls_score_p5, rpn_prob_p5, rpn_bbox_loss_p5, rpn_bbox_pred_p5 = self.get_rpn_subnet(fpn_p5, cfg.network.NUM_ANCHORS, 'p5')
-        rpn_cls_score_p6, rpn_prob_p6, rpn_bbox_loss_p6, rpn_bbox_pred_p6 = self.get_rpn_subnet(fpn_p6, cfg.network.NUM_ANCHORS, 'p6')
+        #rpn_cls_score_p5, rpn_prob_p5, rpn_bbox_loss_p5, rpn_bbox_pred_p5 = self.get_rpn_subnet(fpn_p5, cfg.network.NUM_ANCHORS, 'p5')
+        #rpn_cls_score_p6, rpn_prob_p6, rpn_bbox_loss_p6, rpn_bbox_pred_p6 = self.get_rpn_subnet(fpn_p6, cfg.network.NUM_ANCHORS, 'p6')
 
         rpn_cls_prob_dict = {
-            'rpn_cls_prob_stride64': rpn_prob_p6,
-            'rpn_cls_prob_stride32': rpn_prob_p5,
+            #'rpn_cls_prob_stride64': rpn_prob_p6,
+            #'rpn_cls_prob_stride32': rpn_prob_p5,
             #'rpn_cls_prob_stride16': rpn_prob_p4,
             #'rpn_cls_prob_stride8': rpn_prob_p3,
             #'rpn_cls_prob_stride4': rpn_prob_p2,
@@ -873,8 +873,8 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
             'rpn_cls_prob_stride1': rpn_prob_p0,
         }
         rpn_bbox_pred_dict = {
-            'rpn_bbox_pred_stride64': rpn_bbox_pred_p6,
-            'rpn_bbox_pred_stride32': rpn_bbox_pred_p5,
+            #'rpn_bbox_pred_stride64': rpn_bbox_pred_p6,
+            #'rpn_bbox_pred_stride32': rpn_bbox_pred_p5,
             #'rpn_bbox_pred_stride16': rpn_bbox_pred_p4,
             #'rpn_bbox_pred_stride8': rpn_bbox_pred_p3,
             #'rpn_bbox_pred_stride4': rpn_bbox_pred_p2,
@@ -891,8 +891,8 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
 
             #rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p1,rpn_cls_score_p2, rpn_cls_score_p3, rpn_cls_score_p4, rpn_cls_score_p5, rpn_cls_score_p6, dim=2)
             #rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p1,rpn_bbox_loss_p2, rpn_bbox_loss_p3, rpn_bbox_loss_p4, rpn_bbox_loss_p5, rpn_bbox_loss_p6, dim=2)
-            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,rpn_cls_score_p5,rpn_cls_score_p6,dim=2)
-            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,rpn_bbox_loss_p5,rpn_bbox_loss_p6,dim=2)
+            rpn_cls_score = mx.sym.Concat(rpn_cls_score_p0,dim=2)
+            rpn_bbox_loss = mx.sym.Concat(rpn_bbox_loss_p0,dim=2)
             # RPN classification loss
             rpn_cls_output = mx.sym.SoftmaxOutput(data=rpn_cls_score, label=rpn_label, multi_output=True, normalization='valid',
                                                   use_ignore=True, ignore_label=-1, name='rpn_cls_prob')
@@ -989,12 +989,12 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
         arg_params['bbox_pred_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['bbox_pred_bias'])
 
     def init_weight_fpn(self, cfg, arg_params, aux_params):
-        
+        '''
         arg_params['fpn_p6_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p6_weight'])
         arg_params['fpn_p6_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p6_bias'])
         arg_params['fpn_p5_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p5_weight'])
         arg_params['fpn_p5_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p5_bias'])
-        '''
+        
         arg_params['fpn_p4_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p4_weight'])
         arg_params['fpn_p4_bias'] = mx.nd.zeros(shape=self.arg_shape_dict['fpn_p4_bias'])
         arg_params['fpn_p3_weight'] = mx.random.normal(0, 0.01, shape=self.arg_shape_dict['fpn_p3_weight'])
