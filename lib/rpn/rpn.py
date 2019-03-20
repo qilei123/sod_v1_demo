@@ -182,6 +182,7 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
         if cfg.TRAIN.RPN_CLOBBER_POSITIVES:
             # assign bg labels last so that negative labels can clobber positives
             labels[max_overlaps < cfg.TRAIN.RPN_NEGATIVE_OVERLAP] = 0
+        print center_ins
         for i in range(argmax_overlaps.shape[0]):
             if center_ins[i,argmax_overlaps[i]]==1:
                 if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/2:
