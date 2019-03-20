@@ -821,7 +821,7 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v3(Symbol):
         fpn_p1 = mx.symbol.Convolution(data=fpn_p1_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p1')
         '''
         fpn_p0 = mx.symbol.Convolution(data=fpn_p0_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p0')
-        return fpn_p0,fpn_p5,fpn_p6#, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, 
+        return fpn_p0#,fpn_p5,fpn_p6#, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, 
 
     def get_rpn_subnet(self, data, num_anchors, suffix):
         rpn_conv = mx.sym.Convolution(data=data, kernel=(3, 3), pad=(1, 1), num_filter=128, name='rpn_conv_' + suffix,
