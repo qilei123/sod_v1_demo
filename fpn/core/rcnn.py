@@ -161,12 +161,13 @@ def sample_rois(rois, fg_rois_per_image, rois_per_image, num_classes, cfg,
     fg_indexes = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
     if DEBUG:
         print "fg_indexes:"+str(fg_indexes)
-        for i in range(len(overlaps)):
-            if overlaps[i]>0.1:
-                if overlaps1[i]>0.7:
-                    if boxcenter_ins[i]==1:
-                        if not(i in fg_indexes):
-                            fg_indexes = np.append(fg_indexes,i) 
+    for i in range(len(overlaps)):
+        if overlaps[i]>0.1:
+            if overlaps1[i]>0.7:
+                if boxcenter_ins[i]==1:
+                    if not(i in fg_indexes):
+                        fg_indexes = np.append(fg_indexes,i)
+    if DEBUG: 
         print "fg_indexes:"+str(fg_indexes)
         print "**********proposal-gt:"+str(len(fg_indexes)-gt_boxes.shape[0])
         f_chan = open('channels.txt')

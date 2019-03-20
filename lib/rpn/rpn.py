@@ -27,7 +27,7 @@ import numpy.random as npr
 
 from utils.image import get_image, tensor_vstack
 from generate_anchor import generate_anchors
-from bbox.bbox_transform import bbox_overlaps, bbox_transform
+from bbox.bbox_transform import bbox_overlaps, bbox_transform,bbox_overlaps_py1
 
 
 def get_rpn_testbatch(roidb, cfg):
@@ -158,12 +158,15 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
     if gt_boxes.size > 0:
         # overlap between the anchors and the gt boxes
         # overlaps (ex, gt)
-        overlaps = bbox_overlaps(anchors.astype(np.float), gt_boxes.astype(np.float))
+        overlaps,_,_,center_ins = bbox_overlaps_py1(anchors.astype(np.float), gt_boxes.astype(np.float))
         argmax_overlaps = overlaps.argmax(axis=1)
         max_overlaps = overlaps[np.arange(len(inds_inside)), argmax_overlaps]
         gt_argmax_overlaps = overlaps.argmax(axis=0)
         gt_max_overlaps = overlaps[gt_argmax_overlaps, np.arange(overlaps.shape[1])]
         gt_argmax_overlaps = np.where(overlaps == gt_max_overlaps)[0]
+
+        #boxcenter_ins=np.zeros(argmax_overlaps.shape[0])
+
 
         if not cfg.TRAIN.RPN_CLOBBER_POSITIVES:
             # assign bg labels first so that positive labels can clobber them
@@ -174,10 +177,17 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
 
         # fg label: above threshold IoU
         labels[max_overlaps >= cfg.TRAIN.RPN_POSITIVE_OVERLAP] = 1
+        
 
         if cfg.TRAIN.RPN_CLOBBER_POSITIVES:
             # assign bg labels last so that negative labels can clobber positives
             labels[max_overlaps < cfg.TRAIN.RPN_NEGATIVE_OVERLAP] = 0
+        for i in range(argmax_overlaps.shape[0]):
+            if center_ins[i,argmax_overlaps[i]]==1:
+                if max_overlaps[i]>=cfg.TRAIN.RPN_POSITIVE_OVERLAP/2:
+                    labels[i] = 1 
+        
+
     else:
         labels[:] = 0
 
