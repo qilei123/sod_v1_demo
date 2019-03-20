@@ -56,6 +56,7 @@ class PyramidProposalOperator(mx.operator.CustomOp):
         # take after_nms_topN proposals after NMS
         # return the top proposals (-> RoIs top, scores top)
         LAYER_NUM = len(in_data)/2
+        LAYER_NUM = 11
         if LAYER_NUM==7:
             cls_prob_dict = {
                 'stride64': in_data[6],
@@ -117,7 +118,14 @@ class PyramidProposalOperator(mx.operator.CustomOp):
             bbox_pred_dict = {
                 'stride64': in_data[9],
                 'stride32': in_data[8],
-            } 
+            }
+        elif LAYER_NUM==11:
+            cls_prob_dict = {
+                'stride64': in_data[0],
+            }
+            bbox_pred_dict = {
+                'stride64': in_data[1],
+            }  
         elif LAYER_NUM==1:
             cls_prob_dict = {
                 'stride1': in_data[0],
