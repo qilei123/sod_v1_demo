@@ -76,7 +76,7 @@ TRAIN:
   ASPECT_GROUPING: true
   # R-CNN
   # rcnn rois batch size
-  BATCH_ROIS: 256
+  BATCH_ROIS: 128
   BATCH_ROIS_OHEM: 512
   # rcnn rois sampling params
   FG_FRACTION: 0.25
