@@ -204,7 +204,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         logger.info('evaluate detections: \n{}'.format(info_str))
 
 
-def vis_all_detection(save_dir,im_array, detections, class_names, scale, cfg, threshold=1e-2):
+def vis_all_detection(save_dir,im_array, detections, class_names, scale, cfg, threshold=1e-1):
     """
     visualize all detections in one image
     :param im_array: [b=1 c h w] in rgb
