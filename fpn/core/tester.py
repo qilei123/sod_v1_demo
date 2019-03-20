@@ -22,7 +22,7 @@ from utils import image
 from bbox.bbox_transform import bbox_pred, clip_boxes
 from nms.nms import py_nms_wrapper, py_softnms_wrapper
 from utils.PrefetchingIter import PrefetchingIter
-
+count=0
 
 class Predictor(object):
     def __init__(self, symbol, data_names, label_names,
@@ -109,7 +109,7 @@ def detect_at_single_scale(predictor, data_names, imdb, test_data, cfg, thresh, 
                         .format(idx, imdb.num_images, cfg.SCALES, data_time / idx * test_data.batch_size,
                                 net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
 
-count=0
+
 def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=None, ignore_cache=True):
     """
     wrapper for calculating offline validation for faster data analysis
