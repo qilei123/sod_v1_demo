@@ -5,8 +5,8 @@ symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v3
 gpus: '4'
 CLASS_AGNOSTIC: false
 SCALES:
-- 960
-- 960
+- 1280
+- 1280
 # TEST_SCALES: [[800, 1280]] # single scale testing
 TEST_SCALES: [[960, 960]] # multi-scale testing
 default:
