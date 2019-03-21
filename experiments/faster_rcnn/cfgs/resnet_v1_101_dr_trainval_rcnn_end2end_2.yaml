@@ -2,7 +2,7 @@
 MXNET_VERSION: "mxnet"
 output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline2"
 symbol: resnet_v1_101_rcnn
-gpus: '4,5,6,7'
+gpus: '0,1,2,3,4,5,6'
 CLASS_AGNOSTIC: false
 SCALES:
 - 2080
@@ -57,17 +57,17 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.0005
-  lr_step: '5.333'
+  lr: 0.000875
+  lr_step: '9.333'
   warmup: true
   warmup_lr: 0.00005
   # typically we will use 8000 warmup step for single GPU for COCO
   warmup_step: 1000
-  begin_epoch: 0
+  begin_epoch: 4
   end_epoch: 10
   model_prefix: 'rcnn_coco'
   # whether resume training
-  RESUME: false
+  RESUME: true
   # whether flip image
   FLIP: false
   # whether shuffle image
