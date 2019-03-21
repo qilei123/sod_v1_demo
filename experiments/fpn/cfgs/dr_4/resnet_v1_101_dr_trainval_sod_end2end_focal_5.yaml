@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline4_1"
-symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v4
-gpus: '6,7'
+output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline5"
+symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v5
+gpus: '2,3,4,5'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
@@ -48,18 +48,18 @@ dataset:
   test_image_set: val2014
   proposal: rpn
 TRAIN:
-  lr: 0.01
+  lr: 0.005
   warmup_lr: 0.001
   warmup_step: 250
   warmup: true
   # lr: 0.000001
-  lr_step: '10,12'
+  lr_step: '4,6'
   wd: 0.0001
-  begin_epoch: 6
+  begin_epoch: 0
   end_epoch: 10
   model_prefix: 'fpn_dr'
   # whether resume training
-  RESUME: True
+  RESUME: false
   # whether flip image
   FLIP: false
   # whether shuffle image

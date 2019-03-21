@@ -197,7 +197,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                     all_boxes[j][idx_im] = all_boxes[j][idx_im][keep, :]
 
     with open(det_file, 'wb') as f:
-        cPickle.dump(imdb.result_path,all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
+        cPickle.dump(all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
 
     info_str = imdb.evaluate_detections(all_boxes)
     if logger:
