@@ -29,7 +29,7 @@ from utils.image import get_image, tensor_vstack
 from generate_anchor import generate_anchors
 from bbox.bbox_transform import bbox_overlaps, bbox_transform,bbox_overlaps_py1
 
-
+DEBUG = False
 def get_rpn_testbatch(roidb, cfg):
     """
     return a dict of testbatch
@@ -104,7 +104,7 @@ def assign_anchor(feat_shape, gt_boxes, im_info, cfg, feat_stride=16,
             ret[inds, :] = data
         return ret
 
-    DEBUG = False
+
     im_info = im_info[0]
     scales = np.array(scales, dtype=np.float32)
     base_anchors = generate_anchors(base_size=feat_stride, ratios=list(ratios), scales=scales)
