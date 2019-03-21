@@ -53,7 +53,7 @@ TRAIN:
   warmup_step: 250
   warmup: true
   # lr: 0.000001
-  lr_step: '4,6'
+  lr_step: '14,16'
   wd: 0.0001
   begin_epoch: 10
   end_epoch: 20
