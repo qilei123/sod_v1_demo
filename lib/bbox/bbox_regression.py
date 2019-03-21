@@ -19,7 +19,7 @@ import numpy as np
 
 from bbox_transform import bbox_overlaps, bbox_transform
 
-
+DEBUG=False
 def compute_bbox_regression_targets(rois, overlaps, labels, cfg):
     """
     given rois, overlaps, gt labels, compute bounding box regression targets
@@ -97,13 +97,13 @@ def add_bbox_regression_targets(roidb, cfg):
         means = sums / class_counts
         # var(x) = E(x^2) - E(x)^2
         stds = np.sqrt(squared_sums / class_counts - means ** 2)
-
-    print 'bbox target means:'
-    print means
-    print means[1:, :].mean(axis=0)  # ignore bg class
-    print 'bbox target stdevs:'
-    print stds
-    print stds[1:, :].mean(axis=0)  # ignore bg class
+    if DEBUG:
+        print 'bbox target means:'
+        print means
+        print means[1:, :].mean(axis=0)  # ignore bg class
+        print 'bbox target stdevs:'
+        print stds
+        print stds[1:, :].mean(axis=0)  # ignore bg class
 
 
     # normalized targets
