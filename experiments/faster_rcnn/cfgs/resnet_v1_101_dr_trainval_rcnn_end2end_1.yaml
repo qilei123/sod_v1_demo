@@ -8,7 +8,7 @@ SCALES:
 - 1120
 - 1120
 default:
-  frequent: 100
+  frequent: 20
   kvstore: device
 network:
   pretrained: "./model/pretrained_model/resnet_v1_101"
