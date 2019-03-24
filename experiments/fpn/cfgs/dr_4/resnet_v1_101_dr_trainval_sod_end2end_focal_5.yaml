@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "python"
-output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline5"
+output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/sod_baseline5"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v5
-gpus: '2,3,4,5'
+gpus: '0,1,2,3'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
@@ -41,10 +41,10 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7"
+  dataset_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9"
   image_set: train2014
   # image_set: minival2014
-  root_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/sod_baseline4_1"
+  root_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/sod_baseline5"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
