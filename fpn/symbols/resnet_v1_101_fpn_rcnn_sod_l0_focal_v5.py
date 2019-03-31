@@ -857,6 +857,43 @@ class resnet_v1_101_fpn_rcnn_sod_l0_focal_v5(Symbol):
         fpn_p0 = mx.symbol.Convolution(data=fpn_p0_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p0')
         return fpn_p0,fpn_p6#,fpn_p5#, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, 
 
+    def get_fpn_feature2(self, c0, c1, c2, c3, c4, c5, feature_dim=128):
+        # lateral connection
+        fpn_p5_1x1 = mx.symbol.Convolution(data=c5, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p5_1x1')
+        fpn_p4_1x1 = mx.symbol.Convolution(data=c4, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p4_1x1')
+        fpn_p3_1x1 = mx.symbol.Convolution(data=c3, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p3_1x1')
+        fpn_p2_1x1 = mx.symbol.Convolution(data=c2, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p2_1x1')
+        fpn_p1_1x1 = mx.symbol.Convolution(data=c1, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p1_1x1')
+        fpn_p0_1x1 = mx.symbol.Convolution(data=c0, kernel=(1, 1), pad=(0, 0), stride=(1, 1), num_filter=feature_dim, name='fpn_p0_1x1')
+        # top-down connection
+        fpn_p5_upsample = mx.symbol.UpSampling(fpn_p5_1x1, scale=2, sample_type='nearest', name='fpn_p5_upsample')
+        fpn_p4_plus = mx.sym.ElementWiseSum(*[fpn_p5_upsample, fpn_p4_1x1], name='fpn_p4_sum')
+        fpn_p4_upsample = mx.symbol.UpSampling(fpn_p4_plus, scale=2, sample_type='nearest', name='fpn_p4_upsample')
+        fpn_p3_plus = mx.sym.ElementWiseSum(*[fpn_p4_upsample, fpn_p3_1x1], name='fpn_p3_sum')
+        fpn_p3_upsample = mx.symbol.UpSampling(fpn_p3_plus, scale=2, sample_type='nearest', name='fpn_p3_upsample')
+        fpn_p2_plus = mx.sym.ElementWiseSum(*[fpn_p3_upsample, fpn_p2_1x1], name='fpn_p2_sum')
+        fpn_p2_upsample = mx.symbol.UpSampling(fpn_p2_plus, scale=2, sample_type='nearest', name='fpn_p2_upsample')
+        fpn_p1_plus = mx.sym.ElementWiseSum(*[fpn_p2_upsample, fpn_p1_1x1], name='fpn_p1_sum')
+        fpn_p1_upsample = mx.symbol.UpSampling(fpn_p1_plus, scale=2, sample_type='nearest', name='fpn_p1_upsample')
+        fpn_p0_plus = mx.sym.ElementWiseSum(*[fpn_p1_upsample, fpn_p0_1x1], name='fpn_p0_sum')
+
+
+
+
+
+        # FPN feature
+        fpn_p6 = mx.sym.Convolution(data=c5, kernel=(3, 3), pad=(1, 1), stride=(2, 2), num_filter=feature_dim, name='fpn_p6')
+        '''
+        fpn_p5 = mx.symbol.Convolution(data=fpn_p5_1x1, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p5')
+        fpn_p4 = mx.symbol.Convolution(data=fpn_p4_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p4')
+        fpn_p3 = mx.symbol.Convolution(data=fpn_p3_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p3')
+        fpn_p2 = mx.symbol.Convolution(data=fpn_p2_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p2')
+        fpn_p1 = mx.symbol.Convolution(data=fpn_p1_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p1')
+        '''
+        fpn_p0 = mx.symbol.Convolution(data=fpn_p0_plus, kernel=(3, 3), pad=(1, 1), stride=(1, 1), num_filter=feature_dim, name='fpn_p0')
+        #return fpn_p0, fpn_p1, fpn_p2, fpn_p3, fpn_p4, fpn_p5, fpn_p6
+        return fpn_p0,fpn_p6
+
     def get_rpn_subnet(self, data, num_anchors, suffix):
         rpn_conv = mx.sym.Convolution(data=data, kernel=(3, 3), pad=(1, 1), num_filter=128, name='rpn_conv_' + suffix,
                                       weight=self.shared_param_dict['rpn_conv_weight'], bias=self.shared_param_dict['rpn_conv_bias'])
