@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/sod_baseline5"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v5
-gpus: '0,1,2'
+gpus: '3'
 CLASS_AGNOSTIC: false
 SCALES:
 - 960
