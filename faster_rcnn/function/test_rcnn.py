@@ -75,4 +75,3 @@ def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
 
     # start detection
     pred_eval(predictor, test_data, imdb, cfg, vis=vis, ignore_cache=ignore_cache, thresh=thresh, logger=logger)
-
