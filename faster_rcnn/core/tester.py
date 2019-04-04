@@ -193,6 +193,8 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     num_classes = 5
     #classes = imdb.classes
     classes = ['__background__','1','2','3','4']
+
+    #thresh = 0.1
     # all detections are collected into:
     #    all_boxes[cls][image] = N x 5 array of detections in
     #    (x1, y1, x2, y2, score)
@@ -207,6 +209,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         t = time.time()
 
         scales = [iim_info[0, 2] for iim_info in im_info]
+        print 'im_info'+str(im_info)
         scores_all, boxes_all, data_dict_all = im_detect(predictor, data_batch, data_names, scales, cfg)
 
         t2 = time.time() - t
