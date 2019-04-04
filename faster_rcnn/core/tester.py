@@ -238,7 +238,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                 vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             
             results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
-            del data_dict,boxes_this_image
+            del data_dict,boxes_this_image,all_boxes
             gc.collect()
 
         idx += test_data.batch_size
