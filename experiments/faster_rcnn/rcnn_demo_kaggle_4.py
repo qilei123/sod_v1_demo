@@ -70,8 +70,8 @@ if __name__ == "__main__":
                 'result':boxes_result
                 }
         img_with_boxes = draw_all_boxes(img_path,boxes_result)
-        if not os.path.exists(data_path+'/'+test_save_folder+'/'+str(img_stage)):
-            os.makedirs(data_path+'/'+test_save_folder+'/'+str(img_stage))
+        if not os.path.exists(data_path+'/'+train_save_folder+'/'+str(img_stage)):
+            os.makedirs(data_path+'/'+train_save_folder+'/'+str(img_stage))
         cv2.imwrite(data_path+'/'+train_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends,img_with_boxes)
         train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         img_with_boxes = draw_all_boxes(img_path,boxes_result)
         if not os.path.exists(data_path+'/'+test_save_folder+'/'+str(img_stage)):
             os.makedirs(data_path+'/'+test_save_folder+'/'+str(img_stage))
-        cv2.imwrite(img_with_boxes,data_path+'/'+test_save_folder+'/'+str(img_stage)+'/'+split_line[1]+extends)
+        cv2.imwrite(data_path+'/'+test_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends,img_with_boxes)
         test_results['results_list'].append(test_result)
         test_line = test_set_file.readline()
     test_results_json = json.dumps(test_results)
