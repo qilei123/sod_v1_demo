@@ -27,8 +27,8 @@ def draw_all_boxes(img_path,boxes_result):
     return img
 if __name__ == "__main__":
     fd = faster_detector()
-    cfg_path = '/media/cql/DATA1/Development/small_object_detection_v1_demo/experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml'
-    prefix = '/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1/rcnn_coco'
+    cfg_path = 'experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml'
+    prefix = '/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline1/resnet_v1_101_dr_trainval_rcnn_end2end_1/train2014/rcnn_coco'
     fd.init_predictor(cfg_path,prefix,10)
     
     data_path = '/home/qileimail123/data0/RetinaImg/kaggle_DB'
