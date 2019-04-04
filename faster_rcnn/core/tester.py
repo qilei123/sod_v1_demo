@@ -23,7 +23,7 @@ from bbox.bbox_transform import bbox_pred, clip_boxes
 from nms.nms import py_nms_wrapper, cpu_nms_wrapper, gpu_nms_wrapper,py_softnms_wrapper
 from utils.PrefetchingIter import PrefetchingIter
 
-nms = py_nms_wrapper(0.1)
+
 class Predictor(object):
     def __init__(self, symbol, data_names, label_names,
                  context=mx.cpu(), max_data_shapes=None,
@@ -183,11 +183,11 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     results={}
     assert vis or not test_data.shuffle
     data_names = [k[0] for k in test_data.provide_data[0]]
-
+    '''
     if not isinstance(test_data, PrefetchingIter):
         test_data = PrefetchingIter(test_data)
-
-    
+    '''
+    nms = py_nms_wrapper(cfg.TEST.NMS)
 
     # limit detections to max_per_image over all classes
     max_per_image = cfg.TEST.max_per_image
