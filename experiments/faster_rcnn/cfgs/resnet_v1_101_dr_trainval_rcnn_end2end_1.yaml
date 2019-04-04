@@ -2,7 +2,7 @@
 MXNET_VERSION: "mxnet"
 output_path: "/home/qileimail123/data0/RetinaImg/kaggle_DB"
 symbol: resnet_v1_101_rcnn
-gpus: '1'
+gpus: '0'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
