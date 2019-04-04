@@ -55,7 +55,7 @@ def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
         gt_roidb = imdb.gt_roidb()
         roidb = eval('imdb.' + proposal + '_roidb')(gt_roidb)
     roidb = []
-    img_path = '/media/cql/DATA1/data/train_view/0/40_right.jpeg'
+    img_path = '122_left.jpeg'
     img = cv2.imread(img_path)
     boxes = np.zeros((1, 4), dtype=np.uint16)
     roi_rec = {'image': img_path,
