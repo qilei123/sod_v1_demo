@@ -176,7 +176,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
             logger.info('evaluate detections: \n{}'.format(info_str))
         return
     '''
-    
+    results={}
     assert vis or not test_data.shuffle
     data_names = [k[0] for k in test_data.provide_data[0]]
 
@@ -231,10 +231,10 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                     for j in range(1, num_classes):
                         keep = np.where(all_boxes[j][idx+delta][:, -1] >= image_thresh)[0]
                         all_boxes[j][idx+delta] = all_boxes[j][idx+delta][keep, :]
-
+            boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, num_classes)]
             if not vis:
-                boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, num_classes)]
                 vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
+            results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
 
         idx += test_data.batch_size
         t3 = time.time() - t
@@ -245,6 +245,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
         if logger:
             logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
+    return results
     '''
     with open(det_file, 'wb') as f:
         cPickle.dump(all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
@@ -253,6 +254,47 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     if logger:
         logger.info('evaluate detections: \n{}'.format(info_str))
     '''
+
+def get_json_result(im_array, detections, class_names, scale, cfg, threshold=1e-3):
+    """
+    visualize all detections in one image
+    :param im_array: [b=1 c h w] in rgb
+    :param detections: [ numpy.ndarray([[x1 y1 x2 y2 score]]) for j in classes ]
+    :param class_names: list of names in imdb
+    :param scale: visualize the scaled image
+    :return:
+    """
+    #import matplotlib.pyplot as plt
+    #import random
+    #im = image.transform_inverse(im_array, cfg.network.PIXEL_MEANS)
+    #plt.imshow(im)
+    result_boxes = {'results':[]}
+    for j, name in enumerate(class_names):
+        if name == '__background__':
+            continue
+        #color = (random.random(), random.random(), random.random())  # generate a random color
+        dets = detections[j]
+        for det in dets:
+            bbox = det[:4]
+            score = det[-1]
+            if score < threshold:
+                continue
+            jbox={'box':[bbox[0], bbox[1],bbox[2] - bbox[0],bbox[3] - bbox[1]],
+                    'score':score,
+                    'label':name}
+            result_boxes['results'].append(jbox)
+            '''
+            rect = plt.Rectangle((bbox[0], bbox[1]),
+                                 bbox[2] - bbox[0],
+                                 bbox[3] - bbox[1], fill=False,
+                                 edgecolor=color, linewidth=3.5)
+            plt.gca().add_patch(rect)
+            plt.gca().text(bbox[0], bbox[1] - 2,
+                           '{:s} {:.3f}'.format(name, score),
+                           bbox=dict(facecolor=color, alpha=0.5), fontsize=12, color='white')
+    plt.show()
+    '''
+    return result_boxes
 
 def vis_all_detection(im_array, detections, class_names, scale, cfg, threshold=1e-3):
     """

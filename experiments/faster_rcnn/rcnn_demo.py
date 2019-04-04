@@ -17,7 +17,7 @@ import faster_detector
 from faster_detector import faster_detector
 if __name__ == "__main__":
     fd = faster_detector()
-    fd.init_predictor('experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml',
+    fd.init_predictor('/media/cql/DATA1/Development/small_object_detection_v1_demo/experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml',
         '/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1/rcnn_coco',10)
     for i in range(1):
-        fd.prediction('/media/cql/DATA1/data/train_view/0/13_left.jpeg')
+        print fd.prediction('/media/cql/DATA1/data/train_view/1/566_right.jpeg')

@@ -174,5 +174,5 @@ class detector:
         roidb.append(roi_rec)
         # get test data iter
         test_data = TestLoader(roidb, self.cfg, batch_size=len(self.ctx), shuffle=self.shuffle, has_rpn=self.has_rpn)
-        pred_eval(self.predictor, test_data, None, self.cfg, vis=self.vis, ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
+        return pred_eval(self.predictor, test_data, None, self.cfg, vis=self.vis, ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
     

@@ -36,7 +36,7 @@ def parse_args1(cfg):
     # rcnn
     parser.add_argument('--vis', help='turn on visualization', action='store_true')
     parser.add_argument('--ignore_cache', help='ignore cached results boxes', action='store_true')
-    parser.add_argument('--thresh', help='valid detection threshold', default=0.1, type=float)
+    parser.add_argument('--thresh', help='valid detection threshold', default=0.05, type=float)
     parser.add_argument('--shuffle', help='shuffle data on visualization', action='store_true')
     args = parser.parse_args()
     return args
@@ -74,7 +74,7 @@ class faster_detector:
               ctx, prefix, epoch,args.vis, args.ignore_cache, args.shuffle, config.TEST.HAS_RPN, config.dataset.proposal, 
               args.thresh, logger=logger, output_path=final_output_path)
     def prediction(self,img_dir):
-        self.detector.predict(img_dir)
+        return self.detector.predict(img_dir)
         
 
 '''
