@@ -20,6 +20,7 @@ from faster_detector import faster_detector
 
 def draw_all_boxes(img_path,boxes_result):
     for box in boxes_result['results']:
+        print box
         img = cv2.imread(img_path)
         cv2.rectangle(img,(box[0],box[1]),(box[0]+box[2],box[1]+box[3]),(0,255,0),3)
         font = cv2.FONT_HERSHEY_SIMPLEX
@@ -53,13 +54,13 @@ if __name__ == "__main__":
     while train_line:
         split_line = train_line.split(',')
         img_stage = int(split_line[1])
-        img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
-        print img_path
-        print img_stage
+
         if img_stage==0:
             train_line = train_set_file.readline()
             continue
-
+        img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
+        #print img_path
+        #print img_stage
         boxes_result = fd.prediction(img_path)
         train_result = {
                 'img':split_line[0]+extends,

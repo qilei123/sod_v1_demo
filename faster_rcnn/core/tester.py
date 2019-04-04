@@ -209,7 +209,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         t = time.time()
 
         scales = [iim_info[0, 2] for iim_info in im_info]
-        print 'im_info'+str(im_info)
+        #print 'im_info'+str(im_info)
         scores_all, boxes_all, data_dict_all = im_detect(predictor, data_batch, data_names, scales, cfg)
 
         t2 = time.time() - t
