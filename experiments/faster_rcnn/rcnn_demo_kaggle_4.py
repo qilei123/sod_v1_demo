@@ -72,8 +72,7 @@ if __name__ == "__main__":
         img_with_boxes = draw_all_boxes(img_path,boxes_result)
         if not os.path.exists(data_path+'/'+test_save_folder+'/'+str(img_stage)):
             os.makedirs(data_path+'/'+test_save_folder+'/'+str(img_stage))
-        print data_path+'/'+test_save_folder+'/'+str(img_stage)+'/'+split_line[1]+extends
-        cv2.imwrite(img_with_boxes,data_path+'/'+test_save_folder+'/'+str(img_stage)+'/'+split_line[1]+extends)
+        cv2.imwrite(img_with_boxes,data_path+'/'+train_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends)
         train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
     train_results_json = json.dumps(train_results)
