@@ -22,7 +22,7 @@ def draw_all_boxes(img_path,boxes_result):
     for rbox in boxes_result['results']:
         box = rbox['box']
         img = cv2.imread(img_path)
-        cv2.rectangle(img,(box[0],box[1]),(box[0]+box[2],box[1]+box[3]),(0,255,0),3)
+        cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),3)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score']),(box[0]+box[2],box[1]), font, 4,(0,255,0),2,cv2.LINE_AA)
     return img
