@@ -71,7 +71,7 @@ def predict_for_stage(stage):
         img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
         #print img_path
         #print img_stage
-        boxes_result = fd.prediction(img_path)
+        boxes_result = []#fd.prediction(img_path)
         train_result = {
                 'img':split_line[0]+extends,
                 'stage':img_stage,
