@@ -152,6 +152,8 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
 
         scores_all.append(scores)
         pred_boxes_all.append(pred_boxes)
+    del output_all
+    gc.collect()
     return scores_all, pred_boxes_all, data_dict_all
 
 
