@@ -13,8 +13,9 @@
 
 import numpy as np
 from bbox import bbox_overlaps_cython
-np.set_printoptions(threshold=np.nan)
-
+import sys
+#np.set_printoptions(threshold=np.nan)
+np.set_printoptions(threshold=sys.maxsize)
 DEBUG=False
 
 def bbox_overlaps(boxes, query_boxes):

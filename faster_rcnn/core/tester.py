@@ -20,7 +20,7 @@ import numpy as np
 from module import MutableModule
 from utils import image
 from bbox.bbox_transform import bbox_pred, clip_boxes
-from nms.nms import py_nms_wrapper, cpu_nms_wrapper, gpu_nms_wrapper
+from nms.nms import py_nms_wrapper, cpu_nms_wrapper, gpu_nms_wrapper,py_softnms_wrapper
 from utils.PrefetchingIter import PrefetchingIter
 
 
@@ -166,7 +166,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     :param thresh: valid detection threshold
     :return:
     """
-
+    '''
     det_file = os.path.join(imdb.result_path, imdb.name + '_detections.pkl')
     if os.path.exists(det_file) and not ignore_cache:
         with open(det_file, 'rb') as fid:
@@ -175,7 +175,8 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         if logger:
             logger.info('evaluate detections: \n{}'.format(info_str))
         return
-
+    '''
+    
     assert vis or not test_data.shuffle
     data_names = [k[0] for k in test_data.provide_data[0]]
 
@@ -187,12 +188,16 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     # limit detections to max_per_image over all classes
     max_per_image = cfg.TEST.max_per_image
 
-    num_images = imdb.num_images
+    num_images = 1#imdb.num_images
+    #num_classes = imdb.num_classes
+    num_classes = 5
+    #classes = imdb.classes
+    classes = ['__background__','1','2','3','4']
     # all detections are collected into:
     #    all_boxes[cls][image] = N x 5 array of detections in
     #    (x1, y1, x2, y2, score)
     all_boxes = [[[] for _ in range(num_images)]
-                 for _ in range(imdb.num_classes)]
+                 for _ in range(num_classes)]
 
     idx = 0
     data_time, net_time, post_time = 0.0, 0.0, 0.0
@@ -207,7 +212,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         t2 = time.time() - t
         t = time.time()
         for delta, (scores, boxes, data_dict) in enumerate(zip(scores_all, boxes_all, data_dict_all)):
-            for j in range(1, imdb.num_classes):
+            for j in range(1, num_classes):
                 indexes = np.where(scores[:, j] > thresh)[0]
                 cls_scores = scores[indexes, j, np.newaxis]
                 cls_boxes = boxes[indexes, 4:8] if cfg.CLASS_AGNOSTIC else boxes[indexes, j * 4:(j + 1) * 4]
@@ -217,16 +222,16 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
 
             if max_per_image > 0:
                 image_scores = np.hstack([all_boxes[j][idx+delta][:, -1]
-                                          for j in range(1, imdb.num_classes)])
+                                          for j in range(1, num_classes)])
                 if len(image_scores) > max_per_image:
                     image_thresh = np.sort(image_scores)[-max_per_image]
-                    for j in range(1, imdb.num_classes):
+                    for j in range(1, num_classes):
                         keep = np.where(all_boxes[j][idx+delta][:, -1] >= image_thresh)[0]
                         all_boxes[j][idx+delta] = all_boxes[j][idx+delta][keep, :]
 
-            if vis:
-                boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, imdb.num_classes)]
-                vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, imdb.classes, scales[delta], cfg)
+            if not vis:
+                boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, num_classes)]
+                vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
 
         idx += test_data.batch_size
         t3 = time.time() - t
@@ -234,17 +239,17 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         data_time += t1
         net_time += t2
         post_time += t3
-        print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, imdb.num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
+        print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
         if logger:
-            logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, imdb.num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
-
+            logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
+    '''
     with open(det_file, 'wb') as f:
         cPickle.dump(all_boxes, f, protocol=cPickle.HIGHEST_PROTOCOL)
-
+    
     info_str = imdb.evaluate_detections(all_boxes)
     if logger:
         logger.info('evaluate detections: \n{}'.format(info_str))
-
+    '''
 
 def vis_all_detection(im_array, detections, class_names, scale, cfg, threshold=1e-3):
     """

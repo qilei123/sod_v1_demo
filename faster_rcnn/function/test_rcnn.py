@@ -17,7 +17,8 @@ import logging
 import time
 import os
 import mxnet as mx
-
+import cv2
+import numpy as np
 from symbols import *
 from dataset import *
 from core.loader import TestLoader
@@ -39,18 +40,30 @@ def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
     if has_rpn:
         sym_instance = eval(cfg.symbol + '.' + cfg.symbol)()
         sym = sym_instance.get_symbol(cfg, is_train=False)
+        '''
         imdb = eval(dataset)(image_set, root_path, dataset_path, result_path=output_path)
         roidb = imdb.gt_roidb()
+        '''
     else:
         sym_instance = eval(cfg.symbol + '.' + cfg.symbol)()
         sym = sym_instance.get_symbol_rcnn(cfg, is_train=False)
         imdb = eval(dataset)(image_set, root_path, dataset_path, result_path=output_path)
         gt_roidb = imdb.gt_roidb()
         roidb = eval('imdb.' + proposal + '_roidb')(gt_roidb)
-
+    roidb = []
+    img_path = '/media/cql/DATA1/data/train_view/1/15_left.jpeg'
+    img = cv2.imread(img_path)
+    boxes = np.zeros((1, 4), dtype=np.uint16)
+    roi_rec = {'image': img_path,
+            'height': img.shape[0],
+            'width': img.shape[1],
+            'boxes': boxes,
+            'flipped': False}
+    roidb.append(roi_rec)
     # get test data iter
     test_data = TestLoader(roidb, cfg, batch_size=len(ctx), shuffle=shuffle, has_rpn=has_rpn)
-
+    prefix = '/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1/rcnn_coco'
+    epoch = 10
     # load model
     arg_params, aux_params = load_param(prefix, epoch, process=True)
 
@@ -74,4 +87,4 @@ def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
                           arg_params=arg_params, aux_params=aux_params)
 
     # start detection
-    pred_eval(predictor, test_data, imdb, cfg, vis=vis, ignore_cache=ignore_cache, thresh=thresh, logger=logger)
+    pred_eval(predictor, test_data, None, cfg, vis=vis, ignore_cache=ignore_cache, thresh=thresh, logger=logger)

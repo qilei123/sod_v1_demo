@@ -1,8 +1,8 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline1"
+output_path: "/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1"
 symbol: resnet_v1_101_rcnn
-gpus: '0,1,2,3'
+gpus: '0'
 CLASS_AGNOSTIC: false
 SCALES:
 - 1120
@@ -51,9 +51,9 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7"
+  dataset_path: "/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1"
   image_set: train2014
-  root_path: "/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline1"
+  root_path: "/media/cql/DATA1/Development/small_object_detection_v1_demo_models/faster1"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
