@@ -9,6 +9,7 @@ import os
 import sys
 import json
 import cv2
+import thread
 os.environ['PYTHONUNBUFFERED'] = '1'
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
@@ -27,7 +28,7 @@ def draw_all_boxes(img_path,boxes_result):
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score']),(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
     return img
-if __name__ == "__main__":
+def predict_for_stage(stage):
     fd = faster_detector()
     cfg_path = 'experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml'
     prefix = '/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline1/resnet_v1_101_dr_trainval_rcnn_end2end_1/train2014/rcnn_coco'
@@ -53,7 +54,7 @@ if __name__ == "__main__":
 
     train_line = train_set_file.readline()
 
-    category_id = 0
+    category_id = stage
 
     while train_line:
         split_line = train_line.split(',')
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
     train_results_json = json.dumps(train_results)
-    with open(data_path+'/train_results_4.json', 'w') as json_file:
+    with open(data_path+'/train_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(train_results_json)
 
     test_line = test_set_file.readline()
@@ -102,7 +103,10 @@ if __name__ == "__main__":
         test_results['results_list'].append(test_result)
         test_line = test_set_file.readline()
     test_results_json = json.dumps(test_results)
-    with open(data_path+'/test_results_4.json', 'w') as json_file:
+    with open(data_path+'/test_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(test_results_json)
     
-    
+if __name__ == "__main__":
+    #predict_for_stage(0)
+    for i in range(5):
+        thread.start_new_thread(predict_for_stage,(i,))
