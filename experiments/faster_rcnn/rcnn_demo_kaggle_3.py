@@ -94,7 +94,7 @@ def predict_for_stage(stage):
             test_line = test_set_file.readline()
             continue
         count+=1
-        print count
+        print count  
         img_path = data_path+'/'+test_folder+'/'+split_line[0]+extends
         boxes_result = fd.prediction(img_path)
         test_result = {
