@@ -10,6 +10,7 @@ import sys
 import json
 import cv2
 import thread
+import threading
 os.environ['PYTHONUNBUFFERED'] = '1'
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
@@ -109,4 +110,6 @@ def predict_for_stage(stage):
 if __name__ == "__main__":
     #predict_for_stage(0)
     for i in range(5):
-        thread.start_new_thread(predict_for_stage,(i,))
+        #thread.start_new_thread(predict_for_stage,(i,))
+        my_thread = threading.Thread(target = predict_for_stage,(i,))
+        my_thread.start()
