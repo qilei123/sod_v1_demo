@@ -20,7 +20,7 @@ from faster_detector import faster_detector
 
 def draw_all_boxes(img_path,boxes_result):
     img = cv2.imread(img_path)
-    print img_path
+    #print img_path
     for rbox in boxes_result['results']:
         box = rbox['box']
         
