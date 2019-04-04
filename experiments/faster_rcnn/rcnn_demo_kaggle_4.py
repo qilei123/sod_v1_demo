@@ -19,12 +19,12 @@ import faster_detector
 from faster_detector import faster_detector
 
 def draw_all_boxes(img_path,boxes_result):
-    for box in boxes_result['results']:
-        print box
+    for rbox in boxes_result['results']:
+        box = rbox['box']
         img = cv2.imread(img_path)
         cv2.rectangle(img,(box[0],box[1]),(box[0]+box[2],box[1]+box[3]),(0,255,0),3)
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(img,'OpenCV',(box[0]+box[2],box[1]), font, 4,(0,255,0),2,cv2.LINE_AA)
+        cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score']),(box[0]+box[2],box[1]), font, 4,(0,255,0),2,cv2.LINE_AA)
     return img
 if __name__ == "__main__":
     fd = faster_detector()
