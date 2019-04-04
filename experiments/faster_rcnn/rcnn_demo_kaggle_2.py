@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     train_line = train_set_file.readline()
 
-    category_id = 4
+    category_id = 2
 
     while train_line:
         split_line = train_line.split(',')
