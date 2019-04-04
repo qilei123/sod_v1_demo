@@ -232,7 +232,7 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                         keep = np.where(all_boxes[j][idx+delta][:, -1] >= image_thresh)[0]
                         all_boxes[j][idx+delta] = all_boxes[j][idx+delta][keep, :]
             boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, num_classes)]
-            if not vis:
+            if vis:
                 vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
 
