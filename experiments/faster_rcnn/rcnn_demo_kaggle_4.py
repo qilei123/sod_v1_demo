@@ -57,6 +57,7 @@ if __name__ == "__main__":
         print img_path
         print img_stage
         if img_stage==0:
+            train_line = train_set_file.readline()
             continue
 
         boxes_result = fd.prediction(img_path)
