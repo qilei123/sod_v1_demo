@@ -11,6 +11,7 @@ import json
 import cv2
 import thread
 import threading
+import gc
 os.environ['PYTHONUNBUFFERED'] = '1'
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
@@ -80,7 +81,9 @@ def predict_for_stage(stage):
         if not os.path.exists(data_path+'/'+train_save_folder+'/'+str(img_stage)):
             os.makedirs(data_path+'/'+train_save_folder+'/'+str(img_stage))
         cv2.imwrite(data_path+'/'+train_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends,img_with_boxes)
-        #train_results['results_list'].append(train_result)
+        del img_with_boxes
+        gc.collect()
+        train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
     train_results_json = json.dumps(train_results)
     with open(data_path+'/train_results_'+str(category_id)+'.json', 'w') as json_file:
