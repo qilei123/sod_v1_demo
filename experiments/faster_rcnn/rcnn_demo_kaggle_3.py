@@ -5,7 +5,7 @@
 # Written by Guodong Zhang
 # --------------------------------------------------------
 
-from rcnn_demo_kaggle_0 import *
+from rcnn_demo_kaggle import *
     
 if __name__ == "__main__":
     predict_for_stage(3)
