@@ -53,10 +53,12 @@ if __name__ == "__main__":
     while train_line:
         split_line = train_line.split(',')
         img_stage = int(split_line[1])
-        if img_stage==0:
-            continue
         img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
         print img_path
+        print img_stage
+        if img_stage==0:
+            continue
+
         boxes_result = fd.prediction(img_path)
         train_result = {
                 'img':split_line[0]+extends,
