@@ -16,7 +16,7 @@ import os
 import time
 import mxnet as mx
 import numpy as np
-
+import gc
 from module import MutableModule
 from utils import image
 from bbox.bbox_transform import bbox_pred, clip_boxes
@@ -243,8 +243,12 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         net_time += t2
         post_time += t3
         print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
+        '''
         if logger:
             logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
+        '''
+    del all_boxes,test_data
+    gc.collect()
     return results
     '''
     with open(det_file, 'wb') as f:
