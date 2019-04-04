@@ -152,7 +152,7 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
 
         scores_all.append(scores)
         pred_boxes_all.append(pred_boxes)
-        del scores,pred_boxes
+        del scores,pred_boxes,bbox_deltas
         gc.collect()
     del output_all
     gc.collect()
