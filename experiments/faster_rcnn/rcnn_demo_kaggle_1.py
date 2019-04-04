@@ -57,7 +57,7 @@ def predict_for_stage(stage):
     train_line = train_set_file.readline()
 
     category_id = stage
-
+    count=0
     while train_line:
         split_line = train_line.split(',')
         img_stage = int(split_line[1])
@@ -65,6 +65,8 @@ def predict_for_stage(stage):
         if img_stage!=category_id:
             train_line = train_set_file.readline()
             continue
+        count+=1
+        print count
         img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
         #print img_path
         #print img_stage
@@ -91,6 +93,8 @@ def predict_for_stage(stage):
         if img_stage!=category_id:
             test_line = test_set_file.readline()
             continue
+        count+=1
+        print count
         img_path = data_path+'/'+test_folder+'/'+split_line[0]+extends
         boxes_result = fd.prediction(img_path)
         test_result = {
