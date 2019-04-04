@@ -28,7 +28,7 @@ def draw_all_boxes(img_path,boxes_result):
         box = rbox['box']
         cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),3)
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score']),(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
+        cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score'])[:4],(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
         category_count[int(rbox['label'])-1]+=1
     return img
 def predict_for_stage(stage):
