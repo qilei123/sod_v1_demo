@@ -24,7 +24,7 @@ from dataset import *
 from core.loader import TestLoader
 from core.tester import Predictor, pred_eval
 from utils.load_model import load_param
-
+import gc
 
 def test_rcnn(cfg, dataset, image_set, root_path, dataset_path,
               ctx, prefix, epoch,
@@ -177,5 +177,6 @@ class detector:
         result =  pred_eval(self.predictor, test_data, None, self.cfg, vis=self.vis, 
                     ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
         del test_data
+        gc.collect()
         return result
     
