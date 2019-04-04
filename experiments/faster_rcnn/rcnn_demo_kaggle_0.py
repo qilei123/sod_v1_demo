@@ -99,7 +99,7 @@ def predict_for_stage(stage):
                         
             train_result1 = {
                     'img':img_names[0]+extends,
-                    'stage':stage[0],
+                    'stage':stages[0],
                     'result':fd.getResult()
                     }
             img_with_boxes1 = draw_all_boxes(img_group[0],fd.getResult())
@@ -110,7 +110,7 @@ def predict_for_stage(stage):
 
             train_result2 = {
                     'img':img_names[1]+extends,
-                    'stage':stage[1],
+                    'stage':stages[1],
                     'result':fd0.getResult()
                     }
             img_with_boxes2 = draw_all_boxes(img_group[1],fd0.getResult())
@@ -121,11 +121,11 @@ def predict_for_stage(stage):
 
             train_result3 = {
                     'img':img_names[2]+extends,
-                    'stage':stage[2],
+                    'stage':stages[2],
                     'result':fd1.getResult()
                     }
             img_with_boxes3 = draw_all_boxes(img_group[3],fd1.getResult())
-            cv2.imwrite(data_path+'/'+train_save_folder+'/'+str(stage[2])+'/'+img_names[2]+extends,img_with_boxes3)
+            cv2.imwrite(data_path+'/'+train_save_folder+'/'+str(stages[2])+'/'+img_names[2]+extends,img_with_boxes3)
             del img_with_boxes3
             gc.collect()
             train_results['results_list'].append(train_result3)
