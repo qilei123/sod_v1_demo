@@ -74,7 +74,10 @@ class faster_detector:
               ctx, prefix, epoch,args.vis, args.ignore_cache, args.shuffle, config.TEST.HAS_RPN, config.dataset.proposal, 
               args.thresh, logger=logger, output_path=final_output_path)
     def prediction(self,img_dir):
-        return self.detector.predict(img_dir)
+        self.result = self.detector.predict(img_dir)
+        return self.result
+    def getResult(self):
+        return self.result
         
 
 '''
