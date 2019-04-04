@@ -84,6 +84,7 @@ def predict_for_stage(stage):
         gc.collect()
         train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
+        print category_count
     train_results_json = json.dumps(train_results)
     with open(data_path+'/train_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(train_results_json)
@@ -110,6 +111,7 @@ def predict_for_stage(stage):
         cv2.imwrite(data_path+'/'+test_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends,img_with_boxes)
         test_results['results_list'].append(test_result)
         test_line = test_set_file.readline()
+        print category_count
     test_results_json = json.dumps(test_results)
     with open(data_path+'/test_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(test_results_json)
