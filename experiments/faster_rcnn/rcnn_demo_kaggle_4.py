@@ -56,6 +56,7 @@ if __name__ == "__main__":
         if img_stage==0:
             continue
         img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
+        print img_path
         boxes_result = fd.prediction(img_path)
         train_result = {
                 'img':split_line[0]+extends,
