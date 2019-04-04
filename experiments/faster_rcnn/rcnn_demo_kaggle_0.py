@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(this_dir, '..', '..', 'faster_rcnn'))
 
 import faster_detector
 from faster_detector import faster_detector
-
+category_count=[0,0,0,0]
 def draw_all_boxes(img_path,boxes_result):
     img = cv2.imread(img_path)
     #print img_path
@@ -28,6 +28,7 @@ def draw_all_boxes(img_path,boxes_result):
         cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),3)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score']),(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
+        category_count[int(rbox['label'])-1]+=1
     return img
 def predict_for_stage(stage):
     fd = faster_detector()
@@ -108,8 +109,11 @@ def predict_for_stage(stage):
         json_file.write(test_results_json)
     
 if __name__ == "__main__":
-    #predict_for_stage(0)
+    predict_for_stage(0)
+    print category_count
+    '''
     for i in range(5):
         #thread.start_new_thread(predict_for_stage,(i,))
         my_thread = threading.Thread(target = predict_for_stage,args=(i,))
         my_thread.start()
+    '''
