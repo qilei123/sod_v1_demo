@@ -17,7 +17,7 @@ os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
 #add the faster_predictor path to the system
 this_dir = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(this_dir, '..', '..', 'faster_rcnn'))
-
+print os.path.join(this_dir, '..', '..', 'faster_rcnn')
 import faster_detector
 from faster_detector import faster_detector
 
