@@ -1,6 +1,6 @@
 ---
 MXNET_VERSION: "mxnet"
-output_path: "/home/qileimail123/data0/RetinaImg/kaggle_DB"
+output_path: "data/RetinaImg/kaggle_DB"
 symbol: resnet_v1_101_rcnn
 gpus: '0'
 CLASS_AGNOSTIC: false
@@ -51,9 +51,9 @@ network:
 dataset:
   NUM_CLASSES: 5
   dataset: coco
-  dataset_path: "/home/qileimail123/data0/RetinaImg/kaggle_DB"
+  dataset_path: "data/RetinaImg/kaggle_DB"
   image_set: train2014
-  root_path: "/home/qileimail123/data0/RetinaImg/kaggle_DB"
+  root_path: "data/RetinaImg/kaggle_DB"
   test_image_set: val2014
   proposal: rpn
 TRAIN:
