@@ -58,7 +58,7 @@ def predict_for_stage(stage):
 
     category_id = stage
     count = 0
-    '''
+    
     while train_line:
         split_line = train_line.split(',')
         img_stage = int(split_line[1])
@@ -72,11 +72,13 @@ def predict_for_stage(stage):
         #print img_path
         #print img_stage
         boxes_result = fd.prediction(img_path)
+        print boxes_result
         train_result = {
                 'img':split_line[0]+extends,
                 'stage':img_stage,
                 'result':boxes_result
                 }
+        print train_result
         img_with_boxes = draw_all_boxes(img_path,boxes_result)
         if not os.path.exists(data_path+'/'+train_save_folder+'/'+str(img_stage)):
             os.makedirs(data_path+'/'+train_save_folder+'/'+str(img_stage))
@@ -116,10 +118,12 @@ def predict_for_stage(stage):
     test_results_json = json.dumps(test_results)
     with open(data_path+'/test_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(test_results_json)
-    
+    '''
+'''
 if __name__ == "__main__":
     predict_for_stage(0)
     print category_count
+'''
     '''
     for i in range(5):
         #thread.start_new_thread(predict_for_stage,(i,))
