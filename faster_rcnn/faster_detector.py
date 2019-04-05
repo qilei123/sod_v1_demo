@@ -65,7 +65,7 @@ def main():
 class faster_detector:
     def __init__(self,name = 'faster_detector'):
         self.name = name
-    def init_predictor(self,cfg,prefix,epoch):
+    def init_predictor(self,cfg='/home/ubuntu/sod_v1_demo/experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml',prefix='/home/ubuntu/sod_v1_demo/model/rcnn_coco',epoch=10):
         args = parse_args1(cfg)
         ctx = [mx.gpu(int(i)) for i in config.gpus.split(',')]
         #print args
