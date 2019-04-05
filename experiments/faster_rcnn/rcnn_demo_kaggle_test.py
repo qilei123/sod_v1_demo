@@ -14,6 +14,7 @@ import gc
 os.environ['PYTHONUNBUFFERED'] = '1'
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
+#add the faster_predictor path to the system
 this_dir = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(this_dir, '..', '..', 'faster_rcnn'))
 
@@ -24,3 +25,4 @@ fd = faster_detector()
 #cfg_path = 'experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml'
 #prefix = '/home/qileimail123/data0/RetinaImg/BostonAI4DB7/faster_baseline1/resnet_v1_101_dr_trainval_rcnn_end2end_1/train2014/rcnn_coco'
 fd.init_predictor()
+print fd.prediction('/home/ubuntu/sod_v1_demo/faster_rcnn/function/122_left.jpeg')
