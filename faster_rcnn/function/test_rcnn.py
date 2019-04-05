@@ -121,7 +121,6 @@ class detector:
         roidb = []
         curr_path = os.path.abspath(os.path.dirname(__file__))
         img_path = curr_path+'/122_left.jpeg'
-        print img_path
         img = cv2.imread(img_path)
         boxes = np.zeros((1, 4), dtype=np.uint16)
         roi_rec = {'image': img_path,
