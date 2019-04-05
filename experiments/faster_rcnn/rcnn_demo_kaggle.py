@@ -58,6 +58,7 @@ def predict_for_stage(stage):
 
     category_id = stage
     count = 0
+    '''
     while train_line:
         split_line = train_line.split(',')
         img_stage = int(split_line[1])
@@ -88,7 +89,7 @@ def predict_for_stage(stage):
     train_results_json = json.dumps(train_results)
     with open(data_path+'/train_results_'+str(category_id)+'.json', 'w') as json_file:
         json_file.write(train_results_json)
-
+    '''
     test_line = test_set_file.readline()
     while test_line:
         split_line = test_line.split(',')
