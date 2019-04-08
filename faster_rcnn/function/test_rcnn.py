@@ -161,7 +161,16 @@ class detector:
                             context=ctx, max_data_shapes=max_data_shape,
                             provide_data=test_data.provide_data, provide_label=test_data.provide_label,
                             arg_params=arg_params, aux_params=aux_params)
-    
+    def draw_all_boxes(self,img,img_dir,boxes_result):
+        #print img_path
+        for rbox in boxes_result['results']:
+            box = rbox['box']
+            cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),3)
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score'])[:4],(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
+        file_name = os.path.basename(img_dir)
+        result_img_dir  = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+'_'+file_name
+        cv2.imwrite(result_img_dir,img)     
     def predict(self,img_dir='/media/cql/DATA1/data/train_view/0/13_left.jpeg'):
         roidb = []
         img_path = img_dir
@@ -177,8 +186,8 @@ class detector:
         test_data = TestLoader(roidb, self.cfg, batch_size=len(self.ctx), shuffle=self.shuffle, has_rpn=self.has_rpn)
         result = pred_eval(self.predictor, test_data, None, self.cfg, vis=self.vis, 
                     ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
-        
+        draw_all_boxes(img,img_dir,result)
         del test_data,img
         gc.collect()
         return result
-    
+  

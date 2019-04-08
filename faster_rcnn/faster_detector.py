@@ -76,6 +76,7 @@ class faster_detector:
     def prediction(self,img_dir):
         self.result = self.detector.predict(img_dir)
         return self.result
+
     def getResult(self):
         return self.result
         
