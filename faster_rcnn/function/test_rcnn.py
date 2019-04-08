@@ -170,7 +170,8 @@ class detector:
             cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score'])[:4],(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
         file_name = os.path.basename(img_dir)
         result_img_dir  = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+'_'+file_name
-        cv2.imwrite(result_img_dir,img)     
+        cv2.imwrite(result_img_dir,img)
+        boxes_result['result_img_dir'] = result_img_dir     
     def predict(self,img_dir='/media/cql/DATA1/data/train_view/0/13_left.jpeg'):
         roidb = []
         img_path = img_dir
