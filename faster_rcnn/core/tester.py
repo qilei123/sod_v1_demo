@@ -293,7 +293,7 @@ def get_json_result(im_array, detections, class_names, scale, cfg, threshold=1e-
             score = det[-1]
             if score < threshold:
                 continue
-            jbox={'box':[bbox[0], bbox[1],bbox[2] - bbox[0],bbox[3] - bbox[1]],
+            jbox={'box':[int(bbox[0]), int(bbox[1]),int(bbox[2] - bbox[0]),int(bbox[3] - bbox[1])],
                     'score':score,
                     'label':name}
             result_boxes['results'].append(jbox)
