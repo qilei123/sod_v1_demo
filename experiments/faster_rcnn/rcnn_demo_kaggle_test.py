@@ -15,9 +15,10 @@ os.environ['PYTHONUNBUFFERED'] = '1'
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 os.environ['MXNET_ENABLE_GPU_P2P'] = '0'
 #add the faster_predictor path to the system
-this_dir = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(this_dir, '..', '..', 'faster_rcnn'))
-print os.path.join(this_dir, '..', '..', 'faster_rcnn')
+#this_dir = os.path.dirname(__file__)
+#sys.path.insert(0, os.path.join(this_dir, '..', '..', 'faster_rcnn'))
+#print os.path.join(this_dir, '..', '..', 'faster_rcnn')
+sys.path.insert(0,'/home/ubuntu/sod_v1_demo/faster_rcnn')
 import faster_detector
 from faster_detector import faster_detector
 
