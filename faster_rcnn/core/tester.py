@@ -143,6 +143,7 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
         print len(output)
         print cfg.TEST.HAS_RPN
         print output['rois_output'].shape
+        print output['rois_output']
         print output['rois_output'].asnumpy()
         if cfg.TEST.HAS_RPN:
             rois = output['rois_output'].asnumpy()[:, 1:]
