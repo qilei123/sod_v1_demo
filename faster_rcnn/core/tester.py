@@ -134,9 +134,9 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
     scores_all = []
     pred_boxes_all = []
     print "stopped"
-    print len(output_all)
+    #print len(output_all)
     print len(data_dict_all)
-    print scales
+    #print scales
     #print zip(output_all, data_dict_all, scales)
     for output, data_dict, scale in zip(output_all, data_dict_all, scales):
         print "in for"
@@ -144,8 +144,8 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
         print output
         print cfg.TEST.HAS_RPN
         print output['rois_output'].shape
-        print output['rois_output']
-        print output['rois_output'].asnumpy()
+        #print output['rois_output']
+        #print output['rois_output'].asnumpy()
         if cfg.TEST.HAS_RPN:
             rois = output['rois_output'].asnumpy()[:, 1:]
         else:
