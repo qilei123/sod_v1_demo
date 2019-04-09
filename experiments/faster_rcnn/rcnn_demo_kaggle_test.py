@@ -23,7 +23,7 @@ import faster_detector
 from faster_detector import faster_detector
 
 
-class reclassifier：
+class reclassifier:
     def __init__(self):
         pass
         
