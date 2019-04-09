@@ -237,8 +237,8 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                         all_boxes[j][idx+delta] = all_boxes[j][idx+delta][keep, :]
                 
             boxes_this_image = [[]] + [all_boxes[j][idx+delta] for j in range(1, num_classes)]
-            if vis:
-                vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
+            #if vis:
+            #    vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             
             results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             del data_dict,boxes_this_image,image_scores
