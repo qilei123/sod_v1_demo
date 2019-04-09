@@ -127,8 +127,9 @@ def generate_proposals(predictor, test_data, imdb, cfg, vis=False, thresh=0.):
 
 
 def im_detect(predictor, data_batch, data_names, scales, cfg):
+    print "before data_batch"
     output_all = predictor.predict(data_batch)
-
+    print "after data_batch"
     data_dict_all = [dict(zip(data_names, idata)) for idata in data_batch.data]
     scores_all = []
     pred_boxes_all = []
