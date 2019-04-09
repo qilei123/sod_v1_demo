@@ -149,7 +149,7 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
         # save output
         scores = output['cls_prob_reshape_output'].asnumpy()[0]
         bbox_deltas = output['bbox_pred_reshape_output'].asnumpy()[0]
-
+        print "before bbox_pred"
         # post processing
         pred_boxes = bbox_pred(rois, bbox_deltas)
         pred_boxes = clip_boxes(pred_boxes, im_shape[-2:])
