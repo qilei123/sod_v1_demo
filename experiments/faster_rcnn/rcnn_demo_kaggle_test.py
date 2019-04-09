@@ -60,4 +60,4 @@ fd.init_predictor()
 rf = reclassifier()
 for i in range(100):
     result = fd.prediction('/home/ubuntu/sod_v1_demo/faster_rcnn/function/122_left.jpeg')
-    print rf.reclassifier(2,result)
+    print rf.reclassifier(4,result)
