@@ -196,10 +196,10 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
     results={}
     assert vis or not test_data.shuffle
     data_names = [k[0] for k in test_data.provide_data[0]]
-    
+    '''
     if not isinstance(test_data, PrefetchingIter):
         test_data = PrefetchingIter(test_data)
-    
+    '''
     nms = py_nms_wrapper(cfg.TEST.NMS)
 
     # limit detections to max_per_image over all classes
