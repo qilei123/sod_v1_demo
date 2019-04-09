@@ -145,7 +145,7 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
         else:
             rois = data_dict['rois'].asnumpy().reshape((-1, 5))[:, 1:]
         im_shape = data_dict['data'].shape
-
+        print "before save output"
         # save output
         scores = output['cls_prob_reshape_output'].asnumpy()[0]
         bbox_deltas = output['bbox_pred_reshape_output'].asnumpy()[0]
