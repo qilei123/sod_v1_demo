@@ -17,8 +17,8 @@ def parse_args():
     update_config(args.cfg)
 
     # rcnn
-    parser.add_argument('--vis', help='turn on visualization', action='store_true')
-    parser.add_argument('--ignore_cache', help='ignore cached results boxes', action='store_true')
+    #parser.add_argument('--vis', help='turn on visualization', action='store_true')
+    #parser.add_argument('--ignore_cache', help='ignore cached results boxes', action='store_true')
     parser.add_argument('--thresh', help='valid detection threshold', default=1e-3, type=float)
     parser.add_argument('--shuffle', help='shuffle data on visualization', action='store_true')
     args = parser.parse_args()
@@ -27,17 +27,17 @@ def parse_args():
 def parse_args1(cfg):
     parser = argparse.ArgumentParser(description='Test a Faster R-CNN network')
     # general
-    parser.add_argument('--cfg', help='experiment configure file name',default = cfg, type=str)
+    #parser.add_argument('--cfg', help='experiment configure file name',default = cfg, type=str)
 
     args, rest = parser.parse_known_args()
     args.cfg = cfg
     update_config(cfg)
 
     # rcnn
-    parser.add_argument('--vis', help='turn on visualization', action='store_true')
-    parser.add_argument('--ignore_cache', help='ignore cached results boxes', action='store_true')
-    parser.add_argument('--thresh', help='valid detection threshold', default=0.05, type=float)
-    parser.add_argument('--shuffle', help='shuffle data on visualization', action='store_true')
+    #parser.add_argument('--vis', help='turn on visualization', action='store_true')
+    #parser.add_argument('--ignore_cache', help='ignore cached results boxes', action='store_true')
+    #parser.add_argument('--thresh', help='valid detection threshold', default=0.05, type=float)
+    #parser.add_argument('--shuffle', help='shuffle data on visualization', action='store_true')
     args = parser.parse_args()
     return args
 
@@ -71,8 +71,8 @@ class faster_detector:
         #print args
         logger, final_output_path = create_logger(config.output_path, args.cfg, config.dataset.test_image_set)
         self.detector = detector(config, config.dataset.dataset, config.dataset.test_image_set, config.dataset.root_path, config.dataset.dataset_path,
-              ctx, prefix, epoch,args.vis, args.ignore_cache, args.shuffle, config.TEST.HAS_RPN, config.dataset.proposal, 
-              args.thresh, logger=logger, output_path=final_output_path)
+              ctx, prefix, epoch,True, True, True, config.TEST.HAS_RPN, config.dataset.proposal, 
+              0.05, logger=logger, output_path=final_output_path)
     def prediction(self,img_dir):
         self.result = self.detector.predict(img_dir)
         return self.result

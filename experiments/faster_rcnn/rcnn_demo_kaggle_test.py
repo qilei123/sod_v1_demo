@@ -33,7 +33,7 @@ class reclassifier:
         
         #predict_result = self.classifier(self.encode_feature(detection_result))
         
-        if pre_prediction_stage==4:
+        if pre_prediction_stage==4 or pre_prediction_stage==0:
             return pre_prediction_stage
         
         lesions_count = [0,0,0,0]
@@ -48,8 +48,6 @@ class reclassifier:
             final_stage = 2
         elif lesions_count[0]+lesions_count[1]>30:
             final_stage = 3
-
-
         return final_stage
 
 
