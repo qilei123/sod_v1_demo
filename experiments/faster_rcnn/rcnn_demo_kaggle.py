@@ -67,12 +67,12 @@ def predict_for_stage(stage):
             train_line = train_set_file.readline()
             continue
         count+=1
-        print count
+        #print count
         img_path = data_path+'/'+train_folder+'/'+split_line[0]+extends
         #print img_path
         #print img_stage
         boxes_result = fd.prediction(img_path)
-        print boxes_result
+        #print boxes_result
         train_result = {
                 'img':split_line[0]+extends,
                 'stage':img_stage,
@@ -83,8 +83,8 @@ def predict_for_stage(stage):
         if not os.path.exists(data_path+'/'+train_save_folder+'/'+str(img_stage)):
             os.makedirs(data_path+'/'+train_save_folder+'/'+str(img_stage))
         cv2.imwrite(data_path+'/'+train_save_folder+'/'+str(img_stage)+'/'+split_line[0]+extends,img_with_boxes)
-        #del img_with_boxes
-        #gc.collect()
+        del img_with_boxes
+        gc.collect()
         train_results['results_list'].append(train_result)
         train_line = train_set_file.readline()
         print category_count

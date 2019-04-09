@@ -127,23 +127,23 @@ def generate_proposals(predictor, test_data, imdb, cfg, vis=False, thresh=0.):
 
 
 def im_detect(predictor, data_batch, data_names, scales, cfg):
-    print "before data_batch"
+    #print "before data_batch"
     output_all = predictor.predict(data_batch)
-    print "after data_batch"
+    #print "after data_batch"
     data_dict_all = [dict(zip(data_names, idata)) for idata in data_batch.data]
     scores_all = []
     pred_boxes_all = []
-    print "stopped"
+    #print "stopped"
     #print len(output_all)
-    print len(data_dict_all)
+    #print len(data_dict_all)
     #print scales
     #print zip(output_all, data_dict_all, scales)
     for output, data_dict, scale in zip(output_all, data_dict_all, scales):
-        print "in for"
-        print len(output)
+        #print "in for"
+        #print len(output)
         #print output
-        print cfg.TEST.HAS_RPN
-        print output['rois_output'].shape
+        #print cfg.TEST.HAS_RPN
+        #print output['rois_output'].shape
         #print output['rois_output']
         #print output['rois_output'].asnumpy()
         if cfg.TEST.HAS_RPN:
@@ -151,11 +151,11 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
         else:
             rois = data_dict['rois'].asnumpy().reshape((-1, 5))[:, 1:]
         im_shape = data_dict['data'].shape
-        print "before save output"
+        #print "before save output"
         # save output
         scores = output['cls_prob_reshape_output'].asnumpy()[0]
         bbox_deltas = output['bbox_pred_reshape_output'].asnumpy()[0]
-        print "before bbox_pred"
+        #print "before bbox_pred"
         # post processing
         pred_boxes = bbox_pred(rois, bbox_deltas)
         pred_boxes = clip_boxes(pred_boxes, im_shape[-2:])
@@ -165,10 +165,10 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
 
         scores_all.append(scores)
         pred_boxes_all.append(pred_boxes)
-        #del scores,pred_boxes,bbox_deltas
-        #gc.collect()
-    #del output_all
-    #gc.collect()
+        del scores,pred_boxes,bbox_deltas
+        gc.collect()
+    del output_all
+    gc.collect()
     return scores_all, pred_boxes_all, data_dict_all
 
 
@@ -227,9 +227,9 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
 
         scales = [iim_info[0, 2] for iim_info in im_info]
         #print 'im_info'+str(im_info)
-        print "before im_detect"
+        #print "before im_detect"
         scores_all, boxes_all, data_dict_all = im_detect(predictor, data_batch, data_names, scales, cfg)
-        print "after im_detect"
+        #print "after im_detect"
         t2 = time.time() - t
         t = time.time()
         for delta, (scores, boxes, data_dict) in enumerate(zip(scores_all, boxes_all, data_dict_all)):
@@ -255,8 +255,8 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
             #    vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             
             results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
-            #del data_dict,boxes_this_image,image_scores
-            #gc.collect()
+            del data_dict,boxes_this_image,image_scores
+            gc.collect()
 
         idx += test_data.batch_size
         t3 = time.time() - t
@@ -264,15 +264,15 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         data_time += t1
         net_time += t2
         post_time += t3
-        #del scores_all, boxes_all, data_dict_all
-        #gc.collect()
+        del scores_all, boxes_all, data_dict_all
+        gc.collect()
         #print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
         '''
         if logger:
             logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
         '''
-    #del all_boxes,test_data
-    #gc.collect()
+    del all_boxes,test_data
+    gc.collect()
     return results
     '''
     with open(det_file, 'wb') as f:
