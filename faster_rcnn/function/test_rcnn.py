@@ -188,7 +188,7 @@ class detector:
         result = pred_eval(self.predictor, test_data, None, self.cfg, vis=self.vis, 
                     ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
         self.draw_all_boxes(img,img_dir,result)
-        del test_data,img
-        gc.collect()
+        #del test_data,img
+        #gc.collect()
         return result
   
