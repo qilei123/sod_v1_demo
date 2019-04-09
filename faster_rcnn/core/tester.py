@@ -134,8 +134,8 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
     scores_all = []
     pred_boxes_all = []
     print "stopped"
-    print output_all.shape
-    print data_dict_all
+    print len(output_all)
+    print len(data_dict_all)
     print scales
     #print zip(output_all, data_dict_all, scales)
     for output, data_dict, scale in zip(output_all, data_dict_all, scales):
