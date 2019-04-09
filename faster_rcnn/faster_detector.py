@@ -66,10 +66,11 @@ class faster_detector:
     def __init__(self,name = 'faster_detector'):
         self.name = name
     def init_predictor(self,cfg='/home/ubuntu/sod_v1_demo/experiments/faster_rcnn/cfgs/resnet_v1_101_dr_trainval_rcnn_end2end_1.yaml',prefix='/home/ubuntu/sod_v1_demo/model/rcnn_coco',epoch=10):
-        args = parse_args1(cfg)
+        #args = parse_args1(cfg)
+        update_config(cfg)
         ctx = [mx.gpu(int(i)) for i in config.gpus.split(',')]
         #print args
-        logger, final_output_path = create_logger(config.output_path, args.cfg, config.dataset.test_image_set)
+        logger, final_output_path = create_logger(config.output_path, cfg, config.dataset.test_image_set)
         self.detector = detector(config, config.dataset.dataset, config.dataset.test_image_set, config.dataset.root_path, config.dataset.dataset_path,
               ctx, prefix, epoch,True, True, True, config.TEST.HAS_RPN, config.dataset.proposal, 
               0.05, logger=logger, output_path=final_output_path)
