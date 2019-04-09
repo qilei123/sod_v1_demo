@@ -165,10 +165,10 @@ def im_detect(predictor, data_batch, data_names, scales, cfg):
 
         scores_all.append(scores)
         pred_boxes_all.append(pred_boxes)
-        del scores,pred_boxes,bbox_deltas
-        gc.collect()
-    del output_all
-    gc.collect()
+        #del scores,pred_boxes,bbox_deltas
+        #gc.collect()
+    #del output_all
+    #gc.collect()
     return scores_all, pred_boxes_all, data_dict_all
 
 
@@ -255,8 +255,8 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
             #    vis_all_detection(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
             
             results = get_json_result(data_dict['data'].asnumpy(), boxes_this_image, classes, scales[delta], cfg)
-            del data_dict,boxes_this_image,image_scores
-            gc.collect()
+            #del data_dict,boxes_this_image,image_scores
+            #gc.collect()
 
         idx += test_data.batch_size
         t3 = time.time() - t
@@ -264,15 +264,15 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
         data_time += t1
         net_time += t2
         post_time += t3
-        del scores_all, boxes_all, data_dict_all
-        gc.collect()
+        #del scores_all, boxes_all, data_dict_all
+        #gc.collect()
         #print 'testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size)
         '''
         if logger:
             logger.info('testing {}/{} data {:.4f}s net {:.4f}s post {:.4f}s'.format(idx, num_images, data_time / idx * test_data.batch_size, net_time / idx * test_data.batch_size, post_time / idx * test_data.batch_size))
         '''
-    del all_boxes,test_data
-    gc.collect()
+    #del all_boxes,test_data
+    #gc.collect()
     return results
     '''
     with open(det_file, 'wb') as f:

@@ -191,7 +191,7 @@ class detector:
                     ignore_cache=self.ignore_cache, thresh=self.thresh, logger=self.logger)
         #print "after pre_eval"
         self.draw_all_boxes(img,img_dir,result)
-        del test_data,img
-        gc.collect()
+        #del test_data,img
+        #gc.collect()
         return result
   
