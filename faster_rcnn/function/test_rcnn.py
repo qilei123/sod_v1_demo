@@ -102,7 +102,7 @@ class detector:
             assert False, 'require a logger'
         # print cfg
         #pprint.pprint(cfg)
-        logger.info('testing cfg:{}\n'.format(pprint.pformat(cfg)))
+        #logger.info('testing cfg:{}\n'.format(pprint.pformat(cfg)))
 
         # load symbol and testing data
         if has_rpn:
