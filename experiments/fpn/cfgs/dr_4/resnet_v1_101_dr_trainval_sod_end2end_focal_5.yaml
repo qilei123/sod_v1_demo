@@ -2,7 +2,7 @@
 MXNET_VERSION: "python"
 output_path: "/data0/qilei_chen/AI_EYE/BostonAI4DB9/sod_baseline5"
 symbol: resnet_v1_101_fpn_rcnn_sod_l0_focal_v5
-gpus: '3'
+gpus: '0,1,2'
 CLASS_AGNOSTIC: false
 SCALES:
 - 960
@@ -53,9 +53,9 @@ TRAIN:
   warmup_step: 250
   warmup: true
   # lr: 0.000001
-  lr_step: '16,18'
+  lr_step: '22,24'
   wd: 0.0001
-  begin_epoch: 12
+  begin_epoch: 18
   end_epoch: 25
   model_prefix: 'fpn_dr'
   # whether resume training
