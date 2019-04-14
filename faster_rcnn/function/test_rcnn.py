@@ -165,9 +165,10 @@ class detector:
         #print img_path
         for rbox in boxes_result['results']:
             box = rbox['box']
-            cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),3)
+            cv2.rectangle(img,(int(box[0]),int(box[1])),(int(box[0]+box[2]),int(box[1]+box[3])),(0,255,0),2)
             font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score'])[:4],(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
+            #cv2.putText(img,str(rbox['label'])+'/'+str(rbox['score'])[:4],(int(box[0]+box[2]),int(box[1])), font, 4,(0,255,0),2,cv2.LINE_AA)
+            cv2.putText(img,str(rbox['label']),(int(box[0]+box[2]),int(box[1])), font, 1,(0,255,0),2,cv2.LINE_AA)
         file_name = os.path.basename(img_dir)
         #result_img_dir  = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+'_'+file_name
         result_img_dir = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+file_name
