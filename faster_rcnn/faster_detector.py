@@ -73,7 +73,7 @@ class faster_detector:
         logger, final_output_path = create_logger(config.output_path, cfg, config.dataset.test_image_set)
         self.detector = detector(config, config.dataset.dataset, config.dataset.test_image_set, config.dataset.root_path, config.dataset.dataset_path,
               ctx, prefix, epoch,True, True, True, config.TEST.HAS_RPN, config.dataset.proposal, 
-              0.05, logger=logger, output_path=final_output_path)
+              0.00, logger=logger, output_path=final_output_path)
     def prediction(self,img_dir):
         #print "before predict"
         self.result = self.detector.predict(img_dir)

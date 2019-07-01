@@ -150,5 +150,5 @@ TEST:
   # RCNN nms
   NMS: 0.1
   test_epoch: 10
-  max_per_image: 50
+  max_per_image: 500
 
