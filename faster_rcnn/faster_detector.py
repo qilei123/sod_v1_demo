@@ -47,12 +47,9 @@ curr_path = os.path.abspath(os.path.dirname(__file__))
 mxnet_path = os.path.join(curr_path, '../external/incubator-mxnet/python/')
 print(mxnet_path)
 sys.path.insert(0, mxnet_path)
-
 import mxnet as mx
 from function.test_rcnn import test_rcnn,detector
 from utils.create_logger import create_logger
-
-
 def main():
     ctx = [mx.gpu(int(i)) for i in config.gpus.split(',')]
     print args
