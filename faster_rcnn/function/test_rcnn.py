@@ -174,6 +174,7 @@ class detector:
         #result_img_dir  = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+'_'+file_name
         result_img_dir = '/home/ubuntu/Code/AI_4_Retinaimage/result_img/result_'+file_name
         result_img_dir = '/media/cql/DATA0/Development/RetinaImg/dataset/test_show.jpg'
+        result_img_dir = '/home/intellifai/docker_images/sod_v1_models/RESULTS/test_show.jpg'
         cv2.imwrite(result_img_dir,img)
         boxes_result['result_img_dir'] = result_img_dir     
     def predict(self,img_dir='/media/cql/DATA1/data/train_view/0/13_left.jpeg'):
