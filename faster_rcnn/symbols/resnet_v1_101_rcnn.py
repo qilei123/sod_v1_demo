@@ -762,7 +762,7 @@ class resnet_v1_101_rcnn(Symbol):
             # ROI Proposal
             rpn_cls_score_reshape = mx.sym.Reshape(
                 data=rpn_cls_score, shape=(0, 2, -1, 0), name="rpn_cls_score_reshape")
-            rpn_cls_prob = mx.sym.SoftmaxActivation(
+            rpn_cls_prob = mx.sym.softmax(
                 data=rpn_cls_score_reshape, mode="channel", name="rpn_cls_prob")
             rpn_cls_prob_reshape = mx.sym.Reshape(
                 data=rpn_cls_prob, shape=(0, 2 * num_anchors, -1, 0), name='rpn_cls_prob_reshape')
